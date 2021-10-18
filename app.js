@@ -19,7 +19,7 @@ const app = express();
 app.set('view engine', 'pug');
 
 app.use(session({
-  name: 'amusement.sid',
+  name: 'cinemaroll.sid',
   secret: sessionSecret,
   resave: false,
   saveUninitialized: false
