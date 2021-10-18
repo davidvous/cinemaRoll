@@ -1,17 +1,18 @@
-extends layout.pug 
+extends layout.pug
 
 block content
+    h1 This is a user registration form.
     form(action="/users/signup" method="post")
         input(type="hidden", name="_csrf" value=csrfToken)
         div(class="form-field")
             label(for="firstName") First Name
-            input(type="text", name="firstName" id="firstName" placeholder="Enter your first name here.")
+            input(type="text", name="firstName" id="firstName" value=user.first_name)
         div(class="form-field")
             label(for="lastName") Last Name
-            input(type="text", name="lastName" id="lastName" placeholder="Enter your last name here.")
+            input(type="text", name="lastName" id="lastName" value=user.last_name placeholder="Enter your last name here.")
         div(class="form-field")
             label(for="email") E-mail
-            input(type="email", name="email" id="email" placeholder="Enter your E-mail address here.")
+            input(type="email", name="email" id="email" value=user.email placeholder="Enter your E-mail address here.")
         div(class="form-field")
             label(for="password") Password
             input(type="password", name="password" id="password" placeholder="Enter a password here.")

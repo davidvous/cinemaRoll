@@ -1,15 +1,74 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const { check, validationResult } = require('express-validator');
+
+
 const {csurfProtection, asyncHandler} = require('./utils')
+const db = require('../db/models');
+
+
+const router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get("/signup",csurfProtection, function(req, res, next) {
+
+
+const signupValidation = [
+  check("firstName")
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for First Name')
+    .isLength({ max: 50})
+    .withMessage('First Name must not be more than 50 characters long'),
+  check("lastName")
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for Last Name')
+    .isLength({ max: 50})
+    .withMessage('Last Name must not be more than 50 characters long'),
+  check("email")
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for Email Address')
+    .isLength({ max: 150})
+    .withMessage('Email address must not be more than 255 characters long'),
+  check("password")
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for password')
+    .isLength({ max: 50})
+    .withMessage('Password must not be more than 50 characters long')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)
+    .withMessage('Password should contain at least 1 lowercase letter, uppercase letter, number, and special character'),
+  check("confirmPassword")
+    .exists({ checkFalsy: true })
+    .withMessage('Please confirm password')
+    .custom((val, { req }) => val === req.body.password)
+    .withMessage('Password and password confirm do not match'),
+
+]
+
+
+router.get("/signup", csurfProtection, function(req, res, next) {
   const csrfToken = req.csrfToken()
-  console.log(csrfToken, ">>>>>>>>>>>>");
-  res.render('signup', {csrfToken});
+  res.render('signup', {csrfToken, user: {}});
 })
+
+
+router.post("/signup", csurfProtection, signupValidation, asyncHandler(async function(req, res) {
+
+  const errors = validationResult(req).errors.map(e => e.msg);
+
+  if (errors.length > 0) {
+    const user = db.User.build({
+      email: req.body.email,
+      first_name: req.body.firstName,
+      last_name: req.body.lastName,
+    });
+    return res.render('signup', { user, csrfToken: req.csrfToken()});
+  } else {
+    // no error
+    // register user
+  }
+
+}));
+
 
 module.exports = router;
