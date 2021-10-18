@@ -82,4 +82,44 @@ router.post("/signup", csurfProtection, signupValidation, asyncHandler(async fun
 }));
 
 
+
+const loginValidation = [
+  check("email")
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for Email Address'),
+
+  check("password")
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for password')
+]
+
+
+router.post('/login', csurfProtection, loginValidation, asyncHandler (async (req, res, next) =>{
+
+  const errors = validationResult(req).errors.map(e => e.msg);
+
+  if (errors.length > 0) {
+    return res.render('login', {errors, csrfToken: req.csrfToken()});}
+  else {
+    const user = await db.User.findOne({where: {email:req.body.email}})
+    if (user){
+      const isPasswords = await bcrypt.compare(req.body.password, user.password_encrypted.toString())
+      if (isPasswords) {
+        return res.redirect('/'); 
+      }
+      else{
+        errors.push("Email address or password incorrect.")
+        return res.render('login', {errors, csrfToken: req.csrfToken()});
+      }
+    }
+    
+  }
+  //return res.render("login",{csrfToken: req.csrfToken()});
+}))
+
+router.get('/login', csurfProtection,  (req, res, next) =>{
+  return res.render("login",{csrfToken: req.csrfToken()});
+})
+
+
 module.exports = router;
