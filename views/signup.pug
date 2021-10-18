@@ -1,0 +1,21 @@
+extends layout.pug 
+
+block content
+    form(action="/users/signup" method="post")
+        input(type="hidden", name="_csrf" value=csrfToken)
+        div(class="form-field")
+            label(for="firstName") First Name
+            input(type="text", name="firstName" id="firstName" placeholder="Enter your first name here.")
+        div(class="form-field")
+            label(for="lastName") Last Name
+            input(type="text", name="lastName" id="lastName" placeholder="Enter your last name here.")
+        div(class="form-field")
+            label(for="email") E-mail
+            input(type="email", name="email" id="email" placeholder="Enter your E-mail address here.")
+        div(class="form-field")
+            label(for="password") Password
+            input(type="password", name="password" id="password" placeholder="Enter a password here.")
+        div(class="form-field")
+            label(for="confirm-password") Confirm Password
+            input(type="password", name="confirm-password" id="confirm-password" placeholder="Please confirm your password.")
+        button(type="submit") Sign up
