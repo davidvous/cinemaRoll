@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 
 const {csurfProtection, asyncHandler} = require('./utils')
 const db = require('../db/models');
+const { loginUser, logoutUser } = require('../auth');
 
 
 const router = express.Router();
@@ -64,7 +65,7 @@ router.post("/signup", csurfProtection, signupValidation, asyncHandler(async fun
     });
     return res.render('signup', { user, errors, csrfToken: req.csrfToken()});
   } else {
-    
+
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -75,7 +76,7 @@ router.post("/signup", csurfProtection, signupValidation, asyncHandler(async fun
       last_name: req.body.lastName,
       password_encrypted: hashedPassword,
     });
-    
+    loginUser(req, res, user);
     return res.redirect('/');
   }
 
@@ -105,14 +106,15 @@ router.post('/login', csurfProtection, loginValidation, asyncHandler (async (req
     if (user){
       const isPasswords = await bcrypt.compare(req.body.password, user.password_encrypted.toString())
       if (isPasswords) {
-        return res.redirect('/'); 
+        loginUser(req, res, user);
+        return res.redirect('/');
       }
       else{
         errors.push("Email address or password incorrect.")
         return res.render('login', {errors, csrfToken: req.csrfToken()});
       }
     }
-    
+
   }
   //return res.render("login",{csrfToken: req.csrfToken()});
 }))
