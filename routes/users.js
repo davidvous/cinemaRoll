@@ -1,5 +1,6 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 
 const {csurfProtection, asyncHandler} = require('./utils')
@@ -11,7 +12,6 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
-
 
 
 const signupValidation = [
@@ -62,10 +62,21 @@ router.post("/signup", csurfProtection, signupValidation, asyncHandler(async fun
       first_name: req.body.firstName,
       last_name: req.body.lastName,
     });
-    return res.render('signup', { user, csrfToken: req.csrfToken()});
+    return res.render('signup', { user, errors, csrfToken: req.csrfToken()});
   } else {
-    // no error
-    // register user
+    
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    const user = await db.User.create({
+      email: req.body.email,
+      first_name: req.body.firstName,
+      last_name: req.body.lastName,
+      password_encrypted: hashedPassword,
+    });
+    
+    return res.redirect('/');
   }
 
 }));
