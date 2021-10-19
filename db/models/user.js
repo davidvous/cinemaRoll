@@ -7,15 +7,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(150), 
         allowNull: false, 
         unique: true },
-      password_encrypted: {
+      passwordHash: {
         type: DataTypes.STRING.BINARY,
         allowNull: false,
       },
-      first_name: {
+      firstName: {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
-      last_name: {
+      lastName: {
         type: DataTypes.STRING(50),
         allowNull: false,
       },

@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      releaseDate: {
+      dateReleased: {
         type: Sequelize.DATEONLY,
         allowNull:true
       },
