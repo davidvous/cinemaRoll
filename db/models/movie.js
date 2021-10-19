@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'movieId',
       otherKey: 'genreId'
     }
-    Movie.belongsToMany(modesl.Genre, columnMapping__genres);
+    Movie.belongsToMany(models.Genre, columnMapping__genres);
 
   };
   return Movie;
