@@ -17,11 +17,6 @@ module.exports = {
         type: Sequelize.DATEONLY,
         allowNull:true
       },
-      genreId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'Genres' },
-      },
       summary: {
         type: Sequelize.TEXT,
         allowNull: false
