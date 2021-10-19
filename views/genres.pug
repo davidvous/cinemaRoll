@@ -1,0 +1,8 @@
+extends layout
+include utils.pug
+block content
+    div(id="container")
+        h2(class="search-header" id="search-header") Search and browse movies
+        input(id="search" class="search-bar" placeholder="Search for a movie.")
+        +blockList(genresArray1, "genres-1")
+        +blockList(genresArray2, "genres-2")
