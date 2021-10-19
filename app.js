@@ -8,7 +8,11 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+
 const genresRouter = require('./routes/genres');
+
+const { restoreUser } = require('./auth');
+
 const { sessionSecret } = require('./config');
 
 const app = express();
@@ -42,6 +46,9 @@ app.use(
     resave: false,
   })
 );
+
+// restore user middleware
+app.use(restoreUser);
 
 // create Session table if it doesn't already exist
 store.sync();

@@ -1,25 +1,26 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('MovieLists', {
+    return queryInterface.createTable('MoviesToGenresJoinTables', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING(50),
-        allowNull: false
-      },
-      userId: {
-        type: Sequelize.INTEGER,
+      movieId: {
         allowNull: false,
-        references: { model: 'Users' },
+        type: Sequelize.INTEGER,
+        references: { model: "Movies" }
+      },
+      genreId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: "Genres" }
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
@@ -28,6 +29,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('MovieLists');
+    return queryInterface.dropTable('MoviesToGenresJoinTables');
   }
 };

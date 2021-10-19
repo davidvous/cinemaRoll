@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 
 const {csurfProtection, asyncHandler} = require('./utils')
 const db = require('../db/models');
+const { loginUser, logoutUser } = require('../auth');
 
 
 const router = express.Router();
@@ -64,7 +65,7 @@ router.post("/signup", csurfProtection, signupValidation, asyncHandler(async fun
     });
     return res.render('signup', { user, errors, csrfToken: req.csrfToken()});
   } else {
-    
+
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -75,7 +76,7 @@ router.post("/signup", csurfProtection, signupValidation, asyncHandler(async fun
       last_name: req.body.lastName,
       password_encrypted: hashedPassword,
     });
-    
+    loginUser(req, res, user);
     return res.redirect('/');
   }
 
@@ -97,29 +98,36 @@ const loginValidation = [
 router.post('/login', csurfProtection, loginValidation, asyncHandler (async (req, res, next) =>{
 
   const errors = validationResult(req).errors.map(e => e.msg);
-
+  console.log(errors)
   if (errors.length > 0) {
     return res.render('login', {errors, csrfToken: req.csrfToken()});}
   else {
-    const user = await db.User.findOne({where: {email:req.body.email}})
-    if (user){
-      const isPasswords = await bcrypt.compare(req.body.password, user.password_encrypted.toString())
+    const user = await db.User.findOne({ where: { email: req.body.email } });
+    if (user) {
+      const isPasswords = await bcrypt.compare(
+        req.body.password,
+        user.password_encrypted.toString()
+      );
       if (isPasswords) {
-        return res.redirect('/'); 
-      }
-      else{
-        errors.push("Email address or password incorrect.")
-        return res.render('login', {errors, csrfToken: req.csrfToken()});
+        loginUser(req, res, user);
+        return res.redirect("/");
       }
     }
-    
   }
-  //return res.render("login",{csrfToken: req.csrfToken()});
+  errors.push("Email address or password incorrect.");
+  return res.render("login", { errors, csrfToken: req.csrfToken() });
 }))
 
 router.get('/login', csurfProtection,  (req, res, next) =>{
   return res.render("login",{csrfToken: req.csrfToken()});
 })
+
+router.post('/logout', asyncHandler(async (req, res, next) => {
+  logoutUser(req);
+  return res.redirect("/");
+}))
+
+
 
 
 module.exports = router;

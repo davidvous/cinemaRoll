@@ -1,11 +1,22 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Genre = sequelize.define('Genre',{
-      name: { type: DataTypes.STRING(75), allowNull: false, unique: true },
+      name: {
+        type: DataTypes.STRING(75),
+        allowNull: false,
+        unique: true
+      },
     }, {});
   Genre.associate = function(models) {
     // associations can be defined here
-    Genre.hasMany(models.Movie, {foreignKey: 'genreId'})
+
+    const columnMapping = {
+      through: 'MoviesToGenresJoinTables',
+      otherKey: 'movieId',
+      foreignKey: 'genreId'
+    }
+    Movie.belongsToMany(models.Movie, columnMapping);
+
   };
   return Genre;
 };

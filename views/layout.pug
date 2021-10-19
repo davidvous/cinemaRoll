@@ -1,8 +1,70 @@
+block variables
 doctype html
 html
   head
       block head
         title="Express Starter App"
         link(rel='stylesheet' href='/stylesheets/genresGrid.css')
-  body
-    block content
+        link(rel='stylesheet' href='/stylesheets/header.css')
+        link(rel='stylesheet' href='/stylesheets/reset.css')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  script. 
+    const dropDown = () => {
+      document.getElementById("dropDownLink").classList.toggle("show")
+    }
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropDownLink')) {
+        let dropdowns = document.getElementsByClassName("dropdown-content");
+
+        for (let i = 0; i < dropdowns.length; i++) {
+          let openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }   
+body
+  header(class="header")
+    div
+      a(class="logo", href="/") cinemaRoll
+    div.header_nav
+    form(action ="/" method="GET")
+      button(type='submit' class="util_btn") Home
+    form(action ="/movies" method="GET")
+      button(type='submit' class="util_btn") My Movies
+    .dropdown 
+      button(onclick="dropDown()" class="dropDownLink") Browse Genres
+      div(id="dropDownLink" class="dropdown-content")
+        a(href="#") Action
+        a(href="#") Comedy
+        a(href="#") Drama 
+        a(href="#") Fantasy
+        a(href="#") Horror
+        a(href="#") Mystery 
+    .blank
+    .navsearch
+      div
+        form(class="search" action="/search" method="post")
+          input(type="text" name="search" class="inputfield" placeholder="Search movies" size="50")
+      div    
+        button(class="search_btn")
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    .blank
+    div
+      if locals.authenticated 
+        span Welcome #{user.first_name} #{user.last_name}!
+        form(action ="/users/logout" method="POST")
+          button(type='submit') Logout
+      else 
+        div.header
+          div
+            form(action ="/users/login" method="GET") 
+              button(type='submit' class="util_btn") Login 
+          div
+            form(action ="/users/signup" method="GET")
+              button(type='submit' class="util_btn") Signup
+    .blank
+  hr
+  block content
+
