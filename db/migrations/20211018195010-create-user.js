@@ -13,15 +13,15 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      password_encrypted: {
+      passwordHash: {
         type: Sequelize.STRING.BINARY,
         allowNull: false,
       },
-      first_name: {
+      firstName: {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      last_name: {
+      lastName: {
         type: Sequelize.STRING(50),
         allowNull: false,
       },

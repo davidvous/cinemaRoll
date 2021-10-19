@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       rating: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+          min: 1,
+          max: 5
+        }
       },
     }, {});
   UserMovieRating.associate = function(models) {
