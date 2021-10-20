@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-      return queryInterface.bulkInsert('People', [
+      return queryInterface.bulkInsert('Users', [
         {id:1,
         email:"jim@jim.com",
         passwordHash:"$2a$10$tuOOz8wLRds1Z03iGlNEr.ErjYfFCivNYHfVb33ulaGrRqtxnaDsa",
@@ -37,7 +37,7 @@ module.exports = {
       Return a promise to correctly handle asynchronicity.
 
       Example:
-      return queryInterface.bulkDelete('People', null, {});
-    */
+      */
+   return queryInterface.bulkDelete('Users', null, {});
   }
 };
