@@ -22,6 +22,6 @@ module.exports = {
 
       Example:
       */
-   return queryInterface.bulkDelete("UserMovieRating", null, {});
+   return queryInterface.bulkDelete("UserMovieRatings", null, {});
   }
 };
