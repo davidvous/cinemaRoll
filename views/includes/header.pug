@@ -1,0 +1,40 @@
+
+header(class="header")
+  div
+    a(class="logo", href="/") cinemaRoll
+  div.header_nav
+    a(class="util_btn" href="/") Home
+    a(class="util_btn" href="/movies") My Movies
+  .dropdown
+    hr
+    button(onclick="dropDown()" class="dropDownLink") Browse Genres
+    div(id="dropDownLink" class="dropdown-content")
+      a(href="#") Action
+      a(href="#") Comedy
+      a(href="#") Drama
+      a(href="#") Fantasy
+      a(href="#") Horror
+      a(href="#") Mystery
+  .blank
+  .navsearch
+    div
+      form(class="search" action="/search" method="post")
+        input(type="text" name="search" class="inputfield" placeholder="Search movies" size="50")
+    div
+      button(class="search_btn")
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+  .blank
+  div
+    if locals.authenticated
+      span Welcome #{user.first_name} #{user.last_name}!
+      form(action ="/users/logout" method="POST")
+        button(type='submit') Logout
+    else
+      div.header
+        div
+          form(action ="/users/login" method="GET") 
+            button(type='submit' class="util_btn") Login
+        div
+          form(action ="/users/signup" method="GET")
+            button(type='submit' class="util_btn") Signup
+  .blank
