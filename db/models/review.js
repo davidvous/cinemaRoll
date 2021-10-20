@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      reviewDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      }
     },
    {});
   Review.associate = function(models) {
