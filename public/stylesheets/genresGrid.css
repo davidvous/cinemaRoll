@@ -1,44 +1,52 @@
-#container{
+#genre-container{
     display: grid;
-    grid-template-rows: 45px 30px 60px;
-    grid-template-columns: 200px 200px;
-    grid-template-areas: "search-header search-header"
-    "search-bar  search-bar"
-    "genres-1 genres-2";
-    grid-auto-rows: auto;
-    
+    grid-template-rows: 30px 35px 100px;
+    grid-template-columns: repeat(4, 150px);
+    grid-template-areas:
+        ". a a ."
+        ". b b ."
+        "c d e f";
 }
-#search-header {
-font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 18px;
-font-weight: 400;
+
+#search-header{
+    font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    grid-area: a;
 }
-.search-header{
-    grid-area: search-header;
-}
+
 .search-bar{
-    grid-area: search-bar;
+    background-color: black;
+    grid-area: b;
     background: url("../icons/magnifying_glass-a2d7514d50bcee1a0061f1ece7821750.png") right center no-repeat;
-    border-radius:5px;
-    border: 1px solid #999;
+    border-radius: 5px;
+    border: 2px solid #999;
     padding: 5px;
-    width: 300px;
 }
-.genres-1{
-    grid-area: genres-1;
+
+#genres-1{
+    grid-area: c;
 }
-.genres-2{
-    grid-area: genres-2;
+#genres-2{
+    grid-area: d;
 }
-a{
+#genres-3{
+    grid-area: e;
+}
+#genres-4{
+    grid-area: f;
+}
+
+#genre-container a{
     color: rgb(0, 99, 93);
     text-decoration-line: none;
     line-height: 21px;
     text-decoration-color: rgb(0, 99, 93);
     font-size: 14px;
     font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
-
 }
-a:hover{
+
+#genre-container a:hover{
     text-decoration: underline;
 }
+

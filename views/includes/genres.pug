@@ -1,9 +1,8 @@
-extends index.pug
 include utils.pug
 
 block genres
-    div(id="container")
+    div(id="genre-container")
         h2(class="search-header" id="search-header") Search and browse movies
         input(id="search" class="search-bar" placeholder="Search for a movie.")
-        +blockList(genresArray1, "genres-1")
-        +blockList(genresArray2, "genres-2")
+        each genreArray, index in genres
+            +blockList(genreArray, index+1)
