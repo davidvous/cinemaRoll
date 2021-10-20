@@ -34,3 +34,12 @@ footer {
 footer > h2 {
   font-size: 25px;
 }
+
+footer a {
+  text-decoration: none;
+}
+
+.names {
+  border: 1px red solid;
+  background-color: red;
+}

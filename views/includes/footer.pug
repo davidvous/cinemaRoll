@@ -1,3 +1,10 @@
+- const david = {"name": "David Le", "mail": "none@gmail.com", "lnk": "TDB", "git": "davidvous"}
+- const ilya  = {"name": "Ilya Novikov", "mail": "ibnovikov@gmail.com", "lnk": "ilyabnovikov", "git": "ily123"}
+- const jay   = {"name": "Jay Alani Spencer", "mail": "TDB", "lnk": "TDB", "git": "jas0123uah"}
+
+- const test = "abc"
+- const test2 = [{"a": "b"}]
+
 append head
   link(rel="stylesheet" href="/stylesheets/footer.css")
   link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
@@ -6,19 +13,10 @@ footer
   hr
   h2 Work with us
   div#contact_info_wrapper
-    div.team_member
-      p fName LastName
-      a(href="my-linked-in")
-      a(href="/") Link to Github
-      a(href="/") Gmail
-    div.team_member
-      p fName LastName
-      a(href="my-linked-in") Link to LinkedIn
-      a(href="/") Link to Github
-      a(href="/") Gmail
-    div.team_member
-      p fName LastName
-      a(href="my-linked-in") Link to LinkedIn
-      a(href="/") Link to Github
-      a(href="/") Gmail
+    each member in [david, ilya, jay]
+      div.team_member
+        p.names #{member["name"]}
+        a(href="my-linked-in")
+        a(href="/") #{test}
+        a(href="/") Gmail
 
