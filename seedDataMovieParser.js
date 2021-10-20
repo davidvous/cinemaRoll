@@ -143,7 +143,7 @@ function movieUrlFixer(arr){
         delete Object.assign(movie, {['dateReleased']: movie['release_date'] })['release_date'];
         delete Object.assign(movie, {['summary']: movie['overview'] })['overview'];
         delete Object.assign(movie, {['posterPath']: movie['poster_path'] })['poster_path'];
-        delete movie.genre_ids
+        //delete movie.genre_ids
     }
     
         
@@ -151,7 +151,7 @@ function movieUrlFixer(arr){
 
 
 movieUrlFixer(movies)
-fs.writeFileSync('/mnt/d/tmdb_movies_filtered.json', JSON.stringify(movies));
+fs.writeFileSync('/mnt/d/tmdb_movies_filtered_with_genres.json', JSON.stringify(movies));
 
 for (let index = 0; index < genreObjArray.length; index++) {
     const genreObj = genreObjArray[index]

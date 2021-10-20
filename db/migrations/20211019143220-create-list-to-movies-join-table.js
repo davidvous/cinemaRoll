@@ -16,10 +16,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'MovieLists' }
       },
-      dateReleased: {
-        type: Sequelize.DATEONLY,
-        allowNull: false,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
