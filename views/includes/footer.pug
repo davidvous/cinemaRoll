@@ -1,13 +1,13 @@
 - const david = {"name": "David Le", "mail": "none@gmail.com", "lnk": "TDB", "git": "davidvous"}
 - const ilya  = {"name": "Ilya Novikov", "mail": "ibnovikov@gmail.com", "lnk": "ilyabnovikov", "git": "ily123"}
-- const jay   = {"name": "Jay Alani Spencer", "mail": "TDB", "lnk": "TDB", "git": "jas0123uah"}
+- const jay   = {"name": "Jay Alani Spencer", "mail": "jas0123@uah.edu", "lnk": "jay-spencer-621b44166", "git": "jas0123uah"}
 
 - const test = "abc"
 - const test2 = [{"a": "b"}]
 
 append head
   link(rel="stylesheet" href="/stylesheets/footer.css")
-  link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+  link(rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css")
 
 footer
   hr
@@ -15,8 +15,11 @@ footer
   div#contact_info_wrapper
     each member in [david, ilya, jay]
       div.team_member
-        p.names #{member["name"]}
-        a(href="my-linked-in")
-        a(href="/") #{test}
-        a(href="/") Gmail
+        p.names= member["name"]
+        a(href= "fdsfs"+member["git"])
+            i(class="fab fa-github-square fa-2x")
+        a(href= "fdsfs"+member["git"])
+            i(class="fab fa-linkedin fa-2x")
+        a(href= "fdsfs"+member["git"])
+            i(class="fas fa-envelope-square fa-2x")
 
