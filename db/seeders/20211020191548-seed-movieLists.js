@@ -5,21 +5,21 @@ module.exports = {
     
       return queryInterface.bulkInsert('movieLists', [{
         'id': 1,
-        'name':"My Favorite Comedies",
+        'name':"Comedies",
         'userId':1,
         'createdAt': new Date(),
         'updatedAt': new Date()
       },
     {
-        'id': 1,
-        'name':"My Favorite Documentaries",
+        'id': 2,
+        'name':"Documentaries",
         'userId':1,
         'createdAt': new Date(),
         'updatedAt': new Date()
       }
     ,  {
-        'id': 1,
-        'name':"My Favorite Action Movies",
+        'id': 3,
+        'name':"Action Movies",
         'userId':1,
         'createdAt': new Date(),
         'updatedAt': new Date()
