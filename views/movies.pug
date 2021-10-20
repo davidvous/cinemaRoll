@@ -7,18 +7,19 @@ block content
                 .leftContainer 
                     #topcolumn(class="col")
                         #imagecolumn(class="col") 
-                            img(src=`${movieObj.poster_path}`)
-                            p Movie Poster (above)
+                            img(src=`${movieObj.posterPath}`)
                             p Movie Lists (add or remove)
-                            p Star Ratings here
+                            .smallHeadingcontainer 
+                            h2.smallHeading Popularity 
+                            span= `${ratingDecimal} out of 10`
                         #metacolumn(class="col") 
                             .movieTitleContainer
                                 h1#movieTitle= movieObj.title
                             .smallHeadingContainer
-                                h2#movieDate= `Released: ${movieObj.release_date}`
+                                h2#movieDate= `Released: ${movieObj.dateReleased}`
                             .smallHeadingContainer
                                 h2.smallHeading Overview:
-                                span= movieObj.overview
+                                span= movieObj.summary
                 .rightContainer  
                     .smallHeadingContainer
                         h2.smallHeading Viewers also enjoyed 
