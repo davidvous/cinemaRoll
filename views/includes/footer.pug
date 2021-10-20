@@ -1,0 +1,30 @@
+- const david = {"name": "David Le", "mail": "none@gmail.com", "lnk": "TDB", "git": "davidvous"}
+- const ilya  = {"name": "Ilya Novikov", "mail": "ibnovikov@gmail.com", "lnk": "ilyabnovikov", "git": "ily123"}
+- const jay   = {"name": "Jay Alan Spencer", "mail": "jas0123@uah.edu", "lnk": "jay-spencer-621b44166", "git": "jas0123uah"}
+
+- const test = "abc"
+- const test2 = [{"a": "b"}]
+
+append head
+  link(rel="stylesheet" href="/stylesheets/footer.css")
+  link(rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css")
+
+footer
+  hr
+  h2#source_code_label Source Code Repository
+  div#repo_information
+    a(target="_blank" href= "https://github.com/davidvous/cinemaRoll")
+       i(class="fab fa-github-square fa-3x")
+  h2#work_with_us Work with us
+  div#contact_info_wrapper
+    each member in [david, ilya, jay]
+      div.team_member
+        p.names= member["name"]
+        div.social_media_icons
+          a(target="_blank" href= "https://github.com/"+member["git"])
+              i(class="fab fa-github-square fa-2x")
+          a(target="_blank" href= "https://www.linkedin.com/in/"+member["lnk"])
+              i(class="fab fa-linkedin fa-2x")
+          a(target="_blank" href= "mailto:"+member["mail"])
+              i(class="fas fa-envelope-square fa-2x")
+
