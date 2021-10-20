@@ -10,6 +10,11 @@
   display: flex;
   align-items: flex-start;
 }
+
+.logobox {
+  margin: 15px 20px 0px 15px;
+}
+
 .logo {
   color: rgb(143, 67, 25);
   font-weight: 800;
@@ -46,6 +51,7 @@
 
 .navsearch {
   display: flex;
+  flex-direction: row;
   box-sizing: border-box;
   height: 50px;
   margin: 0 auto;
@@ -53,8 +59,12 @@
   align-items: center;
 }
 
+.inputfield {
+  padding: 8px;
+}
 
 .search_btn {
+  height: 68%;
   border: none;
   background: rgb(143, 67, 25);
   outline: none;

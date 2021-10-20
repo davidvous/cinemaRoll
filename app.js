@@ -10,6 +10,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const genresRouter = require('./routes/genres');
+const moviesRouter = require('./routes/movies')
 
 const { restoreUser } = require('./auth');
 
@@ -56,6 +57,8 @@ store.sync();
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/genres', genresRouter);
+app.use('/movies', moviesRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -63,7 +66,7 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-  console.log("--------------> ALL THE WAY DOWN IN THE RROR HDLR.");
+
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

@@ -1,0 +1,18 @@
+extends layout
+include utils.pug
+block content
+    .mainContentContainer 
+        .mainContent 
+            .mainContentFloat 
+                .leftContainer 
+                    #topcolumn(class="col")
+                        #imagecolumn(class="col") 
+                            img(src=`${movieObj}`)
+                            span Movie List dynamic function here
+                            span Reviews here
+                        #metacolumn(class="col") 
+                            h1#movieTitle= movieObj.title
+                            h2#movieDate= movieObj.date
+                            span= movieObj.overview
+                .rightContainer  
+                    img(src="https://hs.sbcounty.gov/cn/Photo%20Gallery/_w/Sample%20Picture%20-%20Koala_jpg.jpg")

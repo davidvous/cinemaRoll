@@ -1,0 +1,60 @@
+.mainContentContainer {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 25px;
+}
+
+.mainContent {
+    margin: 0px auto;
+    text-align: left;
+    width: 970px;
+    background: #FFF;
+}
+
+.mainContentFloat {
+    float: left;
+    width: 960px;
+    margin-top: 15px;
+    margin-left: 5px;
+    font-size: 12px;
+    min-height: 400px;
+    background: #FFF;
+}
+
+.leftContainer {
+    float: left;
+    width: 625px;
+    padding: 0px 10px 0px 8px; 
+}
+
+#topcolumn {
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+}
+
+.col {
+    float: left;
+    margin: 0px 20px 10px 0px;
+}
+
+.col img {
+    height: 230px;
+    width: 150px;
+}
+
+.rightContainer {
+    float: left;
+    width: 300px;
+    display: inline;
+    margin: 0px 0px 0px 8px;
+}
+
+.rightContainer img {
+    height: 230px;
+    width: 150px;
+}
+
+.header_nav {
+  display: flex;
+  align-items: flex-start;
+}

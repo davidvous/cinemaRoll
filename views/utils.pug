@@ -11,3 +11,12 @@ mixin blockList(arrayOfGenres, divId)
         each genre in arrayOfGenres
           a(href= `/genres/${genre}/`)=genre 
           br
+
+mixin movieGenerate(movieObj)
+  #imagecolumn(class="col") 
+    img(src=`${movieObj}`)
+  #metacolumn(class="col") 
+    h1#movieTitle= movieObj.title
+    h2#movieDate= movieObj
+    span= movieObj
+  - console.log(movieObj)
