@@ -1,6 +1,36 @@
 footer {
-  background-color: #f9f8f4;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 18px;
+
   padding: 0;
+  border-top: 1px gray solid;
+  background-color: #f9f8f4;
+
+  border: 1px blue solid;
+
+}
+
+#contact_info_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  border: 1px red solid;
+  width: 100%;
+  padding: 20px;
+}
+
+.team_member {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 40px;
+}
+
+footer > h2 {
+  font-size: 25px;
 }
