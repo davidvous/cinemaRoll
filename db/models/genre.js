@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'movieId',
       foreignKey: 'genreId'
     }
-    Genre.belongsToMany(models.Movie, columnMapping);
+    //Genre.belongsToMany(models.Movie, columnMapping);
 
   };
   return Genre;

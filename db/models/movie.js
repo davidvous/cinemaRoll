@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   Movie.associate = function(models) {
     // associations can be defined here
     Movie.hasMany(models.UserMovieRating, {foreignKey: 'movieId'})
-    Movie.belongsTo(models.Genre, {foreignKey:'genreId'})
+    //Movie.belongsTo(models.Genre, {foreignKey:'genreId'})
     Movie.hasMany(models.Review, {foreignKey: 'movieId'})
 
     const columnMapping = {
