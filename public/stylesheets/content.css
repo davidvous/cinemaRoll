@@ -1,7 +1,7 @@
 .mainContentContainer {
   width: 100%;
   text-align: center;
-  padding-bottom: 25px;
+  display: grid;
 }
 
 .mainContent {
@@ -12,7 +12,6 @@
 }
 
 .mainContentFloat {
-    float: left;
     width: 960px;
     margin-top: 15px;
     margin-left: 5px;
@@ -38,6 +37,10 @@
     width: 100%;
 }
 
+.movieTitleContainer {
+    text-align: center;
+}
+
 .col {
     float: left;
     margin: 0px 20px 10px 0px;
@@ -55,13 +58,44 @@
     margin: 0px 0px 0px 8px;
 }
 
+.reviewContent {
+    margin: 0px auto;
+    text-align: left;
+    width: 970px;
+    background: #FFF;
+}
+
 .smallHeadingContainer {
     height: 28px;
-    margin-top: 10px;
+    margin: 10px 0px 5px 0px;
 }
 
 .smallHeading {
     border-bottom: 1px solid;
+}
+
+.reviewContainer {
+    display: grid;
+    grid-auto-rows: max-content;
+    grid-row-gap: 25%;
+}
+
+.reviewHeader {
+    font-size: 14px;
+}
+
+.reviewTitle {
+    font-weight: bold;
+}
+
+.reviewMeta {
+    width: 100%;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.reviewDate {
+    text-align: right;
 }
 
 h1 {

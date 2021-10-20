@@ -12,9 +12,13 @@ block content
                             p Movie Lists (add or remove)
                             p Star Ratings here
                         #metacolumn(class="col") 
-                            h1#movieTitle= movieObj.title
-                            h2#movieDate= movieObj.release_date
-                            span= movieObj.overview
+                            .movieTitleContainer
+                                h1#movieTitle= movieObj.title
+                            .smallHeadingContainer
+                                h2#movieDate= `Released: ${movieObj.release_date}`
+                            .smallHeadingContainer
+                                h2.smallHeading Overview:
+                                span= movieObj.overview
                 .rightContainer  
                     .smallHeadingContainer
                         h2.smallHeading Viewers also enjoyed 
@@ -22,7 +26,42 @@ block content
                         span Similar Movies Here?
                     .smallHeadingContainer 
                         h2.smallHeading Genres
-                    span Not exactly sure what to put in here 
-            .restOfContent  
-                span Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        
+                        p Genre 1
+                        p Genre 2
+                        p Genre 3
+                        p Genre 4
+                        p Genre 5
+        .mainContent
+            .reviewContent
+                .smallHeadingContainer 
+                    h2.smallHeading Reviews
+                .reviewContainer
+                    .reviewHeader
+                        span.reviewTitle= reviewObj.title
+                        .reviewMeta     
+                            .reviewAuthor= reviewObj.userId
+                            .reviewDate= reviewObj.reviewDate
+                        .smallHeadingContainer
+                            span= reviewObj.reviewText
+                    .reviewHeader
+                        span.reviewTitle= reviewObj.title
+                        .reviewMeta     
+                            .reviewAuthor= reviewObj.userId
+                            .reviewDate= reviewObj.reviewDate
+                        .smallHeadingContainer
+                            span= reviewObj.reviewText
+                    .reviewHeader
+                        span.reviewTitle= reviewObj.title
+                        .reviewMeta     
+                            .reviewAuthor= reviewObj.userId
+                            .reviewDate= reviewObj.reviewDate
+                        .smallHeadingContainer
+                            span= reviewObj.reviewText
+                    .reviewHeader
+                        span.reviewTitle= reviewObj.title
+                        .reviewMeta     
+                            .reviewAuthor= reviewObj.userId
+                            .reviewDate= reviewObj.reviewDate
+                        .smallHeadingContainer
+                            span= reviewObj.reviewText
+            
