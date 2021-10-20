@@ -2,6 +2,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Movie = sequelize.define('Movie',
     {
+      popularity: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+
+      },
       title: {
         type: DataTypes.STRING(300),
         allowNull: false,
@@ -14,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      posterPath:{
+        type: DataTypes.TEXT,
+        allowNull: false,
+      }
+
     }, {});
   Movie.associate = function(models) {
     // associations can be defined here

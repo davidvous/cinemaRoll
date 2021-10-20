@@ -8,6 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      popularity: {
+        type: Sequelize.DECIMAL,
+        allowNull: false,
+
+      },
       title: {
         type: Sequelize.STRING(300),
         allowNull: false,
@@ -20,6 +25,10 @@ module.exports = {
       summary: {
         type: Sequelize.TEXT,
         allowNull: false
+      },
+      posterPath:{
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
