@@ -14,6 +14,8 @@ addUserRatings = (array) => {
             movie["userId"] = Math.floor(Math.random() * (4) + 1);
             movie["rating"] = Math.floor(Math.random() * 5 + 1);
             movie["movieId"] = movie.id;
+            movie["createdAt"] = new Date();
+            movie["updatedAt"] = new Date();
         }
         filteredMovies.push(movie);
 
