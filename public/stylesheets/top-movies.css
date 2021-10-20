@@ -1,0 +1,29 @@
+#top_movies_wrapper {
+  max-width: 1000px;
+}
+
+.movie_wrapper {
+  border: 1px red solid;
+  max-width: 200px;
+};
+
+.movie_wraper > a {
+  width: 100%;
+}
+.movie_wrapper > a >  img {
+  max-width: 100%;
+  height: auto;
+}
+
+#top_movies_grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+}
+
+
+#top_movies_wrapper > h2 {
+  font-size: 25px;
+  padding-bottom: 20px;
+}

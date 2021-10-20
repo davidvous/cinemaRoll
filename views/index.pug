@@ -7,12 +7,6 @@ append head
   script(src="/javascripts/index.js" type="module" defer)
 
 block content
-  p THIS IS THE HOME PAGE
-  p it needs to have
-  ol
-    li TWO RANDOM BLURB OF TEXT (?? maybe not)
-    li TOP MOVIES SECTION
-    li GENRES SECTION (done)
-  hr
+  include includes/top-movies.pug
   include includes/genres.pug
 
