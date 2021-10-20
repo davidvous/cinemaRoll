@@ -72,9 +72,9 @@ router.post("/signup", csurfProtection, signupValidation, asyncHandler(async fun
 
     const user = await db.User.create({
       email: req.body.email,
-      first_name: req.body.firstName,
-      last_name: req.body.lastName,
-      password_encrypted: hashedPassword,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      passwordHash: hashedPassword,
     });
     loginUser(req, res, user);
     return res.redirect('/');
