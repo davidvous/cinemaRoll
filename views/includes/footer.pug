@@ -1,6 +1,6 @@
 - const david = {"name": "David Le", "mail": "none@gmail.com", "lnk": "TDB", "git": "davidvous"}
 - const ilya  = {"name": "Ilya Novikov", "mail": "ibnovikov@gmail.com", "lnk": "ilyabnovikov", "git": "ily123"}
-- const jay   = {"name": "Jay Alani Spencer", "mail": "jas0123@uah.edu", "lnk": "jay-spencer-621b44166", "git": "jas0123uah"}
+- const jay   = {"name": "Jay Alan Spencer", "mail": "jas0123@uah.edu", "lnk": "jay-spencer-621b44166", "git": "jas0123uah"}
 
 - const test = "abc"
 - const test2 = [{"a": "b"}]
@@ -16,10 +16,11 @@ footer
     each member in [david, ilya, jay]
       div.team_member
         p.names= member["name"]
-        a(href= "fdsfs"+member["git"])
-            i(class="fab fa-github-square fa-2x")
-        a(href= "fdsfs"+member["git"])
-            i(class="fab fa-linkedin fa-2x")
-        a(href= "fdsfs"+member["git"])
-            i(class="fas fa-envelope-square fa-2x")
+        div.social_media_icons
+          a(href= "https://github.com/"+member["git"])
+              i(class="fab fa-github-square fa-2x")
+          a(href= "https://www.linkedin.com/in/"+member["lnk"])
+              i(class="fab fa-linkedin fa-2x")
+          a(href= member["mail"])
+              i(class="fas fa-envelope-square fa-2x")
 
