@@ -1,6 +1,7 @@
-extends layout
+extends index.pug
 include utils.pug
-block content
+
+block genres
     div(id="container")
         h2(class="search-header" id="search-header") Search and browse movies
         input(id="search" class="search-bar" placeholder="Search for a movie.")
