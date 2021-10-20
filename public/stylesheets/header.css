@@ -62,6 +62,7 @@
 }
 
 .util_btn {
+  text-decoration: none;
   background-color: #F4F1EA;
   color: rgb(143, 67, 25);
   padding: 16px;
@@ -117,3 +118,23 @@
 .dropdown-content a:hover {background-color: #ddd}
 
 .show {display:block;}
+
+
+#dropdown_items_wrapper {
+  display: none;
+}
+
+#browse_genres__dropdown:hover > #dropdown_items_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start
+  position: absolute;
+  margin-top: 16px; /*must be the same as util_btn bottom padding*/
+}
+
+.dropdown_item {
+  padding-top: 5px;
+  text-decoration: none;
+}
+
+
