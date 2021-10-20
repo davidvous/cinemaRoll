@@ -5,16 +5,14 @@ header(class="header")
   div.header_nav
     a(class="util_btn" href="/") Home
     a(class="util_btn" href="/movies") My Movies
-  .dropdown
-    hr
-    button(onclick="dropDown()" class="dropDownLink") Browse Genres
-    div(id="dropDownLink" class="dropdown-content")
-      a(href="#") Action
-      a(href="#") Comedy
-      a(href="#") Drama
-      a(href="#") Fantasy
-      a(href="#") Horror
-      a(href="#") Mystery
+    div(id="browse_genres__dropdown" class="util_btn") Browse Genres
+      div(id="dropdown_items_wrapper")
+        a(class="dropdown_item" href="/") Action
+        a(class="dropdown_item" href="/") Comedy
+        a(class="dropdown_item" href="/") Drama
+        a(class="dropdown_item" href="/") Fantasy
+        a(class="dropdown_item" href="/") Horror
+        a(class="dropdown_item" href="/") Mystery
   .blank
   .navsearch
     div
