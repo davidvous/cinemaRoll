@@ -1,0 +1,128 @@
+* {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background: url('../assets//movie_bg.jpg');
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.errors {
+    font-size: 12px;
+    font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.signup_form {
+    background: #F4F1EA;
+    padding: 25px;
+    border-radius: 5px;
+    width: 400px;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup_form .title {
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: rgb(143, 67, 25);
+    letter-spacing: 5px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.signup_form .title a{
+    text-decoration: none;
+    color: rgb(143, 67, 25);
+    font-weight: 800;
+    font-size: 2.2rem;
+    user-select: none;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.signup_form label {
+    font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
+    color: #333;
+    font-size: 13px;
+}
+
+.form_wrap {
+    margin-top: 35px; 
+}
+
+.form_wrap .field_wrap {
+    margin-bottom: 15px;
+}
+
+.form_wrap .field_wrap:last-child{
+    margin-bottom: 0px;
+}
+
+.form_wrap .field_wrap label {
+    display: block;
+    margin-bottom: 3px;
+}
+
+.form_wrap .field_group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form_wrap .field_group input {
+    width: 165px;
+}
+
+.form_wrap input {
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #9597a6;
+    padding: 10px;
+    outline: none;
+}
+
+.form_wrap input:focus {
+    border: 2px solid #F2DAA0;
+}
+
+.submit_button {
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    cursor: pointer;
+    outline: none;
+    background: #BDBAB5;
+}
+
+.submit_button:hover {
+    background: #F2DAA0;
+}
+
+.link {
+    text-align: center;
+}
+
+.link a {
+    text-decoration: none;
+    color: rgb(143, 67, 25);
+    user-select: none;
+    letter-spacing: 0;
+    text-transform: none;
+    font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 14px;
+}
+

@@ -98,7 +98,7 @@ const loginValidation = [
 router.post('/login', csurfProtection, loginValidation, asyncHandler (async (req, res, next) =>{
 
   const errors = validationResult(req).errors.map(e => e.msg);
-  console.log(errors)
+
   if (errors.length > 0) {
     return res.render('login', {errors, csrfToken: req.csrfToken()});}
   else {
@@ -106,7 +106,7 @@ router.post('/login', csurfProtection, loginValidation, asyncHandler (async (req
     if (user) {
       const isPasswords = await bcrypt.compare(
         req.body.password,
-        user.password_encrypted.toString()
+        user.passwordHash.toString(),
       );
       if (isPasswords) {
         loginUser(req, res, user);
