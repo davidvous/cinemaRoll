@@ -1,0 +1,91 @@
+
+#more-of-genre-1{
+    grid-area: more-of-genre-1;
+}
+#more-of-genre-2{
+    grid-area: more-of-genre-2;
+}
+#more-of-genre-3{
+    grid-area: more-of-genre-3;
+}
+#more-of-genre-4{
+    grid-area: more-of-genre-4;
+}
+#genre-container-1 {
+    display:flex;
+    flex-direction: row;
+}
+#movies-row-1-item{
+    
+    inline-size: 25em;
+    margin-right:-10em;
+}
+img{
+    inline-size: 15rem;
+    object-fit: contain;
+    
+
+}
+
+img{
+}
+#genre-2-name {
+    grid-area: genre-2-name;
+}
+#genre-3-name {
+    grid-area: genre-3-name;
+}
+#genre-4-name {
+    grid-area: genre-4-name;
+}
+#movie-row-1-item-1{
+    grid-area: movie-row-1-item-1;
+}
+#movie-row-1-item-2{
+    grid-area: movie-row-1-item-2;
+}
+#movie-row-1-item-3{
+    grid-area: movie-row-1-item-3;
+}
+#movie-row-1-item-4{
+    grid-area: movie-row-1-item-4;
+}
+
+#movie-row-2-item-1{
+    grid-area: movie-row-2-item-1;
+}
+#movie-row-2-item-2{
+    grid-area: movie-row-2-item-2;
+}
+#movie-row-2-item-3{
+    grid-area: movie-row-2-item-3;
+}
+#movie-row-2-item-4{
+    grid-area: movie-row-2-item-4;
+}
+
+#movie-row-3-item-1{
+    grid-area: movie-row-3-item-1;
+}
+#movie-row-3-item-2{
+    grid-area: movie-row-3-item-2;
+}
+#movie-row-3-item-3{
+    grid-area: movie-row-3-item-3;
+}
+#movie-row-3-item-4{
+    grid-area: movie-row-3-item-4;
+}
+
+#movie-row-4-item-1{
+    grid-area: movie-row-4-item-1;
+}
+#movie-row-4-item-2{
+    grid-area: movie-row-4-item-2;
+}
+#movie-row-4-item-3{
+    grid-area: movie-row-4-item-3;
+}
+#movie-row-4-item-4{
+    grid-area: movie-row-4-item-4;
+}

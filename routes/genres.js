@@ -36,19 +36,22 @@ router.get('/:genre([A-Za-z]+)', asyncHandler( async (req, res) => {
   console.log(reqsGenreId.id)
   reqsGenreId = reqsGenreId
 
-const actionMovies = await db.genresToMovieJoinTable.findAll({ order: [db.Sequelize.fn('RANDOM')], limit: 5,
-where:{
-  genreId: reqsGenreId 
-},
-include: ['Movies'] })
-console.log(actionMovies)
+  const movies = await db.Movie.findAll({ order: [db.Sequelize.fn('RANDOM')], limit: 4,
+include: ['Genres']})
+
+// const actionMovies = await db.genresToMovieJoinTable.findAll({ order: [db.Sequelize.fn('RANDOM')], limit: 5,
+// where:{
+//   genreId: reqsGenreId 
+// },
+// include: ['Movies'] })
+console.log(movies)
+res.render('listGenres', {movies} );
 //   const moviesFromRequestedGenre = await db.Movies.findAll({ order: [db.Sequelize.fn('RANDOM')], limit: 5,
 //   where:  {
 //     Genres: {[sequelize.contains]:reqsGenreId}
 //   },
 // include: ['Genres']})
 //   console.log(moviesFromRequestedGenre)
-//   res.render('listGenres');
 // const Genres
 
 }));

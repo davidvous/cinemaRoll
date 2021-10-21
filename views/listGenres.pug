@@ -4,13 +4,15 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet" href="/stylesheets/genres.css")
         title Document
     body 
-   div(id= )
-
-mixin blockList(arrayOfGenres, index)
-    div(id= ${movie.name}+index)
-        each genre in arrayOfGenres
-          a(href=`/movies/${movie.id}/`)
-            img(src=${movie.posterPath})
-          br
+      div(id="movie-container")
+        h3(id="genre-1-name") Heading
+        div(id="genre-container-1")
+          each movie, index in movies
+            div(id=`movies-row-1-item`)
+              a(href=`/movies/${movie.id}/` id="ok")
+                img(src=`${movie.posterPath}`)
+      h3(id="more-of-genre-1") Footer
+        
