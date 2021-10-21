@@ -15,6 +15,26 @@
     margin: 0px 0px 0px 8px;
 }
 
-.smallHeadingContainer a {
+a {
     text-decoration: none;
+}
+
+.genre-heading {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-right: 8rem;
+    user-select: none;
+}
+
+.line {
+    flex: 1;
+    background-color: #333;
+    height: 0.1rem;
+    width: 60%;
+    border-radius: 100px;
+    margin-left: 5px;
+    margin-right: 5px;
 }

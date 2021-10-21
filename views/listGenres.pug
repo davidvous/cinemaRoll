@@ -3,40 +3,213 @@ append head
     link(rel="stylesheet" href="/stylesheets/genres.css")
 
 block content
-    .mainContentContainer 
+    .mainContentContainer
         .mainContent 
             .mainContentFloat 
                 .leftContainer 
                     #topcolumn(class="col")
+                      if !validGenre
                         .movies-container
                           .genre-heading 
-                            h3.genre-name Action Movies
+                            p.genre-name= `Action`
+                            .line 
+                            .p
+                              a(href="/genres/Action") View All
                           .genre-container
-                            each movie, index in movies
+                            each act_movie in actMovies
                               .movie-item
-                                a(href=`/movies/${movie.id}/` id="ok")
-                                  img(src=`${movie.posterPath}`)
+                                a(href=`/genres/${act_movie.id}/`)
+                                  img(src=`${act_movie.posterPath}`)
                           .genre-heading 
-                            h3.genre-name Comedy Movies
+                            p.genre-name= `Adventure`
+                            .line 
+                            .p
+                              a(href="/genres/Adventure") View All
                           .genre-container
-                            each movie, index in movies
+                            each adv_movie in advMovies
                               .movie-item
-                                a(href=`/movies/${movie.id}/` id="ok")
-                                  img(src=`${movie.posterPath}`)
+                                a(href=`/genres/${adv_movie.id}/`)
+                                  img(src=`${adv_movie.posterPath}`)
                           .genre-heading 
-                            h3.genre-name Comedy Movies
+                            p.genre-name= `Animation`
+                            .line 
+                            .p
+                              a(href="/genres/Animation") View All
                           .genre-container
-                            each movie, index in movies
+                            each ani_movie in aniMovies
                               .movie-item
-                                a(href=`/movies/${movie.id}/` id="ok")
-                                  img(src=`${movie.posterPath}`)
+                                a(href=`/genres/${ani_movie.id}/`)
+                                  img(src=`${ani_movie.posterPath}`)
                           .genre-heading 
-                            h3.genre-name Comedy Movies
+                            p.genre-name= `Comedy`
+                            .line 
+                            .p
+                              a(href="/genres/Action") View All
                           .genre-container
-                            each movie, index in movies
+                            each com_movie in comMovies
                               .movie-item
-                                a(href=`/movies/${movie.id}/` id="ok")
-                                  img(src=`${movie.posterPath}`)
+                                a(href=`/genres/${com_movie.id}/`)
+                                  img(src=`${com_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Crime`
+                            .line 
+                            .p
+                              a(href="/genres/Crime") View All
+                          .genre-container
+                            each cri_movie in criMovies
+                              .movie-item
+                                a(href=`/genres/${cri_movie.id}/`)
+                                  img(src=`${cri_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Documentary`
+                            .line 
+                            .p
+                              a(href="/genres/Documentary") View All
+                          .genre-container
+                            each doc_movie in docMovies
+                              .movie-item
+                                a(href=`/genres/${doc_movie.id}/`)
+                                  img(src=`${doc_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Drama`
+                            .line 
+                            .p
+                              a(href="/genres/Drama") View All
+                          .genre-container
+                            each dra_movie in draMovies
+                              .movie-item
+                                a(href=`/genres/${dra_movie.id}/`)
+                                  img(src=`${dra_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Family`
+                            .line 
+                            .p
+                              a(href="/genres/Family") View All
+                          .genre-container
+                            each fam_movie in famMovies
+                              .movie-item
+                                a(href=`/genres/${fam_movie.id}/`)
+                                  img(src=`${fam_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Fantasy`
+                            .line 
+                            .p
+                              a(href="/genres/Fantasy") View All
+                          .genre-container
+                            each fan_movie in fanMovies
+                              .movie-item
+                                a(href=`/genres/${fan_movie.id}/`)
+                                  img(src=`${fan_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `History`
+                            .line 
+                            .p
+                              a(href="/genres/History") View All
+                          .genre-container
+                            each his_movie in hisMovies
+                              .movie-item
+                                a(href=`/genres/${his_movie.id}/`)
+                                  img(src=`${his_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Horror`
+                            .line 
+                            .p
+                              a(href="/genres/Horror") View All
+                          .genre-container
+                            each hor_movie in horMovies
+                              .movie-item
+                                a(href=`/genres/${hor_movie.id}/`)
+                                  img(src=`${hor_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Music`
+                            .line 
+                            .p
+                              a(href="/genres/Music") View All
+                          .genre-container
+                            each mus_movie in musMovies
+                              .movie-item
+                                a(href=`/genres/${mus_movie.id}/`)
+                                  img(src=`${mus_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Mystery`
+                            .line 
+                            .p
+                              a(href="/genres/Mystery") View All
+                          .genre-container
+                            each mys_movie in mysMovies
+                              .movie-item
+                                a(href=`/genres/${mys_movie.id}/`)
+                                  img(src=`${mys_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Romance`
+                            .line 
+                            .p
+                              a(href="/genres/Romance") View All
+                          .genre-container
+                            each rom_movie in romMovies
+                              .movie-item
+                                a(href=`/genres/${rom_movie.id}/`)
+                                  img(src=`${rom_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Science Fiction`
+                            .line 
+                            .p
+                              a(href="/genres/Science Fiction") View All
+                          .genre-container
+                            each cri_movie in sciMovies
+                              .movie-item
+                                a(href=`/genres/${cri_movie.id}/`)
+                                  img(src=`${cri_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `TV Movie`
+                            .line 
+                            .p
+                              a(href="/genres/TV Movie") View All
+                          .genre-container
+                            each tv_movie in tvMovies
+                              .movie-item
+                                a(href=`/genres/${tv_movie.id}/`)
+                                  img(src=`${tv_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Thriller`
+                            .line 
+                            .p
+                              a(href="/genres/Thriller") View All
+                          .genre-container
+                            each thr_movie in thrMovies
+                              .movie-item
+                                a(href=`/genres/${thr_movie.id}/`)
+                                  img(src=`${thr_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `War`
+                            .line 
+                            .p
+                              a(href="/genres/War") View All
+                          .genre-container
+                            each war_movie in warMovies
+                              .movie-item
+                                a(href=`/genres/${war_movie.id}/`)
+                                  img(src=`${war_movie.posterPath}`)
+                          .genre-heading 
+                            p.genre-name= `Western`
+                            .line 
+                            .p
+                              a(href="/genres/Western") View All
+                          .genre-container
+                            each wes_movie in wesMovies
+                              .movie-item
+                                a(href=`/genres/${wes_movie.id}/`)
+                                  img(src=`${wes_movie.posterPath}`)
+                      else
+                        .movies-container
+                          .genre-heading 
+                            p.genre-name= genreTitle
+                            .line
+                          .genre-container
+                            each genreMovie,index in genreMovies
+                              .movie-item
+                                a(href=`/movies/${genreMovie.id}`)
+                                  img(src=`${genreMovie.posterPath}`)                   
                 .rightContainerGrid  
                     .smallHeadingContainer 
                           h2.smallHeading Genres
