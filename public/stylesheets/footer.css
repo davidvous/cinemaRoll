@@ -1,4 +1,16 @@
 footer {
+  border-top: 1px gray solid;
+  background-color: #f9f8f4;
+  display: flex;
+  justify-content: center;
+}
+
+#footer_content {
+  max-width: 1000px;
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 18px;
+
+  padding: 30px 0;
 
   display: grid;
   grid-template-areas:
@@ -6,20 +18,13 @@ footer {
     "c d";
   align-items: center;
   justify-content: space-evenly;
-
-  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  line-height: 18px;
-
-  padding: 30px 0;
-  border-top: 1px gray solid;
-  background-color: #f9f8f4;
-
 }
 
 #source_code_label {
   grid-area: a;
   align-self: center;
   justify-self: center;
+  font-size: 18px;
 }
 #repo_information {
   grid-area: c;
@@ -31,6 +36,7 @@ footer {
   grid-area: b;
   align-self: center;
   justify-self: center;
+  font-size: 18px;
 }
 
 #contact_info_wrapper {
