@@ -6,3 +6,9 @@ body
     each movie in actionMovies
         img (src= ${movie.posterPath} )
     
+mixin blockList(arrayOfGenres, index)
+    div(id=${movie.name}+index)
+        each genre in arrayOfGenres
+          a(href=`/movies/${movie.id}/`)
+            img(src=${movie.posterPath})
+          br
