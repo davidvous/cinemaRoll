@@ -18,10 +18,10 @@ body
                         input(type="hidden", name="_csrf" value=csrfToken)
                         div(class="form-field field_wrap")
                             label(for="firstName") First Name
-                            input(type="text", name="firstName" id="firstName" value=user.first_name placeholder="Enter first name here")
+                            input(type="text", name="firstName" id="firstName" value=user.firstName placeholder="Enter first name here")
                         div(class="form-field field_wrap")
                             label(for="lastName") Last Name
-                            input(type="text", name="lastName" id="lastName" value=user.last_name placeholder="Enter last name here")
+                            input(type="text", name="lastName" id="lastName" value=user.lastName placeholder="Enter last name here")
                     div(class="form-field field_wrap")
                         label(for="email") E-mail
                         input(type="email", name="email" id="email" value=user.email placeholder="Enter your E-mail address here.")

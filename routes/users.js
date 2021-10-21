@@ -57,25 +57,38 @@ router.post("/signup", csurfProtection, signupValidation, asyncHandler(async fun
 
   const errors = validationResult(req).errors.map(e => e.msg);
 
-  if (errors.length > 0) {
-    const user = db.User.build({
+  // create user object with fields to re-render if there are errors
+  const prefillUser = db.User.build({
       email: req.body.email,
-      first_name: req.body.firstName,
-      last_name: req.body.lastName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
     });
-    return res.render('signup', { user, errors, csrfToken: req.csrfToken()});
+
+  if (errors.length > 0) {
+    return res.render('signup', { user: prefillUser, errors, csrfToken: req.csrfToken()});
   } else {
+
+    // check if the e-mail is available
+    emailPresent = await db.User.count( { where: { email: req.body.email } })
+    if (emailPresent) {
+      errors.push("A user with this e-mail already exists.")
+      return res.render('signup', { user: prefillUser, errors, csrfToken: req.csrfToken()});
+    }
 
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
+    console.log("BEFORE: I got to this line with no error.");
     const user = await db.User.create({
       email: req.body.email,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       passwordHash: hashedPassword,
     });
+    console.log("AFTER: I got to this line with no error.");
+    console.log(user);
+    console.log("I got to this line with no error.");
     loginUser(req, res, user);
     return res.redirect('/');
   }
