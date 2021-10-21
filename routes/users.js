@@ -104,10 +104,9 @@ router.post('/login', csurfProtection, loginValidation, asyncHandler (async (req
   else {
     const user = await db.User.findOne({ where: { email: req.body.email } });
     if (user) {
-      console.log(user.password_encrypted)
       const isPasswords = await bcrypt.compare(
         req.body.password,
-        user.password_encrypted.toString(),
+        user.passwordHash.toString(),
       );
       if (isPasswords) {
         loginUser(req, res, user);
