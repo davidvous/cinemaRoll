@@ -108,22 +108,23 @@
 }
 
 #dropdown_content {
+
   display: none;
+
   position: absolute;
   z-index: 1;
-  /* margin-top: 16px; /*must be the same as util_btn bottom padding*/
   flex-direction: column;
-  align-items: flex-start
+  align-items: flex-start;
   justify-content: flex-start;
   color: black;
   width: 100%;
   padding: 10px 10px 0 10px;
-  background-color: white;
 
+  background-color: white;
+  box-shadow: 2px 2px 3px gray;
   /* https://stackoverflow.com/questions/5790615/can-you-make-an-invisible-border */
   top: 49px; /* ... -_-7 */
   border-top: 1px solid transparent;
-
 
 }
 
@@ -134,6 +135,10 @@
 .dropdown_item {
   text-decoration: none;
   margin-bottom: 10px;
+}
+
+a.dropdown_item:hover {
+ text-decoration: underline;
 }
 
 
