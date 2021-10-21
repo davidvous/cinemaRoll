@@ -7,6 +7,8 @@ router.get('/', asyncHandler( async (req, res, next) => {
   const actionMovies = await db.Movie.findAll({ order: [db.Sequelize.fn('RANDOM')], limit: 5,
     include: ['Genres']});
 
+  const genresList = await db.Genre.findAll();
+
   // const comedyMovies = await db.Movie.findAll({ order: Sequelize.literal('rand()'), limit: 5,
   // where: { genreId: 4} })
 
@@ -18,8 +20,8 @@ router.get('/', asyncHandler( async (req, res, next) => {
 
   //res.render("temp", {actionMovies, comedyMovies, crimeMovies, romanceMovies}) 
 
-  console.log(actionMovies);
-  res.render("listGenres", {movies: actionMovies});  
+  console.log(genresList);
+  res.render("listGenres", {movies: actionMovies, genresList});  
 }));
 
 router.get('/:genre([A-Za-z]+)', asyncHandler( async (req, res) => {

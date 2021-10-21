@@ -39,11 +39,10 @@ block content
                                   img(src=`${movie.posterPath}`)
                 .rightContainerGrid  
                     .smallHeadingContainer 
-                        h2.smallHeading Genres
-                        p Genre 1
-                        p Genre 2
-                        p Genre 3
-                        p Genre 4
-                        p Genre 5
-
+                          h2.smallHeading Genres
+                          p
+                            a(href="/genres") All
+                          each genre in genresList 
+                            p
+                              a(href=`/genres/${genre.name}`)= genre.name
         
