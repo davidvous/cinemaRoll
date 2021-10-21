@@ -1,18 +1,49 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(http-equiv="X-UA-Compatible", content="IE=edge")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet" href="/stylesheets/genres.css")
-        title Document
-    body 
-      div(id="movie-container")
-        h3(id="genre-1-name") Heading
-        div(id="genre-container-1")
-          each movie, index in movies
-            div(id=`movies-row-1-item`)
-              a(href=`/movies/${movie.id}/` id="ok")
-                img(src=`${movie.posterPath}`)
-      h3(id="more-of-genre-1") Footer
+extends layout
+append head
+    link(rel="stylesheet" href="/stylesheets/genres.css")
+
+block content
+    .mainContentContainer 
+        .mainContent 
+            .mainContentFloat 
+                .leftContainer 
+                    #topcolumn(class="col")
+                        .movies-container
+                          .genre-heading 
+                            h3.genre-name Action Movies
+                          .genre-container
+                            each movie, index in movies
+                              .movie-item
+                                a(href=`/movies/${movie.id}/` id="ok")
+                                  img(src=`${movie.posterPath}`)
+                          .genre-heading 
+                            h3.genre-name Comedy Movies
+                          .genre-container
+                            each movie, index in movies
+                              .movie-item
+                                a(href=`/movies/${movie.id}/` id="ok")
+                                  img(src=`${movie.posterPath}`)
+                          .genre-heading 
+                            h3.genre-name Comedy Movies
+                          .genre-container
+                            each movie, index in movies
+                              .movie-item
+                                a(href=`/movies/${movie.id}/` id="ok")
+                                  img(src=`${movie.posterPath}`)
+                          .genre-heading 
+                            h3.genre-name Comedy Movies
+                          .genre-container
+                            each movie, index in movies
+                              .movie-item
+                                a(href=`/movies/${movie.id}/` id="ok")
+                                  img(src=`${movie.posterPath}`)
+                .rightContainerGrid  
+                    .smallHeadingContainer 
+                        h2.smallHeading Genres
+                        p Genre 1
+                        p Genre 2
+                        p Genre 3
+                        p Genre 4
+                        p Genre 5
+
         

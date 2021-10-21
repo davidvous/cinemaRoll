@@ -1,0 +1,33 @@
+extends layout
+include utils.pug
+block content
+    .mainContentContainer 
+        .mainContent 
+            .mainContentFloat 
+                .leftContainer 
+                    #topcolumn(class="col")
+                        #imagecolumn(class="col") 
+                        #metacolumn(class="col") 
+                            .movieTitleContainer
+                                h1
+                            .smallHeadingContainer
+                                h2#m
+                            .smallHeadingContainer
+                                h2.smallHeading Currently Watching:
+                                span
+                            smallHeadingContainer
+                                h2.smallHeading Want to Watch:
+                                span
+                            smallHeadingContainer
+                                h2.smallHeading Your Reviews:
+                                span
+                .rightContainer  
+                    .smallHeadingContainer
+                        h2.smallHeading Edit/Add List
+                    .smallHeadingContainer 
+                        h2.smallHeading Movie Lists
+                        p All ()
+                        p Currently Watching
+                        p Want to watch
+                        p Custom 1
+                        p Custom 2
