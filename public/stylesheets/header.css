@@ -78,7 +78,6 @@
   outline: none;
   cursor: pointer;
 }
-
 .util_btn {
   text-decoration: none;
   background-color: #F4F1EA;
@@ -94,7 +93,7 @@
 }
 
 .util_btn:hover, .util_btn:focus {
-  background-color: rgb(143, 67, 25);
+  background-color: #382110;
   color: #FFF;
 }
 
