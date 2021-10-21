@@ -2,16 +2,14 @@ append head
   link(rel="stylesheet" href="/stylesheets/top-movies.css")
 
 
-- const movies_ = ["blah", "blah", "blah", "blah", "blah"]
-- const movies = [...movies_, ...movies_]
 
 div#top_movies_wrapper
   h2 Top 10 movies this year
   div#top_movies_grid
-    each movie in movies
+    each movie in topMovies
       div.movie_wrapper
-        a(href="/")
+        a(href= "/movies/"+movie.id)
           img(
-            src="https://image.tmdb.org/t/p/w500//5VJSIAhSn4qUsg5nOj4MhQhF5wQ.jpg",
-            alt="movie poster for movie XYZ"
+            src= movie.posterPath
+            alt= "movie poster for " + movie.title
           )
