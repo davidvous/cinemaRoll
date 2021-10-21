@@ -6,4 +6,11 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Document
     body 
-    h1 HIIIIIIIIIIIIII
+   div(id= )
+
+mixin blockList(arrayOfGenres, index)
+    div(id= ${movie.name}+index)
+        each genre in arrayOfGenres
+          a(href=`/movies/${movie.id}/`)
+            img(src=${movie.posterPath})
+          br
