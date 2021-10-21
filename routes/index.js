@@ -1,16 +1,18 @@
 const express = require('express');
+
+const db = require("../db/models");
+const { asyncHandler } = require("./utils");
+
 const router = express.Router();
 
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', {
-    genres: [
-      ['genre1', 'genre2', 'genre3', 'genre4', 'genre5'],
-      ['genre1', 'genre2', 'genre3', 'genre4', 'genre5'],
-      ['genre1', 'genre2', 'genre3', 'genre4', 'genre5'],
-      ['genre1', 'genre2', 'genre3']
-    ]
-  });
-});
+router.get('/', asyncHandler(async (req, res) => {
+  // the template expects sub-arrays of size 5
+  const genres_ = await db.Genre.findAll().map(g => g.dataValues);
+  const genres = [];
+  while(genres_.length) genres.push(genres_.splice(0, 5));
+  res.render('index', { genres } );
+}));
 
 module.exports = router;
