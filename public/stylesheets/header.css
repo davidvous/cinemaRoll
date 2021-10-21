@@ -2,8 +2,17 @@
   display: flex;
   box-sizing: border-box;
   height: 50px;
-  margin: 0 auto;
   background: #F4F1EA;
+  border-bottom: 1px gray solid;
+  display: flex;
+  justify-content: center;
+}
+
+.header_content {
+  border: 2px blue dotted;
+  max-width: 1250px;
+  display: flex;
+  justify-content: center;
 }
 
 .header_nav {
@@ -75,10 +84,14 @@
   text-decoration: none;
   background-color: #F4F1EA;
   color: rgb(143, 67, 25);
-  padding: 16px;
+  padding: 0px 16px;
   font-size: 16px;
+  height: 100%;
   border: none;
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
 }
 
 .util_btn:hover, .util_btn:focus {
