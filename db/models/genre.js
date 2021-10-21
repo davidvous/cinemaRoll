@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
 
     const columnMapping = {
-      through: 'MoviesToGenresJoinTables',
+      through: 'genresToMovieJoinTable',
       otherKey: 'movieId',
       foreignKey: 'genreId'
     }
