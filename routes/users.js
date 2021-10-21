@@ -98,15 +98,16 @@ const loginValidation = [
 router.post('/login', csurfProtection, loginValidation, asyncHandler (async (req, res, next) =>{
 
   const errors = validationResult(req).errors.map(e => e.msg);
-  console.log(errors)
+
   if (errors.length > 0) {
     return res.render('login', {errors, csrfToken: req.csrfToken()});}
   else {
     const user = await db.User.findOne({ where: { email: req.body.email } });
     if (user) {
+      console.log(user.password_encrypted)
       const isPasswords = await bcrypt.compare(
         req.body.password,
-        user.password_encrypted.toString()
+        user.password_encrypted.toString(),
       );
       if (isPasswords) {
         loginUser(req, res, user);

@@ -18,20 +18,20 @@ body
                         input(type="hidden", name="_csrf" value=csrfToken)
                         div(class="form-field field_wrap")
                             label(for="firstName") First Name
-                            input(type="text", name="firstName" id="firstName" value=user.first_name)
+                            input(type="text", name="firstName" id="firstName" value=user.first_name placeholder="Enter first name here")
                         div(class="form-field field_wrap")
                             label(for="lastName") Last Name
-                            input(type="text", name="lastName" id="lastName" value=user.last_name)
+                            input(type="text", name="lastName" id="lastName" value=user.last_name placeholder="Enter last name here")
                     div(class="form-field field_wrap")
                         label(for="email") E-mail
-                        input(type="email", name="email" id="email" value=user.email)
+                        input(type="email", name="email" id="email" value=user.email placeholder="Enter your E-mail address here.")
                     .field_group
                         div(class="form-field field_wrap")
                             label(for="password") Password
-                            input(type="password", name="password" id="password")
+                            input(type="password", name="password" id="password" placeholder="Enter a password here.")
                         div(class="form-field field_wrap")
                             label(for="confirmPassword") Confirm Password
-                            input(type="password", name="confirmPassword" id="confirmPassword")
+                            input(type="password", name="confirmPassword" id="confirmPassword" placeholder="Please confirm your password.")
                     button(type="submit" class="submit_button") Sign up
                     .link
                         br
