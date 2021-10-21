@@ -9,7 +9,6 @@
 }
 
 .header_content {
-  border: 2px blue dotted;
   max-width: 1250px;
   display: flex;
   justify-content: center;
@@ -115,48 +114,41 @@
   color: #FFF;
 }
 
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
+/* 000000000000000000 */
+#browse_genres_dropdown {
+  min-height: 100%;
 
-.dropdown-content {
-  margin: 0px 0px 0px 0px;
-  display: none;
-  position: absolute;
-  background-color: #FFF;
-  min-width: 150px;
-  box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {background-color: #ddd}
-
-.show {display:block;}
-
-
-#dropdown_items_wrapper {
-  display: none;
-}
-
-#browse_genres__dropdown:hover > #dropdown_items_wrapper {
   display: flex;
   flex-direction: column;
-  align-items: flex-start
+  justify-content: center;
+
+  position: relative;
+}
+
+#dropdown_content {
+  display: none;
   position: absolute;
-  margin-top: 16px; /*must be the same as util_btn bottom padding*/
+  z-index: 1;
+  /* margin-top: 16px; /*must be the same as util_btn bottom padding*/
+  flex-direction: column;
+  align-items: flex-start
+  justify-content: flex-start;
+  color: black;
+  width: 100%;
+
+  background-color: yellow;
+
+  /* https://stackoverflow.com/questions/5790615/can-you-make-an-invisible-border */
+  top: 49px; /* ... -_-7 */
+  border-top: 1px solid transparent;
+
+}
+
+#dropdown_content:hover, #browse_genres_dropdown:hover #dropdown_content{
+  display: flex;
 }
 
 .dropdown_item {
-  padding-top: 5px;
   text-decoration: none;
 }
 
