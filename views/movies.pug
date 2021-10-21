@@ -37,31 +37,17 @@ block content
                 .smallHeadingContainer 
                     h2.smallHeading Reviews
                 .reviewContainer
-                    .reviewHeader
-                        span.reviewTitle= reviewObj.title
+                .reviewHeader
+                if reviews.length
+                    each singleReview in reviews
+                        span.reviewTitle= singleReview.title
                         .reviewMeta     
-                            .reviewAuthor= reviewObj.userId
-                            .reviewDate= reviewObj.reviewDate
+                            .reviewAuthor= singleReview.userId
+                            .reviewDate= singleReview.createdAt
                         .smallHeadingContainer
-                            span= reviewObj.reviewText
-                    .reviewHeader
-                        span.reviewTitle= reviewObj.title
-                        .reviewMeta     
-                            .reviewAuthor= reviewObj.userId
-                            .reviewDate= reviewObj.reviewDate
-                        .smallHeadingContainer
-                            span= reviewObj.reviewText
-                    .reviewHeader
-                        span.reviewTitle= reviewObj.title
-                        .reviewMeta     
-                            .reviewAuthor= reviewObj.userId
-                            .reviewDate= reviewObj.reviewDate
-                        .smallHeadingContainer
-                            span= reviewObj.reviewText
-                    .reviewHeader
-                        span.reviewTitle= reviewObj.title
-                        .reviewMeta     
-                            .reviewAuthor= reviewObj.userId
-                            .reviewDate= reviewObj.reviewDate
-                        .smallHeadingContainer
-                            span= reviewObj.reviewText
+                                span= singleReview.reviewText
+                    p
+                else
+                    span.reviewTitle Submit The First Review!
+                    p 
+                    p
