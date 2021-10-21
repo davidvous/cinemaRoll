@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {   
-      return queryInterface.bulkInsert('ListToMoviesJoinTable', [
+      return queryInterface.bulkInsert('ListToMoviesJoinTables', [
         {'id':1,
       'movieId':2,
       'movieListId':3,
@@ -96,7 +96,7 @@ module.exports = {
       Return a promise to correctly handle asynchronicity.
 
       Example:
-      return queryInterface.bulkDelete('People', null, {});
-    */
+      */
+   return queryInterface.bulkDelete("ListToMoviesJoinTables", null, {});
   }
 };
