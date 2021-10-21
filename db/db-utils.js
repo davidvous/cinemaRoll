@@ -41,8 +41,33 @@ const movies = moviesTMDB.map(movie => {
 });
 
 
+// overly gratuitous movies to be removed from the set before seeding
+const banList = [
+  719088,
+  81774,
+  440249,
+  381749,
+  337167,
+  441168,
+  873491,
+  197158,
+  20222,
+  61927,
+  84354,
+  766680,
+  818659,
+  351819,
+  360789,
+  451156,
+  24593,
+  487297,
+  106758
+]
+
+
 module.exports = {
   genreNames,
-  movies
+  movies,
+  banList
 }
 
