@@ -140,7 +140,14 @@ router.post('/logout', asyncHandler(async (req, res, next) => {
   return res.redirect("/");
 }))
 
+router.get('/:id(\\d+)/movielists/:id(\\d+)', asyncHandler( async (req, res) => {
 
+}));
+router.patch('/:id(\\d+)/movielists/:id(\\d+)/edit', asyncHandler( async (req, res) => {
 
+}));
+router.delete('/:id(\\d+)/movielists/:id(\\d+)/delete', asyncHandler( async (req, res) => {
+
+}));
 
 module.exports = router;
