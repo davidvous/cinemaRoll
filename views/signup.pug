@@ -1,26 +1,38 @@
-extends layout.pug
 
 include includes/utils.pug
+append head
+  link(rel="stylesheet" href="/stylesheets/signup.css")
 
-block content
-    h1 This is a user registration form.
-    +validationErrorSummary(errors)
-    p
-    form(action="/users/signup" method="post")
-        input(type="hidden", name="_csrf" value=csrfToken)
-        div(class="form-field")
-            label(for="firstName") First Name
-            input(type="text", name="firstName" id="firstName" value=user.first_name)
-        div(class="form-field")
-            label(for="lastName") Last Name
-            input(type="text", name="lastName" id="lastName" value=user.last_name placeholder="Enter your last name here.")
-        div(class="form-field")
-            label(for="email") E-mail
-            input(type="email", name="email" id="email" value=user.email placeholder="Enter your E-mail address here.")
-        div(class="form-field")
-            label(for="password") Password
-            input(type="password", name="password" id="password" placeholder="Enter a password here.")
-        div(class="form-field")
-            label(for="confirmPassword") Confirm Password
-            input(type="password", name="confirmPassword" id="confirmPassword" placeholder="Please confirm your password.")
-        button(type="submit") Sign up
+body 
+    .wrapper 
+        .signup_form
+            .title 
+                a(href="/") cinemaRoll
+                span Sign Up
+            .errors
+                br
+                +validationErrorSummary(errors)
+            form(action="/users/signup" method="post")
+                .form_wrap
+                    .field_group
+                        input(type="hidden", name="_csrf" value=csrfToken)
+                        div(class="form-field field_wrap")
+                            label(for="firstName") First Name
+                            input(type="text", name="firstName" id="firstName" value=user.first_name)
+                        div(class="form-field field_wrap")
+                            label(for="lastName") Last Name
+                            input(type="text", name="lastName" id="lastName" value=user.last_name)
+                    div(class="form-field field_wrap")
+                        label(for="email") E-mail
+                        input(type="email", name="email" id="email" value=user.email)
+                    .field_group
+                        div(class="form-field field_wrap")
+                            label(for="password") Password
+                            input(type="password", name="password" id="password")
+                        div(class="form-field field_wrap")
+                            label(for="confirmPassword") Confirm Password
+                            input(type="password", name="confirmPassword" id="confirmPassword")
+                    button(type="submit" class="submit_button") Sign up
+                    .link
+                        br
+                        a(href="/users/login") Already have an account?

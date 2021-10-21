@@ -1,17 +1,29 @@
-extends layout.pug
-
 include includes/utils.pug
+append head
+  link(rel="stylesheet" href="/stylesheets/signup.css")
 
-block content
-    h1 This is a user login form.
-    p
-    +validationErrorSummary(errors)
-    form(action="/users/login" method="post")
-        input(type="hidden", name="_csrf" value=csrfToken)
-        div(class="form-field")
-            label(for="email") E-mail
-            input(type="email", name="email" id="email" placeholder="Enter your E-mail address here.")
-        div(class="form-field")
-            label(for="password") Password
-            input(type="password", name="password" id="password" placeholder="Enter a password here.")
-        button(type="submit") Login
+body 
+    .wrapper 
+        .signup_form
+            .title 
+                a(href="/") cinemaRoll
+                span Login
+            .errors
+                br
+                +validationErrorSummary(errors)
+            form(action="/users/login" method="post")
+                .form_wrap
+                    .field_group
+                    input(type="hidden", name="_csrf" value=csrfToken)
+                    div(class="form-field field_wrap")
+                        label(for="email") E-mail
+                        input(type="email", name="email" id="email" placeholder="Enter your E-mail address here.")
+                    .field_group
+                    div(class="form-field field_wrap")
+                        label(for="password") Password
+                        input(type="password", name="password" id="password" placeholder="Enter a password here.")
+                    .field_group
+                    button(type="submit" class="submit_button") Login
+                    .link
+                        br
+                        a(href="/users/signup") Don't have an account? Sign Up!
