@@ -16,7 +16,7 @@ const isBanned = (id) => {
   return banList.has(id);
 }
 
-let movies = moviesTMDB.filter(movie => !isBanned(movie.id));
+const moviesTMDBfiltered = moviesTMDB.filter(movie => !isBanned(movie.id));
 
 
 // Create genres object for seeding into the database
@@ -24,11 +24,11 @@ let movies = moviesTMDB.filter(movie => !isBanned(movie.id));
 //
 // Createa a map of old genres ids vs new ids
 let newId = 0;
-const idMapper = {}
+const genreIdMapper = {}
 const genres = genresTMDB.map(genre => {
   newId += 1
   const name = genre.name;
-  idMapper[genre.id] = newId;
+  genreIdMapper[genre.id] = newId;
   return {
     id: newId,
     name,
@@ -43,7 +43,15 @@ const genres = genresTMDB.map(genre => {
 // - replace missing values
 const titles = new Set();
 let newMovieId = 0;
-movies = movies.map(movie => {
+const movies = [];
+
+// We also need a table mapping new movie ids to new genre ids.
+const moviesGenresJoin = [];
+let joinId = 0;
+
+moviesTMDBfiltered.map(movie => {
+
+  // first, do the movies
   newMovieId += 1;
 
   let { genre_ids, original_title, overview, release_date, popularity, poster_path} = movie;
@@ -52,7 +60,7 @@ movies = movies.map(movie => {
   if (!release_date) release_date = "09-09-9999";
   titles.add(original_title);
 
-  return {
+  movies.push({
     "id": newMovieId,
     "title": original_title,
     "dateReleased": release_date,
@@ -61,12 +69,28 @@ movies = movies.map(movie => {
     createdAt,
     updatedAt,
     posterPath: "https://image.tmdb.org/t/p/original" + poster_path
-  }
+  });
+
+  // now do the join table
+  const oldGenreIds = movie.genre_ids;
+  oldGenreIds.forEach(oldId => {
+    joinId += 1;
+    moviesGenresJoin.push({
+      id: joinId,
+      movieId: newMovieId,
+      genreId: genreIdMapper[oldId],
+      createdAt,
+      updatedAt
+    });
+  });
 
 });
 
+//console.log(moviesGenresJoin);
+//console.log(movies);
 
 module.exports = {
   genres,
   movies,
+  moviesGenresJoin
 }
