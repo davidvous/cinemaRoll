@@ -6,6 +6,7 @@
         ". a a ."
         ". b b ."
         "c d e f";
+    row-gap: 10px;
 }
 
 #search-header{
@@ -49,4 +50,3 @@
 #genre-container a:hover{
     text-decoration: underline;
 }
-

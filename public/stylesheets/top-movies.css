@@ -1,9 +1,9 @@
 #top_movies_wrapper {
   max-width: 1000px;
+  padding-bottom: 30px;
 }
 
 .movie_wrapper {
-  border: 1px red solid;
   max-width: 200px;
 };
 

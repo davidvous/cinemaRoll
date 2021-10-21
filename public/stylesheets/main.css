@@ -6,12 +6,10 @@ body {
 }
 
 main {
-  max-width: 1300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px red solid;
 }
 
 #top_movies_wrapper {
