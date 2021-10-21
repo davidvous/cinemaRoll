@@ -81,7 +81,7 @@
 .util_btn {
   text-decoration: none;
   background-color: #F4F1EA;
-  color: rgb(143, 67, 25);
+  color: #382110;
   padding: 0px 16px;
   font-size: 16px;
   height: 100%;
@@ -97,21 +97,6 @@
   color: #FFF;
 }
 
-/* Drop-down menu */
-.dropDownLink {
-  background-color: #F4F1EA;
-  color: rgb(143, 67, 25);
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-/* Dropdown button on hover & focus */
-.dropDownLink:hover, .dropDownLink:focus {
-  background-color: rgb(143, 67, 25);
-  color: #FFF;
-}
 
 /* 000000000000000000 */
 #browse_genres_dropdown {
