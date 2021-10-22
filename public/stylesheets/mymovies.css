@@ -1,0 +1,20 @@
+#mymovies_container {
+  display: flex;
+  flex-direction: row;
+  background-color: red;
+}
+
+#sidebar {
+  min-width: 200px;
+  background-color: blue;
+}
+
+#sidebar_label {
+  display: flex;
+  justify-content: center;
+  background-color: yellow;
+}
+
+#movie_container {
+
+}
