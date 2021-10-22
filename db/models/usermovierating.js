@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     UserMovieRating.belongsTo(models.User, {foreignKey:'userId'})
     UserMovieRating.belongsTo(models.Movie, {foreignKey:'movieId'})
+    
   };
   return UserMovieRating;
 };

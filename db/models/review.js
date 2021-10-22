@@ -17,12 +17,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      userRating: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          min: 1,
+          max: 5
+        }
+      }
     },
    {});
   Review.associate = function(models) {
     // associations can be defined here
     Review.belongsTo(models.User, {foreignKey:'userId'})
     Review.belongsTo(models.Movie, {foreignKey:'movieId'})
+    
   };
   return Review;
 };
