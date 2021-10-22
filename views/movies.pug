@@ -42,12 +42,17 @@ block content
                     each singleReview in reviews
                         span.reviewTitle= singleReview.title
                         .reviewMeta     
-                            .reviewAuthor= singleReview.userId
+                            .reviewAuthor= `By User ${singleReview.userId}`
                             .reviewDate= singleReview.createdAt
                         .smallHeadingContainer
                                 span= singleReview.reviewText
                     p
                 else
                     span.reviewTitle Submit The First Review!
+                    p
+                        if userStatus == 0
+                            span Logged Out
+                        else 
+                            span= userStatus
                     p 
                     p

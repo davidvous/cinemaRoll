@@ -32,6 +32,8 @@ router.get("/", asyncHandler(async (req, res) => {
 router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
   const movieId = parseInt(req.params.id);
   const movie = await db.Movie.findByPk(movieId);
+  let userStatus = 0;
+
   if (!movie) {
     next(createError(404))
   }
@@ -43,7 +45,13 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
       return row.dataValues
     })
   })
-  res.render("movies", { movieObj: movie, ratingDecimal, reviews });
+  
+  if (req.session.auth) {
+    userStatus = req.session.auth.userId;
+  }
+
+  console.log(userStatus)
+  res.render("movies", { movieObj: movie, ratingDecimal, reviews, userStatus });
 }));
 
 
@@ -82,7 +90,6 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
     
   }
   const movieId = Number(req.params.id)
-  console.log(req.session.auth, "<------");
   const userId = Number(req.session.auth.userId)
   //const movie = await db.Movie.findByPk(movieId);
   //
@@ -114,7 +121,7 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
 
 }));
 
-//DONE: Gets form for new movie
+//DONE: Gets form for new movie review
 router.get('/:id(\\d+)/reviews/new/', csurfProtection, asyncHandler( async (req, res) => {
   //Get the form to add a review that will be associated w/ a movie
   const movieId = req.params.id;
