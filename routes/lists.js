@@ -21,7 +21,13 @@ router.get('/', asyncHandler(async (req, res) => {
       limit: 15,
       order: [["popularity", "DESC"]]
   }).map(m => m.dataValues);
-  //res.json({authenticated, user});
+
+  const test = await db.MovieList.findAll({
+    where: { userId: 1 },
+    include: [{ model: db.Movie }]
+  }).map(m => m.dataValues);
+  console.log(test);
+
   res.render('mymovies', {topMovies});
 
 }));
