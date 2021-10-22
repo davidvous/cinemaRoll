@@ -1,3 +1,8 @@
+#list-test {
+ background: green;
+ min-height: 200px;
+}
+
 #mymovies_container {
   display: flex;
   flex-direction: row;
@@ -6,6 +11,7 @@
 
 #sidebar {
   min-width: 200px;
+
   background-color: lightblue;
 }
 

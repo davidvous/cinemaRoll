@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', async event => {
   console.log("i am alive, what am i? ..");
   // get side bar
   const sideBar = document.getElementById("sidebar");
+  const listDisplay = document.getElementById("list-test");
 
 
   const addList = document.getElementById("addListButton");
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async event => {
 
   const deleteListButton = document.getElementById("deleteListButton");
   deleteListButton.addEventListener("click", async (event) => {
-    const listId= document.getElementById("listId").value;
+    const listId = document.getElementById("listId-delete").value;
     let res = await fetch('/lists', {
       method: "DELETE",
       headers: { 'Content-Type': 'application/json' },
@@ -61,6 +62,19 @@ document.addEventListener('DOMContentLoaded', async event => {
       listItem.remove();
     }
 
+  });
+
+
+  const getListButton = document.getElementById("getListButton");
+  getListButton.addEventListener("click", async (event) => {
+    const listId= document.getElementById("listId-get").value;
+    let res = await fetch('/lists' + "/" + listId);
+    let content = await res.json();
+
+    const titles = content.Movies.map(m => m.title).join("\n");
+    console.log(titles);
+    //console.log(listDisplay);
+    listDisplay.innerText = titles;//JSON.stringify(titles);
   });
 
   console.log("you are an important JavaScript");

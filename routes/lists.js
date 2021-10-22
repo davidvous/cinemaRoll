@@ -75,10 +75,21 @@ router.delete('/', asyncHandler(async (req, res) => {
   const { authenticated, user } = res.locals;
   // need user auth check
   const { listId } = req.body
-  const isDeleted= await db.MovieList.destroy({
+  const isDeleted = await db.MovieList.destroy({
     where: { id: listId }
   });
   res.json({isDeleted})
+}));
+
+
+router.get('/:listId', asyncHandler(async (req, res) => {
+  console.log(req.params);
+  const list = await db.MovieList.findOne({
+    where: { id: 1 },
+    include: [{ model: db.Movie }]
+  });
+  console.log(list.dataValues);
+  res.json(list.dataValues);
 }));
 
 
