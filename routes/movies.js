@@ -78,6 +78,7 @@ res.render("reviewsForMovieWithId", {popularity, dateReleased, title, summary, p
 router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandler( async (req, res) => {
   //Add a new review for a given movie
   if (!req.session.auth) {
+    //req.session.redirectTo =
     res.redirect("http://localhost:8080/users/login/");
     
   }
@@ -114,7 +115,7 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
 
 }));
 
-//DONE: Gets form for new movie
+//DONE: Gets form for new movie review
 router.get('/:id(\\d+)/reviews/new/', csurfProtection, asyncHandler( async (req, res) => {
   //Get the form to add a review that will be associated w/ a movie
   const movieId = req.params.id;
