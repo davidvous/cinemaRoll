@@ -13,6 +13,11 @@ block content
       div#sidebar_label Watch Lists
     div#movie_container
       h2 List title
+        form
+          label(for="listName") New List Name
+          input(type="text", name="listName" id="listName" placeholder="Enter new list name.")
+          input(type="button" value="Add New List")
+
       div#top_movies_grid-4
         each movie in topMovies
           div.movie_wrapper
