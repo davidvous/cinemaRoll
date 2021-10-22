@@ -156,7 +156,7 @@ router.get('/:userId(\\d+)/movielists/:movieListId(\\d+)', asyncHandler( async (
     }
 }));
 
-router.post('/:id(\\d+)/movielists/', movieListValidators, asyncHandler( async (req, res) => {
+router.post('/:id(\\d+)/movielists/',  asyncHandler( async (req, res) => {
     const userId = req.params.id;
     const {
     name
@@ -179,7 +179,7 @@ router.post('/:id(\\d+)/movielists/', movieListValidators, asyncHandler( async (
     }
 
 }));
-router.patch('/:id(\\d+)/movielists/:id(\\d+)/edit', movieListValidators, asyncHandler( async (req, res) => {
+router.patch('/:id(\\d+)/movielists/:id(\\d+)/edit',  asyncHandler( async (req, res) => {
   const userId = req.params.id;
     const {
     name
