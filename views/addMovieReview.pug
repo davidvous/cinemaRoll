@@ -1,16 +1,81 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(http-equiv="X-UA-Compatible", content="IE=edge")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Document
-    body
-    h1=`${csrfToken}`
-        form(type="submit" method="post" action=`http://localhost:8080/movies/${movieId}/reviews`)
-            input(type='hidden' name='_csrf' value=csrfToken)
-            input(type="text", name="title" placeholder="Enter the title of your review.") 
-            textarea(name="reviewText", cols="30", rows="10", placeholder='Write your review here') 
-            input(type="number", name="rating") 
-            button(type='submit') Submit your review!
- 
+extends layout
+include utils.pug
+append head
+    link(rel="stylesheet" href="/stylesheets/reviews.css")
+
+block content
+    .mainContentContainer 
+        .mainContent 
+            .mainContentFloat 
+                .leftContainer 
+                    #topcolumn(class="col")
+                        #imagecolumn(class="col") 
+                            img(src=`${movieObj.posterPath}`)
+                            p Movie Lists (add or remove)
+                            .smallHeadingcontainer 
+                            h2.smallHeading Popularity 
+                            span= `${ratingDecimal} out of 10`
+                        #metacolumn(class="col") 
+                            .movieTitleContainer
+                                h1#movieTitle= movieObj.title
+                            .smallHeadingContainer
+                                h2#movieDate= `Released: ${movieObj.dateReleased}`
+                            .smallHeadingContainer
+                                h2.smallHeading Overview:
+                                span= movieObj.summary
+                .rightContainer  
+                    .smallHeadingContainer
+                        h2.smallHeading Viewers also enjoyed 
+                    .similarMovies
+                        each oneGenreMovie,index in genreMovies
+                            .movie-item
+                            a(href=`/movies/${oneGenreMovie.id}`)
+                                img(src=`${oneGenreMovie.posterPath}`)  
+        .mainContent
+            .reviewContent
+                .smallHeadingContainerReview 
+                    h2.smallHeading Leave Your Review!
+                .reviewContainer
+                    form(type="submit" method="post" action=`/movies/${movieId}/reviews`)
+                        .form_wrap
+                            .field_group
+                            input(type='hidden' name='_csrf' value=csrfToken)
+                            div(class="form-field field_wrap")
+                                label(for="email") Review title:
+                            .field_group 
+                            div(class="form-field field_wrap")
+                                input(type="text", name="title" placeholder="Enter the title of your review.") 
+                            .field_group
+                            div(class="form-field field_wrap")
+                                label(for="email") What did you think of this movie?
+                            div(class="form-field field_wrap")
+                                textarea(name="reviewText", cols="30", rows="10", placeholder='Write your review here')
+                            .field_group
+                            div(class="form-field field_wrap") 
+                                span Rate the movie from 1 - 5 (Worst to Best)
+                            .field_group
+                            div(class="form-field field_wrap")
+                                ul  
+                                    li 
+                                        label(for="rating-1")
+                                        input(type="radio" id="rating-1" name="rating" value="1")
+                                        i(class="fas fa-star") 1
+                                    li
+                                        label(for="rating-2")
+                                        input(type="radio" id="rating-2" name="rating" value="2")
+                                        i(class="fas fa-star") 2
+                                    li
+                                        label(for="rating-3")
+                                        input(type="radio" id="rating-3" name="rating" value="3")
+                                        i(class="fas fa-star") 3
+                                    li
+                                        label(for="rating-4")
+                                        input(type="radio" id="rating-4" name="rating" value="4")
+                                        i(class="fas fa-star") 4
+                                    li
+                                        label(for="rating-5")
+                                        input(type="radio" id="rating-5" name="rating" value="5")
+                                        i(class="fas fa-star") 5
+                            .field_group
+                            button(type='submit' id="reviewButton") Submit
+                .reviewHeader

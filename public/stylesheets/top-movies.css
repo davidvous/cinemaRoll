@@ -27,3 +27,8 @@
   font-size: 25px;
   padding-bottom: 20px;
 }
+
+h2 {
+  text-transform: uppercase;
+  font-size: 10px;
+}

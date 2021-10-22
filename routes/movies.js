@@ -22,9 +22,9 @@ const movieValidators = [
 
 
 
-// should route to genres to display "all movies"
+// should re-direct to genres to display "all movies"
 router.get("/", asyncHandler(async (req, res) => {
-  res.render("listGenres");
+  res.redirect("/genres");
 }));
 
 
@@ -32,26 +32,48 @@ router.get("/", asyncHandler(async (req, res) => {
 router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
   const movieId = parseInt(req.params.id);
   const movie = await db.Movie.findByPk(movieId);
+  const genreId = await db.genresToMovieJoinTable.findOne({ where: { movieId: movieId}});
   let userStatus = 0;
 
   if (!movie) {
-    next(createError(404))
+    next(createError(404));
   }
   const ratingDecimal = (movie.popularity / 1000).toFixed(2);
+
+  // Added finding users associated with each review for "By Jim Regan"
   const reviews = await db.Review.findAll({
-    where: { movieId: movieId }
-  }).then(res => {
-    return res.map(row => {
-      return row.dataValues
-    })
-  })
-  
+    where: { movieId: movieId },
+    include: { model: db.User },
+  }).then((res) => {
+    return res.map((row) => {
+      return row.dataValues;
+    });
+  });
+
+  // Finding the user where the Review has a specific
+  let userName = await db.User.findAll({
+    include: { model: db.Review, where: { movieId: movieId } },
+  });
+
   if (req.session.auth) {
     userStatus = req.session.auth.userId;
   }
 
-  console.log(userStatus)
-  res.render("movies", { movieObj: movie, ratingDecimal, reviews, userStatus });
+  /// Pulling "similar movies"
+  const genreMovies = await db.Movie.findAll({
+    order: [db.Sequelize.fn("RANDOM")],
+    limit: 9,
+    include: { model: db.Genre, where: { id: genreId.genreId } },
+  });
+
+  res.render("movies", {
+    movieObj: movie,
+    ratingDecimal,
+    reviews,
+    userStatus,
+    userName,
+    genreMovies
+  });
 }));
 
 
@@ -177,11 +199,40 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
 router.get('/:id(\\d+)/reviews/new/', csurfProtection, asyncHandler( async (req, res) => {
   //Get the form to add a review that will be associated w/ a movie
   const movieId = req.params.id;
-  if (!req.session.auth) {
-    res.redirect(`/users/login/`)
-  }
-  res.render("addMovieReview", {csrfToken: req.csrfToken(), movieId})
+  const genreId = await db.genresToMovieJoinTable.findOne({
+    where: { movieId: movieId },
+  });
 
+  /// Pulling "similar movies"
+  const genreMovies = await db.Movie.findAll({
+    order: [db.Sequelize.fn("RANDOM")],
+    limit: 9,
+    include: { model: db.Genre, where: { id: genreId.genreId } },
+  });
+
+  if (!req.session.auth) {
+
+    res.redirect(`/users/login/`)
+    
+  }
+  const movie = await db.Movie.findByPk(movieId);
+  const ratingDecimal = (movie.popularity / 1000).toFixed(2);
+  //added finding users associated with each review for "By Jim Regan"
+  const reviews = await db.Review.findAll({
+    where: { movieId: movieId },
+    include: { model: db.User },
+  }).then((res) => {
+    return res.map((row) => {
+      return row.dataValues;
+    });
+  });
+
+  res.render("addMovieReview", {
+    csrfToken: req.csrfToken(),
+    movieId,
+    movieObj: movie,
+    ratingDecimal, genreMovies
+  });
 }));
 
 
