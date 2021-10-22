@@ -49,7 +49,10 @@ block content
                             div(class="form-field field_wrap")
                                 label(for="email") What did you think of this movie?
                             div(class="form-field field_wrap")
-                                textarea(name="reviewText", cols="30", rows="10", placeholder='Write your review here') 
+                                textarea(name="reviewText", cols="30", rows="10", placeholder='Write your review here')
+                            .field_group
+                            div(class="form-field field_wrap") 
+                                span Rate the movie from 1 - 5 (Worst to Best)
                             .field_group
                             div(class="form-field field_wrap")
                                 ul  
@@ -76,20 +79,3 @@ block content
                             .field_group
                             button(type='submit' id="reviewButton") Submit
                 .reviewHeader
-                //- if reviews.length
-                //-     each singleReview in reviews
-                //-         span.reviewTitle= singleReview.title
-                //-         .reviewMeta     
-                //-             .reviewAuthor= `By ${singleReview.User.firstName} ${singleReview.User.lastName}`
-                //-             .reviewDate= singleReview.createdAt
-                //-         .smallHeadingContainer
-                //-                 span= singleReview.reviewText
-                    p
-                //- else
-                //-     span.reviewTitle There are currently no reviews
-                    p
-                        if userStatus
-                            a(href="/" id="reviewButton") Submit the first!
-                    p 
-                    p
- 
