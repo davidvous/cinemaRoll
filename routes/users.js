@@ -79,16 +79,13 @@ router.post("/signup", csurfProtection, signupValidation, asyncHandler(async fun
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    console.log("BEFORE: I got to this line with no error.");
     const user = await db.User.create({
       email: req.body.email,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       passwordHash: hashedPassword,
     });
-    console.log("AFTER: I got to this line with no error.");
-    console.log(user);
-    console.log("I got to this line with no error.");
+
     loginUser(req, res, user);
     return res.redirect('/');
   }
