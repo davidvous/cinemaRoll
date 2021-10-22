@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     const columnMapping = {
       through: 'ListToMoviesJoinTable',
       otherKey: 'movieId',
-      foreignKey: 'movieList'
+      foreignKey: 'movieListId'
     }
     MovieList.belongsToMany(models.Movie, columnMapping);
   };
