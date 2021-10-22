@@ -1,0 +1,23 @@
+extends layout
+
+append head
+  link(rel="stylesheet" href="/stylesheets/mymovies.css")
+  link(rel="stylesheet" href="/stylesheets/top-movies.css")
+  link(rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css")
+
+
+block content
+  This will contain a list of my movies
+  div#mymovies_container
+    div#sidebar
+      div#sidebar_label Watch Lists
+    div#movie_container
+      h2 List title
+      div#top_movies_grid
+        each movie in topMovies
+          div.movie_wrapper
+            a(href= "/movies/"+movie.id)
+              img(
+                src= movie.posterPath
+                alt= "movie poster for " + movie.title
+              )
