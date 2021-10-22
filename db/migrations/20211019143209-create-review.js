@@ -26,6 +26,13 @@ module.exports = {
         allowNull: false,
         references: { model: 'Users' }
       },
+      userRating: {
+        type: Sequelize.INTEGER,
+        validate: {
+          min: 1,
+          max: 5
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -34,6 +41,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+
     });
   },
   down: (queryInterface, Sequelize) => {
