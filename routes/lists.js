@@ -9,11 +9,18 @@ const {csurfProtection, asyncHandler} = require('./utils')
 const router = express.Router();
 
 
+// brrrr, let's sketch out what i need to do
+// GET  '/' - regular HTML request / response that loads all movies in user's list on page
+// POST '/:listName' - creates a new list for the session user with the provided list name
+// -----
+// GET  '/:listName' - ..... DO NOT NEED THIS ONE, we dump all lists when we do 'GET'
+//
+
 router.get('/', asyncHandler(async (req, res) => {
 
   const { authenticated, user } = res.locals;
   if (!authenticated || !user) {
-    return res.redirect('/users/login');
+    //return res.redirect('/users/login');
   }
 
   // the template expects top 10 movies
@@ -30,6 +37,36 @@ router.get('/', asyncHandler(async (req, res) => {
 
   res.render('mymovies', {topMovies});
 
+}));
+
+
+
+// To make requests from the browser, do
+// let response = await fetch('/lists', { method: "POST" }
+// let res = await fetch('/lists', {
+//   method: "POST",
+//   headers: {
+//     'Content-Type': 'application/json'
+//   },
+//   body: JSON.stringify({"xyz": "hello"})
+// });
+// let content  = await response.json()
+//
+//
+// get user ids from res.locals.user
+// req.session.auth = { userId: user.id }
+
+// creates list of movies for user
+router.post('/', asyncHandler(async (req, res) => {
+
+  const { authenticated, user } = res.locals;
+  console.log(user);
+  const list = await db.MovieList.create({name: "TEST_NAME", userId: 1, createdAt: new Date(), updatedAt: new Date()});
+  console.log("this is the list", list);
+
+  //console.log("this is the body", req.body);
+  console.log("TRYANA FETCH");
+  res.json({list})
 }));
 
 
