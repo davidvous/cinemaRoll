@@ -13,11 +13,15 @@ block content
     div#sidebar
       div#sidebar_label Watch Lists
     div#movie_container
-      h2 List title
+      h2 API tests //
         form
-          label(for="listName") New List Name
+          label(for="listName") /lists POST___
           input(type="text", name="listName" id="listName" placeholder="Enter new list name.")
           input(id="addListButton" type="button" value="Add New List")
+        form
+          label(for="listName") /lists DELETE_
+          input(type="text", name="listId" id="listId" placeholder="Enter list id.")
+          input(id="deleteListButton" type="button" value="Delete List by id")
 
       div#top_movies_grid-4
         each movie in topMovies

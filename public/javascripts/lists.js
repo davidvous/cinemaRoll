@@ -1,14 +1,11 @@
 document.addEventListener('DOMContentLoaded', async event => {
 
   console.log("i am alive, what am i? ..");
+  // get side bar
+  const sideBar = document.getElementById("sidebar");
+
 
   const addList = document.getElementById("addListButton");
-
-  console.log("the button object", addList);
-
-  addList.addEventListener("click", e => {
-    console.log("event listener...");
-  });
   addList.addEventListener("click", async (event) => {
     event.preventDefault() // <-- not sure if needed
 
@@ -29,12 +26,11 @@ document.addEventListener('DOMContentLoaded', async event => {
 
     console.log(list);
 
-    // get side bar
-    const sideBar = document.getElementById("sidebar");
 
     // create new list item with the list name and id
     const listItem = document.createElement("div");
-    const text      = document.createTextNode(list.name);
+    listItem.id = "list-id-" + list.id;
+    const text      = document.createTextNode(list.name + "___id_" + list.id);
     listItem.appendChild(text);
 
     sideBar.appendChild(listItem);
@@ -43,6 +39,29 @@ document.addEventListener('DOMContentLoaded', async event => {
 
   });
 
-  console.log("you are an important JavaScript");
 
+
+  const deleteListButton = document.getElementById("deleteListButton");
+  deleteListButton.addEventListener("click", async (event) => {
+    const listId= document.getElementById("listId").value;
+    let res = await fetch('/lists', {
+      method: "DELETE",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ listId})
+    });
+    let content = await res.json();
+
+    const { isDeleted } = content;
+
+    // if success, remove corresponding list div from DOM
+    if (isDeleted) {
+      console.log("hello");
+      const listItem = document.getElementById("list-id-" + listId);
+      console.log(listItem);
+      listItem.remove();
+    }
+
+  });
+
+  console.log("you are an important JavaScript");
 });

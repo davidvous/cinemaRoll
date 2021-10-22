@@ -58,14 +58,27 @@ router.get('/', asyncHandler(async (req, res) => {
 
 // creates list of movies for user
 router.post('/', asyncHandler(async (req, res) => {
-
   const { authenticated, user } = res.locals;
+  // need user auth check
   const { listName } = req.body
-  const list = await db.MovieList.create({name: listName, userId: 1, createdAt: new Date(), updatedAt: new Date()});
-  //console.log("this is the list", list);
-  //console.log("this is the body", req.body);
-  console.log("TRYANA FETCH");
+  const list = await db.MovieList.create({
+    name: listName,
+    userId: 1,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  });
   res.json({list})
+}));
+
+
+router.delete('/', asyncHandler(async (req, res) => {
+  const { authenticated, user } = res.locals;
+  // need user auth check
+  const { listId } = req.body
+  const isDeleted= await db.MovieList.destroy({
+    where: { id: listId }
+  });
+  res.json({isDeleted})
 }));
 
 
