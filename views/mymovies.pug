@@ -4,6 +4,7 @@ append head
   link(rel="stylesheet" href="/stylesheets/mymovies.css")
   link(rel="stylesheet" href="/stylesheets/top-movies.css")
   link(rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css")
+  script(src='/javascripts/lists.js')
 
 
 block content
@@ -16,7 +17,7 @@ block content
         form
           label(for="listName") New List Name
           input(type="text", name="listName" id="listName" placeholder="Enter new list name.")
-          input(type="button" value="Add New List")
+          input(id="addListButton" type="button" value="Add New List")
 
       div#top_movies_grid-4
         each movie in topMovies

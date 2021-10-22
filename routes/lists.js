@@ -60,10 +60,9 @@ router.get('/', asyncHandler(async (req, res) => {
 router.post('/', asyncHandler(async (req, res) => {
 
   const { authenticated, user } = res.locals;
-  console.log(user);
-  const list = await db.MovieList.create({name: "TEST_NAME", userId: 1, createdAt: new Date(), updatedAt: new Date()});
-  console.log("this is the list", list);
-
+  const { listName } = req.body
+  const list = await db.MovieList.create({name: listName, userId: 1, createdAt: new Date(), updatedAt: new Date()});
+  //console.log("this is the list", list);
   //console.log("this is the body", req.body);
   console.log("TRYANA FETCH");
   res.json({list})
