@@ -70,11 +70,14 @@ document.addEventListener('DOMContentLoaded', async event => {
     const listId= document.getElementById("listId-get").value;
     let res = await fetch('/lists' + "/" + listId);
     let content = await res.json();
-
-    const titles = content.Movies.map(m => m.title).join("\n");
-    console.log(titles);
-    //console.log(listDisplay);
-    listDisplay.innerText = titles;//JSON.stringify(titles);
+    if (content.message) {
+      listDisplay.innerText = content.message;
+    } else {
+      const titles = content.Movies.map(m => m.title).join("\n");
+      console.log(titles);
+      //console.log(listDisplay);
+      listDisplay.innerText = titles;//JSON.stringify(titles);
+    }
   });
 
   console.log("you are an important JavaScript");

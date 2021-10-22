@@ -85,11 +85,13 @@ router.delete('/', asyncHandler(async (req, res) => {
 router.get('/:listId', asyncHandler(async (req, res) => {
   console.log(req.params);
   const list = await db.MovieList.findOne({
-    where: { id: 1 },
+    where: { id: req.params.listId },
     include: [{ model: db.Movie }]
   });
-  console.log(list.dataValues);
-  res.json(list.dataValues);
+  console.log("list ret", list);
+  if (!list || !list.dataValues.Movies.length)
+    res.json({"message": "List doesn't have any movies in it."});
+  else res.json(list.dataValues);
 }));
 
 
