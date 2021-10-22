@@ -180,7 +180,7 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
   // print the error details
     
       res.redirect(`/movies/${movieId}/reviews` );
-    } else {
+    } 
       const errors = validatorErrors.array().map((error) => error.msg);
       console.error(errors)
       res.render('addMovieReview', {
