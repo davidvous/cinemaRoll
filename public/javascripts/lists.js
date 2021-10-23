@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', async event => {
 
-  const sideBar = document.getElementById("sidebar");
   const lists = document.getElementsByClassName("listItem");
-
   Array.from(lists).forEach(list => {
     list.addEventListener("click", renderList);
   });
-  console.log(lists);
+
+  const addListButton = document.getElementById("addListButton");
+  addListButton.addEventListener("click", addList);
 
 });
 
@@ -51,4 +51,32 @@ const renderPosters = (movies) => {
   const movieContainer = document.getElementById("top_movies_grid-4");
   movieContainer.innerHTML = '';
   movieCards.forEach(card => movieContainer.appendChild(card));
+}
+
+
+const addList = async (event) => {
+  event.preventDefault() // <-- not sure if needed
+
+  // get content of the form
+  // need a breaker here to prevent empty form submission
+  const listName  = document.getElementById("listName").value;
+  console.log("POST'ing new list to database");
+  let res = await fetch('/lists', {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ listName })
+  });
+  let content = await res.json();
+  const { list } = content;
+
+  console.log(list);
+
+  // create new list item with the list name and id
+  const listItem = document.createElement("div");
+  listItem.id = "list-id-" + list.id;
+  listItem.className = "listItem";
+  listItem.innerText = list.name + " (0)";
+  const sideBarLists = document.getElementById("sidebar_lists");
+  sideBarLists.appendChild(listItem);
+
 }

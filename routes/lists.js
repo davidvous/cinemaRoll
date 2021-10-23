@@ -63,7 +63,6 @@ router.get('/:listId', asyncHandler(async (req, res) => {
   // this should go into GET lists/ with application-type/json if-else check
   // and then the front end "#list-all" will need its listeners / id adjusted
   if (req.params.listId === "all") {
-    console.log("I got here, asshole.");
     lists = await db.MovieList.findAll({
       where: { userId: 1 },
       include: [{ model: db.Movie }]
