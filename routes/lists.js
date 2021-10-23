@@ -24,12 +24,8 @@ router.get('/', asyncHandler(async (req, res) => {
     include: [{ model: db.Movie }]
   })
   const movies = []
-  const listNames = [];
-  lists.forEach(list => {
-    movies.push(...list.Movies)
-    listNames.push(list.name)
-  });
-  console.log(listNames);
+  lists.forEach(list => movies.push(...list.Movies) );
+
   res.render('mymovies', { movies, lists});
 }));
 
@@ -61,15 +57,30 @@ router.delete('/', asyncHandler(async (req, res) => {
 
 
 router.get('/:listId', asyncHandler(async (req, res) => {
-  console.log(req.params);
-  const list = await db.MovieList.findOne({
-    where: { id: req.params.listId },
-    include: [{ model: db.Movie }]
-  });
-  console.log("list ret", list);
-  if (!list || !list.dataValues.Movies.length)
+
+  const movies = [];
+  // this is BAD!! pressed for time rn, sorry future me
+  // this should go into GET lists/ with application-type/json if-else check
+  // and then the front end "#list-all" will need its listeners / id adjusted
+  if (req.params.listId === "all") {
+    console.log("I got here, asshole.");
+    lists = await db.MovieList.findAll({
+      where: { userId: 1 },
+      include: [{ model: db.Movie }]
+    });
+    lists.forEach(list => movies.push(...list.Movies));
+  } else {
+    list = await db.MovieList.findOne({
+      where: { id: req.params.listId },
+      include: [{ model: db.Movie }]
+    });
+    movies.push(...list.Movies);
+  }
+
+  if (!movies.length)
     res.json({"message": "List doesn't have any movies in it."});
-  else res.json(list.dataValues);
+
+  res.json(movies);
 }));
 
 

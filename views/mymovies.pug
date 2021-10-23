@@ -12,7 +12,7 @@ block content
   div#mymovies_container
     div#sidebar
       div#sidebar_label Watch Lists
-      div(class="listItem") All (#{lists.map(L => L.Movies.length).reduce((p, c) => p + c)})
+      div(class="listItem" id="list-all") All (#{lists.map(L => L.Movies.length).reduce((p, c) => p + c)})
       // `" +list.Movies.length})
       each list in lists
         div(class="listItem" id="list-"+list.id) #{list.name} (#{list.Movies.length})
