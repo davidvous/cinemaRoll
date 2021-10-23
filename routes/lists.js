@@ -23,10 +23,14 @@ router.get('/', asyncHandler(async (req, res) => {
     where: { userId: 1 },
     include: [{ model: db.Movie }]
   })
-
   const movies = []
-  lists.forEach(list => movies.push(...list.Movies));
-  res.render('mymovies', { movies });
+  const listNames = [];
+  lists.forEach(list => {
+    movies.push(...list.Movies)
+    listNames.push(list.name)
+  });
+  console.log(listNames);
+  res.render('mymovies', { movies, lists});
 }));
 
 

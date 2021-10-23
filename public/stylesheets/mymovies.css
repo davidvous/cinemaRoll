@@ -24,3 +24,8 @@
 #movie_container {
 
 }
+
+.listItem:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
