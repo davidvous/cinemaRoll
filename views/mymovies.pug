@@ -13,21 +13,7 @@ block content
     div#sidebar
       div#sidebar_label Watch Lists
     div#movie_container
-      h2 API tests //
-        form
-          label(for="listName") /lists POST____
-          input(type="text", name="listName" id="listName" placeholder="Enter new list name.")
-          input(id="addListButton" type="button" value="Add New List")
-        form
-          label(for="listId") /lists DELETE__
-          input(type="text", name="listId" id="listId-delete" placeholder="Enter list id.")
-          input(id="deleteListButton" type="button" value="Delete List by id")
-        form
-          label(for="listName") /lists/:id GET__
-          input(type="text", name="listId" id="listId-get" placeholder="Enter list id.")
-          input(id="getListButton" type="button" value="Fetch List by id")
-
-      div#list-test
+      include includes/list-routes-test.pug
       div#top_movies_grid-4
         each movie in topMovies
           div.movie_wrapper

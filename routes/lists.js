@@ -95,4 +95,9 @@ router.get('/:listId', asyncHandler(async (req, res) => {
 }));
 
 
+router.patch('/:listId/add/:movieId', asyncHandler(async (req, res) => {
+
+}));
+
+
 module.exports = router;
