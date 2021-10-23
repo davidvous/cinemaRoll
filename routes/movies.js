@@ -50,11 +50,13 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     });
   });
 
-  let userId
   // let previouslyReviewedByLoggedInUser
    if (req.session.auth) {
-    userId = req.session.auth.userId;
+
+    // this line sets userStatus either to 0 or their userId. Pug will interpret false or render accordingly
+    userStatus = req.session.auth.userId;
    }
+
   //   previouslyReviewedByLoggedInUser = await db.User.findAll({
   //   include: { model: db.Review, where: { movieId: movieId, userId: userId } },
   // });
