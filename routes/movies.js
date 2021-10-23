@@ -51,17 +51,18 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
   });
 
   let userId
-  let previouslyReviewedByLoggedInUser
+  // let previouslyReviewedByLoggedInUser
    if (req.session.auth) {
     userId = req.session.auth.userId;
-    previouslyReviewedByLoggedInUser = await db.User.findAll({
-    include: { model: db.Review, where: { movieId: movieId, userId: userId } },
-  });
-  previouslyReviewedByLoggedInUser = previouslyReviewedByLoggedInUser[0]
-  }else{
-    previouslyReviewedByLoggedInUser = false
+   }
+  //   previouslyReviewedByLoggedInUser = await db.User.findAll({
+  //   include: { model: db.Review, where: { movieId: movieId, userId: userId } },
+  // });
+  // previouslyReviewedByLoggedInUser = previouslyReviewedByLoggedInUser[0]
+  // }else{
+  //   previouslyReviewedByLoggedInUser = false
 
-  }
+  // }
 
 
 
@@ -81,7 +82,6 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     ratingDecimal,
     reviews,
     userStatus,
-    previouslyReviewedByLoggedInUser,
     genreMovies
   });
 }));
