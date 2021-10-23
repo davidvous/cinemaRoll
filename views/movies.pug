@@ -47,8 +47,8 @@ block content
                     p
                 else
                     span.reviewTitle There are currently no reviews
-                    p
-                        if userStatus
-                            a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review!
-                    p 
-                    p
+                p
+                    if !userName
+                        a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review!
+                p 
+                p

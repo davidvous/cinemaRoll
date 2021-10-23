@@ -59,6 +59,8 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     userStatus = req.session.auth.userId;
   }
 
+  console.log(req.session.auth, "<------- AUTH STATUS")
+
   /// Pulling "similar movies"
   const genreMovies = await db.Movie.findAll({
     order: [db.Sequelize.fn("RANDOM")],
@@ -144,6 +146,7 @@ res.render("reviewsForMovieWithId", {popularity, dateReleased, title, summary, p
 
 //THE POST ROUTE ISNT WORKING? I GET A VALIDATION ERROR. I'M NOT SURE WHY 
 router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandler( async (req, res) => {
+ 
   //Add a new review for a given movie
   if (!req.session.auth) {
     //req.session.redirectTo =
@@ -170,17 +173,21 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
       //const review = await db.Review.create({title, reviewText, movieId, userId, userRating})
 
     try {
+      console.log("YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
       const newMovieId = parseInt(req.params.id, 10)
       const newUserRating = parseInt(userRating, 10)
       const newUserId = parseInt(userId, 10)
-      const review = await db.Review.create({title, reviewText, movieId:newMovieId, userId:newUserId, userRating: newUserRating})
+      await db.Review.create({title, reviewText, movieId:newMovieId, userId:newUserId, userRating: newUserRating})
+       res.redirect(`/movies/${movieId}`);
       // you can now access the newly created user
       //console.log('success', review.toJSON());
 } catch (err) {
   // print the error details
-    
-      res.redirect(`/movies/${movieId}/reviews` );
-    } else {
+    console.log('**********************')
+    console.log(err)
+    console.log('**********************')
+      res.redirect(`/movies/${movieId}/` );
+    } 
       const errors = validatorErrors.array().map((error) => error.msg);
       console.error(errors)
       res.render('addMovieReview', {

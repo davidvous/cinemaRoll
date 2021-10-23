@@ -4,21 +4,19 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     
       return queryInterface.bulkInsert('MovieLists', [{
-        'id': 1,
+        
         'name':"Comedies",
         'userId':1,
         'createdAt': new Date(),
         'updatedAt': new Date()
       },
     {
-        'id': 2,
         'name':"Documentaries",
         'userId':1,
         'createdAt': new Date(),
         'updatedAt': new Date()
       }
     ,  {
-        'id': 3,
         'name':"Action Movies",
         'userId':1,
         'createdAt': new Date(),
