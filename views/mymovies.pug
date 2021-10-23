@@ -13,9 +13,9 @@ block content
     div#sidebar
       div#sidebar_label Watch Lists
     div#movie_container
-      include includes/list-routes-test.pug
+      //include includes/list-routes-test.pug
       div#top_movies_grid-4
-        each movie in topMovies
+        each movie in movies
           div.movie_wrapper
             a(href= "/movies/"+movie.id)
               img(
