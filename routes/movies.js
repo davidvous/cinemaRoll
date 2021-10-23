@@ -34,6 +34,7 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
   const movie = await db.Movie.findByPk(movieId);
   const genreId = await db.genresToMovieJoinTable.findOne({ where: { movieId: movieId}});
   let userStatus = 0;
+  let hasCurrentReview = 1;
 
   if (!movie) {
     next(createError(404));
@@ -65,7 +66,7 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
   //   previouslyReviewedByLoggedInUser = false
 
   // }
-
+   console.log (reviews);
 
 
 
@@ -84,7 +85,8 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     ratingDecimal,
     reviews,
     userStatus,
-    genreMovies
+    genreMovies,
+    hasCurrentReview
   });
 }));
 
