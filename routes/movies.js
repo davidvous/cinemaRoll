@@ -50,16 +50,24 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     });
   });
 
-  // Finding the user where the Review has a specific
-  let userName = await db.User.findAll({
-    include: { model: db.Review, where: { movieId: movieId } },
+  let userId
+  let previouslyReviewedByLoggedInUser
+   if (req.session.auth) {
+    userId = req.session.auth.userId;
+    previouslyReviewedByLoggedInUser = await db.User.findAll({
+    include: { model: db.Review, where: { movieId: movieId, userId: userId } },
   });
+  previouslyReviewedByLoggedInUser = previouslyReviewedByLoggedInUser[0]
+  }else{
+    previouslyReviewedByLoggedInUser = false
 
-  if (req.session.auth) {
-    userStatus = req.session.auth.userId;
   }
 
-  console.log(req.session.auth, "<------- AUTH STATUS")
+
+
+
+
+  
 
   /// Pulling "similar movies"
   const genreMovies = await db.Movie.findAll({
@@ -73,7 +81,7 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     ratingDecimal,
     reviews,
     userStatus,
-    userName,
+    previouslyReviewedByLoggedInUser,
     genreMovies
   });
 }));
