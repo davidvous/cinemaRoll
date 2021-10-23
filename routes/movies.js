@@ -183,10 +183,12 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
       //console.log('success', review.toJSON());
 } catch (err) {
   // print the error details
+
     console.log('**********************')
     console.log(err)
     console.log('**********************')
       res.redirect(`/movies/${movieId}/` );
+
     } 
       const errors = validatorErrors.array().map((error) => error.msg);
       console.error(errors)
