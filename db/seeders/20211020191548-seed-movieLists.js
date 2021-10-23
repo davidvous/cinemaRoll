@@ -3,7 +3,26 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     
-      return queryInterface.bulkInsert('MovieLists', [{"name":"Comedies","userId":1,"createdAt":"2021-10-22T21:03:08.789Z","updatedAt":"2021-10-22T21:03:08.789Z"},{"name":"Documentaries","userId":1,"createdAt":"2021-10-22T21:03:08.789Z","updatedAt":"2021-10-22T21:03:08.789Z"},{"name":"Action Movies","userId":1,"createdAt":"2021-10-22T21:03:08.789Z","updatedAt":"2021-10-22T21:03:08.789Z"}], {});
+      return queryInterface.bulkInsert('MovieLists', [{
+        
+        'name':"Comedies",
+        'userId':1,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      },
+    {
+        'name':"Documentaries",
+        'userId':1,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      }
+    ,  {
+        'name':"Action Movies",
+        'userId':1,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      }], {});
+
     
   },
 

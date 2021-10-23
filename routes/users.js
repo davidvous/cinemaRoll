@@ -156,7 +156,8 @@ router.get('/:userId(\\d+)/movielists/:movieListId(\\d+)', asyncHandler( async (
     }
 }));
 
-router.post('/:id(\\d+)/movielists/',  asyncHandler( async (req, res) => {
+router.post('/:id(\\d+)/movielists/', asyncHandler( async (req, res) => {
+
     const userId = req.params.id;
     const {
     name
