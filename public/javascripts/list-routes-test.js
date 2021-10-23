@@ -1,3 +1,13 @@
+//
+//
+// THIS IS A TEST FILE FOR PLAYING AROUND WITH ROUTES
+// IT IS NOT PART OF THE APPLICATION
+//
+// -- to enable test display on the movie page,
+//    uncomment the pug import ("list-routes-test.pug") in mymovies.pug view
+//
+//
+
 document.addEventListener('DOMContentLoaded', async event => {
 
   console.log("i am alive, what am i? ..");
