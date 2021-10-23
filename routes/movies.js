@@ -35,6 +35,7 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
   const genreId = await db.genresToMovieJoinTable.findOne({ where: { movieId: movieId}});
   let userStatus = 0;
   let hasCurrentReview = 1;
+  // will rewrite this to actually check but hardcoding for now
 
   if (!movie) {
     next(createError(404));
