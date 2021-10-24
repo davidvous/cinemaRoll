@@ -34,4 +34,5 @@ block content
                 alt= "movie poster for " + movie.title
               )
             form
-              input(id="deleteMovieFromListButton-all-"+movie.id class="util_btn delete_btn" type="button" value="Remove")
+              - const id_ = "deleteMovieFromListButton-" + movie.ListToMoviesJoinTable.movieListId + "-" + movie.id
+              input(id=id_ class="util_btn delete_btn" type="button" value="Remove")

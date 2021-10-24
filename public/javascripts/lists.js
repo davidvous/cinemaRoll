@@ -78,6 +78,7 @@ const renderPosters = (movies, listId) => {
     const delForm    = document.createElement("form");
     const delButton  = document.createElement("input");
     // populate components with attributes
+    if (listId === "all") listId = movie.ListToMoviesJoinTable.movieListId;
     delButton.id    = "deleteMovieFromListButton-" + listId + "-" + id;
     delButton.value = "Remove";
     delButton.type  = "button";
@@ -86,6 +87,7 @@ const renderPosters = (movies, listId) => {
     image.src = posterPath;
     navigation.href = "/movies/" + id
 
+    console.log(movie);
 
     // assemble components together
     navigation.appendChild(image);
@@ -169,6 +171,21 @@ const deleteMovie = async (event) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ movieId, listId })
   });
+  const { isDeleted } = await res.json();
+  console.log(isDeleted);
 
+  if (isDeleted) {
+    const movieCard = event.target.parentElement.parentElement; // Will break hard if HTML is changed
+    movieCard.remove();
+
+    // also update the text in the side bar
+
+    // This is turning out too complicated, and I am strapped for time
+    // address this later. Let's table this for now.
+    //const listItem = document.getElementById("list-" + listId);
+    //const lastPart = listItem.innerText.split(" ").slice(-1)[0];
+    //const number   = lastPart.split("").slice(-1, 1);
+    //console.log(number);
+  }
 };
 
