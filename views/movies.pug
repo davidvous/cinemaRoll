@@ -1,5 +1,8 @@
 extends layout
 include utils.pug
+append head
+    link(rel="stylesheet" href="/stylesheets/reviews.css")
+
 block content
     .mainContentContainer 
         .mainContent 
@@ -24,30 +27,48 @@ block content
                     .smallHeadingContainer
                         h2.smallHeading Viewers also enjoyed 
                     .similarMovies
-                        span Similar Movies Here?
-                    .smallHeadingContainer 
-                        h2.smallHeading Genres
-                        p Genre 1
-                        p Genre 2
-                        p Genre 3
-                        p Genre 4
-                        p Genre 5
-        .mainContent
+                        each oneGenreMovie,index in genreMovies
+                            .movie-item
+                            a(href=`/movies/${oneGenreMovie.id}`)
+                                img(src=`${oneGenreMovie.posterPath}`)  
             .reviewContent
                 .smallHeadingContainer 
                     h2.smallHeading Reviews
                 .reviewContainer
                 .reviewHeader
-                if reviews.length
-                    each singleReview in reviews
-                        span.reviewTitle= singleReview.title
-                        .reviewMeta     
-                            .reviewAuthor= singleReview.userId
-                            .reviewDate= singleReview.createdAt
-                        .smallHeadingContainer
-                                span= singleReview.reviewText
-                    p
+                if userStatus 
+                    if reviews.length
+                        if hasCurrentReview 
+                            span DISPLAYS THEIR CURRENT REVIEW AT THE TOP AND THIS OMITS IT FROM ALL REVIEWS
+                            p
+                        each singleReview in reviews
+                            if singleReview.userId == userStatus
+                                span
+                            else
+                                a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review! 
+                                p
+                                span.reviewTitle= singleReview.title
+                                .reviewMeta     
+                                    .reviewAuthor= `By ${singleReview.User.firstName} ${singleReview.User.lastName}`
+                                    .reviewDate= singleReview.createdAt
+                                .smallHeadingContainer
+                                        span= singleReview.reviewText
+                    else
+                        span.reviewTitle There are currently no reviews
+                        p
+                        a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review!
+
                 else
-                    span.reviewTitle Submit The First Review!
-                    p 
-                    p
+                    if reviews.length    
+                        each singleReview in reviews
+                            if singleReview.userId == userStatus
+                                span
+                            else 
+                                span.reviewTitle= singleReview.title
+                                .reviewMeta     
+                                    .reviewAuthor= `By ${singleReview.User.firstName} ${singleReview.User.lastName}`
+                                    .reviewDate= singleReview.createdAt
+                                .smallHeadingContainer
+                                        span= singleReview.reviewText
+                p 
+                p

@@ -30,7 +30,6 @@ const genres = genresTMDB.map(genre => {
   const name = genre.name;
   genreIdMapper[genre.id] = newId;
   return {
-    id: newId,
     name,
     createdAt,
     updatedAt
@@ -61,7 +60,6 @@ moviesTMDBfiltered.map(movie => {
   titles.add(original_title);
 
   movies.push({
-    "id": newMovieId,
     "title": original_title,
     "dateReleased": release_date,
     "summary": overview,
@@ -76,7 +74,6 @@ moviesTMDBfiltered.map(movie => {
   oldGenreIds.forEach(oldId => {
     joinId += 1;
     moviesGenresJoin.push({
-      id: joinId,
       movieId: newMovieId,
       genreId: genreIdMapper[oldId],
       createdAt,

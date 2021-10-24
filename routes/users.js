@@ -79,16 +79,13 @@ router.post("/signup", csurfProtection, signupValidation, asyncHandler(async fun
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    console.log("BEFORE: I got to this line with no error.");
     const user = await db.User.create({
       email: req.body.email,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       passwordHash: hashedPassword,
     });
-    console.log("AFTER: I got to this line with no error.");
-    console.log(user);
-    console.log("I got to this line with no error.");
+
     loginUser(req, res, user);
     return res.redirect('/');
   }
@@ -140,13 +137,89 @@ router.post('/logout', asyncHandler(async (req, res, next) => {
   return res.redirect("/");
 }))
 
-router.get('/:id(\\d+)/movielists/:id(\\d+)', asyncHandler( async (req, res) => {
+router.get('/:userId(\\d+)/movielists/:movieListId(\\d+)', asyncHandler( async (req, res) => {
+  const movieList = await db.Mo.findByPk(req.params.movieListId);
+    if (!movieList) {
+    next(createError(404))
+  }
+    const userIdOfMovieListOwner = movieList.userId
+    if (userIdOfMovieListOwner == req.session.auth.userId) {
+      //const deletedReview = await db.Review.findByPk(req.params.);
+      // await deletedReview.destroy();
+  
+
+      res.render(`getMovieList`, movieList);
+      
+    }else{
+       res.redirect('http://localhost:8080/users/login');
+
+    }
+}));
+
+router.post('/:id(\\d+)/movielists/', asyncHandler( async (req, res) => {
+
+    const userId = req.params.id;
+    const {
+    name
+  } = req.body 
+
+  const validatorErrors = validationResult(req);
+
+    if (validatorErrors.isEmpty()) {
+      await db.MovieList.create({name, userId});
+    
+      res.redirect(`http://localhost:8080/users/${userId}/movielists/` );
+    } else {
+      const errors = validatorErrors.array().map((error) => error.msg);
+      console.error(errors)
+      res.render('createAMovieList', {
+        name,
+        userId,
+        csrfToken: req.csrfToken(),
+      });
+    }
 
 }));
-router.patch('/:id(\\d+)/movielists/:id(\\d+)/edit', asyncHandler( async (req, res) => {
+router.patch('/:id(\\d+)/movielists/:id(\\d+)/edit',  asyncHandler( async (req, res) => {
+  const userId = req.params.id;
+    const {
+    name
+  } = req.body 
+
+  const validatorErrors = validationResult(req);
+
+    if (validatorErrors.isEmpty()) {
+      await db.MovieList.create({name, userId});
+    
+      res.redirect(`http://localhost:8080/users/${userId}/movielists/` );
+    } else {
+      const errors = validatorErrors.array().map((error) => error.msg);
+      console.error(errors)
+      res.render('createAMovieList', {
+        name,
+        userId,
+        csrfToken: req.csrfToken(),
+      });
+    }
 
 }));
-router.delete('/:id(\\d+)/movielists/:id(\\d+)/delete', asyncHandler( async (req, res) => {
+//Delete the entire movie list
+router.post('/:id(\\d+)/movielists/:id(\\d+)/delete', asyncHandler( async (req, res) => {
+  const movieList = await db.MovieList.findByPk(req.params.movieListId);
+    if (!movieList) {
+    next(createError(404))
+  }
+    const userIdOfMovieListOwner = movieList.userId
+    if (userIdOfMovieListOwner == req.session.auth.userId) {
+      await review.update();
+      await movieList.destroy();
+
+      res.render(`getMovieList`, movieList);
+      
+    }else{
+       res.redirect('http://localhost:8080/users/login');
+
+    }
 
 }));
 

@@ -1,0 +1,122 @@
+
+#reviewButton {
+    display: grid;
+    height: 30px;
+    width: 180px;
+    background: linear-gradient(
+        #f0b083,
+        #382110
+    );
+    position: inline;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    place-items: center;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 3px;
+    border-radius: 5px;
+}
+
+.smallHeadingContainerReview .smallHeading {
+    text-align: center;
+}
+
+.reviewContent .reviewContainer {
+    margin: auto;
+}
+
+form {
+    width: 70%;
+    margin: auto;
+}
+
+form label, input, textarea {
+    display: block;
+    width: 100%
+}
+
+form ul {
+    padding: 0px;
+    margin: 0px;
+}
+
+
+form ul li {
+    /* list-style-type: none; */
+    display: inline-block;
+    margin: 15px;
+}
+
+form ul li:hover{
+    color:#f0b083;
+}
+
+.active, .active_again{
+    color:#f0b083;
+}
+
+form input[type="radio"]:checked+i {
+    color:#f0b083;
+}
+
+.form_wrap {
+    margin-top: 35px; 
+}
+
+.form_wrap .field_wrap {
+    margin-bottom: 15px;
+}
+
+.form_wrap .field_wrap:last-child{
+    margin-bottom: 0px;
+}
+
+.form_wrap .field_wrap label {
+    display: block;
+    margin-bottom: 3px;
+}
+
+.form_wrap .field_group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form_wrap .field_group input {
+    width: 165px;
+}
+
+.form_wrap input {
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #9597a6;
+    padding: 10px;
+    outline: none;
+}
+
+.form_wrap input:focus {
+    border: 2px solid #F2DAA0;
+}
+
+textarea:focus {
+    border: 2px solid #F2DAA0;
+}
+
+.submit_button {
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    cursor: pointer;
+    outline: none;
+    background: #BDBAB5;
+}
+
+.submit_button:hover {
+    background: #F2DAA0;
+}
