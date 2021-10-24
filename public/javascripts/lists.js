@@ -75,6 +75,8 @@ const addList = async (event) => {
   listItem.id = "list-id-" + list.id;
   listItem.className = "listItem";
   listItem.innerText = list.name + " (0)";
+  // add event listener to the newly created list item
+  listItem.addEventListener("click", renderList);
   const sideBarLists = document.getElementById("sidebar_lists");
   sideBarLists.appendChild(listItem);
 

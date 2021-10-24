@@ -10,6 +10,7 @@
 }
 
 #sidebar {
+  border-radius: 10px;
   min-width: 200px;
   padding: 50px;
   margin-right: 20px;
