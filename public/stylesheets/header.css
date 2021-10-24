@@ -77,6 +77,17 @@
   outline: none;
   cursor: pointer;
 }
+
+.search {
+  display: inline-grid;
+  grid-template-columns: repeat(2, auto);
+  width: 500px;
+}
+
+.search .util_btn {
+  font-size: 12px;
+}
+
 .util_btn {
   text-decoration: none;
   background-color: #F4F1EA;

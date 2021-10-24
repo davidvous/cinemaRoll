@@ -61,7 +61,6 @@ function movieUrlFixer(arr){
         if (!relevantMovie) {
             arrayOfMoviesThatArentInAKnownGenre.push(index); // The movie is completely irrelevant, add to array of indices to delete
         }
-        //console.log(movies)
 
 
         let old_path = movie.poster_path;
@@ -70,7 +69,7 @@ function movieUrlFixer(arr){
         movie.poster_path = new_path;
         moviesWeAlreadyHave.add(movie.title) //Add movie to known movies
     }
-    console.log(arrayOfMoviesThatArentInAKnownGenre)
+
     for (let index = arrayOfMoviesThatArentInAKnownGenre.length-1; index >= 0; index--) {
         const indexToPop = arrayOfMoviesThatArentInAKnownGenre[index];
         movies.splice(indexToPop, 1);

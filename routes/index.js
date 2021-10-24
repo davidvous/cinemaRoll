@@ -1,5 +1,6 @@
 const express = require('express');
-
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const db = require("../db/models");
 const { asyncHandler } = require("./utils");
 
@@ -20,6 +21,20 @@ router.get('/', asyncHandler(async (req, res) => {
   }).map(m => m.dataValues);
   console.log(genres);
   res.render('index', { genres, topMovies });
+}));
+
+router.post('/search', asyncHandler(async (req, res) => {
+  const { search } = req.body;
+
+  const results = await db.Movie.findAll({
+    where: {
+      title: {
+        [Op.iLike]: `%${search}%`,
+      },
+    },
+  });
+
+  return res.render('searchResults', { results});
 }));
 
 module.exports = router;

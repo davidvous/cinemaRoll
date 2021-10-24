@@ -48,38 +48,33 @@ block content
                 .reviewContainer
                 .reviewHeader
                 if userStatus 
-                    if reviews.length
-                        if hasCurrentReview 
-                            span DISPLAYS THEIR CURRENT REVIEW AT THE TOP AND THIS OMITS IT FROM ALL REVIEWS
-                            p
-                        each singleReview in reviews
-                            if singleReview.userId == userStatus
-                                span
-                            else
-                                a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review! 
-                                p
-                                span.reviewTitle= singleReview.title
+                    if hasCurrentReview 
+                        span.reviewTitle= hasCurrentReview.Reviews[0].title
                                 .reviewMeta     
-                                    .reviewAuthor= `By ${singleReview.User.firstName} ${singleReview.User.lastName}`
-                                    .reviewDate= singleReview.createdAt
+                                    .reviewAuthor= `By ${hasCurrentReview.firstName} ${hasCurrentReview.lastName}`
+                                    .reviewDate= hasCurrentReview.createdAt
                                 .smallHeadingContainer
-                                        span= singleReview.reviewText
-                    else
-                        span.reviewTitle There are currently no reviews
+                                        span= hasCurrentReview.Reviews[0].reviewText
+                                a(href=`/movies/${movieObj.id}/reviews/${hasCurrentReviewId}/edit` id="reviewButton") Edit your review
+                                br
+                                form(type="submit" method="post" action=`/movies/${movieObj.id}/reviews/${hasCurrentReviewId}/delete` id="formFordelete")
+                                    button(type="submit" id="deleteButton") Delete review
+                                
                         p
-                        a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review!
-
-                else
-                    if reviews.length    
-                        each singleReview in reviews
-                            if singleReview.userId == userStatus
-                                span
-                            else 
-                                span.reviewTitle= singleReview.title
-                                .reviewMeta     
-                                    .reviewAuthor= `By ${singleReview.User.firstName} ${singleReview.User.lastName}`
-                                    .reviewDate= singleReview.createdAt
-                                .smallHeadingContainer
-                                        span= singleReview.reviewText
-                p 
-                p
+                    else
+                        if !reviews.length
+                            span.reviewTitle There are currently no reviews
+                            p
+                            a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review!
+                        else 
+                            a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review!
+                        
+                if reviews.length
+                    each singleReview in reviews
+                        if singleReview.userId != userStatus
+                            span.reviewTitle= singleReview.title
+                                    .reviewMeta     
+                                        .reviewAuthor= `By ${singleReview.User.firstName} ${singleReview.User.lastName}`
+                                        .reviewDate= singleReview.createdAt
+                                    .smallHeadingContainer
+                                            span= singleReview.reviewText

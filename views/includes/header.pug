@@ -20,9 +20,7 @@ header(class="header")
       div
         form(class="search" action="/search" method="post")
           input(type="text" name="search" class="inputfield" placeholder="Search movies" size="50")
-      .blank
-      div
-        i(class="fas fa-search")
+          button(type="submit" class="util_btn") Search
     .blank
     if locals.authenticated
       span Welcome #{user.first_name} #{user.last_name}!

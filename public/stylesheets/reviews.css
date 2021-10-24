@@ -20,6 +20,32 @@
     letter-spacing: 3px;
     border-radius: 5px;
 }
+#formFordelete{
+    display: inline-block;
+}
+
+#deleteButton {
+    display: grid;
+    height: 30px;
+    width: 180px;
+    background: linear-gradient(
+        #f0b083,
+        #382110
+    );
+    position: inline;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    place-items: center;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 3px;
+    border-radius: 5px;
+}
+
 
 .smallHeadingContainerReview .smallHeading {
     text-align: center;

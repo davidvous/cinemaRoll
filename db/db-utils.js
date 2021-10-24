@@ -83,8 +83,6 @@ moviesTMDBfiltered.map(movie => {
 
 });
 
-//console.log(moviesGenresJoin);
-//console.log(movies);
 
 module.exports = {
   genres,
