@@ -9,5 +9,5 @@ mixin validationErrorSummary(errors)
 mixin blockList(arrayOfGenres, index)
     div(id= "genres-"+index)
         each genre in arrayOfGenres
-          a(href= "/genres/"+genre.id)= genre.name
+          a(href= "/genres/"+genre.name)= genre.name
           br
