@@ -34,6 +34,8 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
   const movie = await db.Movie.findByPk(movieId);
   const genreId = await db.genresToMovieJoinTable.findOne({ where: { movieId: movieId}});
   let userStatus = 0;
+  let hasCurrentReview = 1;
+  // will rewrite this to actually check but hardcoding for now
 
   if (!movie) {
     next(createError(404));
@@ -50,19 +52,22 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     });
   });
 
-  let userId
-  let previouslyReviewedByLoggedInUser
+  // let previouslyReviewedByLoggedInUser
    if (req.session.auth) {
-    userId = req.session.auth.userId;
-    previouslyReviewedByLoggedInUser = await db.User.findAll({
-    include: { model: db.Review, where: { movieId: movieId, userId: userId } },
-  });
-  previouslyReviewedByLoggedInUser = previouslyReviewedByLoggedInUser[0]
-  }else{
-    previouslyReviewedByLoggedInUser = false
 
-  }
+    // this line sets userStatus either to 0 or their userId. Pug will interpret false or render accordingly
+    userStatus = req.session.auth.userId;
+   }
 
+  //   previouslyReviewedByLoggedInUser = await db.User.findAll({
+  //   include: { model: db.Review, where: { movieId: movieId, userId: userId } },
+  // });
+  // previouslyReviewedByLoggedInUser = previouslyReviewedByLoggedInUser[0]
+  // }else{
+  //   previouslyReviewedByLoggedInUser = false
+
+  // }
+   console.log (reviews);
 
 
 
@@ -81,8 +86,8 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     ratingDecimal,
     reviews,
     userStatus,
-    previouslyReviewedByLoggedInUser,
-    genreMovies
+    genreMovies,
+    hasCurrentReview
   });
 }));
 
