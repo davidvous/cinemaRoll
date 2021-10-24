@@ -4,25 +4,20 @@
 }
 
 #mymovies_container {
+  padding-top: 30px;
   display: flex;
   flex-direction: row;
-  background-color: red;
 }
 
 #sidebar {
   min-width: 200px;
-
-  background-color: lightblue;
+  padding: 50px;
+  margin-right: 20px;
+  background-color: #F4F1EA;
 }
 
 #sidebar_label {
-  display: flex;
-  justify-content: center;
-  background-color: yellow;
-}
-
-#movie_container {
-
+  padding-bottom: 5px;
 }
 
 .listItem:hover {
@@ -35,18 +30,27 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px blue solid;
+  padding-bottom: 20px;
 }
 
 input.util_btn {
+  margin-top: 5px;
   min-height: 30px;
   border-radius: 5px;
+  border: 1px solid gray;
+  max-width: 120px;
 }
 
-/* not selecting -- abandon for time
-#sidebar input.listName {
-  min-height: 100px;
+#sidebar form > #listName {
+  min-height: 30px;
   border-radius: 5px;
-  border: 1px red solid;
+  border: 1px solid gray;
 }
-*/
+
+#sidebar form {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
