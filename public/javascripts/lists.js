@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', async event => {
   const addListButton = document.getElementById("addListButton");
   addListButton.addEventListener("click", addList);
 
+  // add listeners to delete buttons on initial load
+  const deleteMovieButtons = document.getElementsByClassName("delete_btn");
+  Array.from(deleteMovieButtons).forEach(btn => btn.addEventListener("click", deleteMovie));
 });
 
 
@@ -21,7 +24,7 @@ const renderList = async (event) => {
 
   const movies = await res.json();
   if (movies.length) {
-    renderPosters(movies);
+    renderPosters(movies, listId);
   } else {
     const movieContainer = document.getElementById("top_movies_grid-4");
     movieContainer.innerText = "No movies in the list"
@@ -38,12 +41,12 @@ const renderList = async (event) => {
   const buttonContainer = document.getElementById("delete_list_button_container");
   buttonContainer.innerHTML = '';
   // for normal lists, re-render Delete List button with the list id, next to the H1 element
-  if (listId !== "all") addDeleteButtonToListRender(listId);
+  if (listId !== "all") addDeleteListButton(listId);
 
 };
 
 
-const addDeleteButtonToListRender = (listId) => {
+const addDeleteListButton = (listId) => {
   const delForm    = document.createElement("form");
   const delButton  = document.createElement("input");
   // populate components with attributes
@@ -63,8 +66,7 @@ const addDeleteButtonToListRender = (listId) => {
 }
 
 
-const renderPosters = (movies) => {
-  console.log(movies);
+const renderPosters = (movies, listId) => {
   // create new elements
   const movieCards = []
   movies.forEach(movie => {
@@ -76,10 +78,11 @@ const renderPosters = (movies) => {
     const delForm    = document.createElement("form");
     const delButton  = document.createElement("input");
     // populate components with attributes
-    delButton.id    = "deleteMovieFromListButton-" + id;
+    delButton.id    = "deleteMovieFromListButton-" + listId + "-" + id;
     delButton.value = "Remove";
     delButton.type  = "button";
     delButton.className = "util_btn";
+    delButton.addEventListener("click", deleteMovie);
     image.src = posterPath;
     navigation.href = "/movies/" + id
 
@@ -87,7 +90,6 @@ const renderPosters = (movies) => {
     // assemble components together
     navigation.appendChild(image);
     wrapper.appendChild(navigation);
-
     delForm.appendChild(delButton);
     wrapper.appendChild(delForm);
 
@@ -132,9 +134,6 @@ const addList = async (event) => {
 }
 
 
-//const deleteListButton = document.getElementById("deleteListButton");
-//deleteListButton.addEventListener("click",
-
 const deleteList = async (event) => {
   const listId = document.querySelector("#delete_list_button_container input").id.split("-")[1];
   console.log("list del", listId);
@@ -161,6 +160,15 @@ const deleteList = async (event) => {
 };
 
 
-const removeMovie = async (event) => {
-  if (event) movieId = event.target.id.split("-")[1];
-}
+const deleteMovie = async (event) => {
+  const [listId, movieId] = event.target.id.split("-").slice(-2);
+  console.log(movieId);
+  console.log(listId);
+  let res = await fetch('/lists/movie', {
+    method: "delete",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ movieId, listId })
+  });
+
+};
+

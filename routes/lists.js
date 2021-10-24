@@ -92,14 +92,47 @@ router.get('/:listId', asyncHandler(async (req, res) => {
     });
     movies.push(...list.Movies);
   }
-
-  //if (!movies.length) res.json({"message": "List doesn't have any movies in it."});
   res.json(movies);
 }));
 
 
-router.patch('/:listId/add/:movieId', asyncHandler(async (req, res) => {
-
+router.delete('/movie', asyncHandler(async (req, res) => {
+  // if list id is string "all", will delete from all lists
+  // this is not intended functionality.... will redo later
+  const userId = 1;
+  const { movieId, listId } = req.body;
+  let isDeleted = false;
+  if (listId === "all") {
+    // Going to table this for now, finish other stuff first
+    //
+    // This block was supposed to enable deleting from the "All page"
+    // I can already delete from the list-specific page, so I think I am ok
+    // I can just disable the delete buttons or something on the main page.
+    //
+    // FML -- the join table needs to be configures for associations
+    // before I can do this in a single call
+    // for now, a hack:
+    //const lists = await db.MovieList.findAll({
+    //  where: { userId },
+    //  include: [{ model: db.Movie }]
+    //});
+    //console.log(lists);
+    //firstList = lists.find(L => L.Movies.find(m => m.id === movieId));
+    //console.log("sup", firstList.id);
+    //console.log("---------------");
+    //isDeleted = await db.ListToMoviesJoinTable.destroy({
+    //  where: { movieId },
+    //  include: {
+    //    model: db.User,
+    //    where: { id: 1 }
+    //  }
+    //});
+  } else {
+    isDeleted = await db.ListToMoviesJoinTable.destroy({
+      where: { movieListId: listId , movieId}
+    });
+  }
+  return res.json({ isDeleted });
 }));
 
 
