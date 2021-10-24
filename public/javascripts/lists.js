@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', async event => {
 
 const renderList = async (event) => {
   // there is gotta be a better way to do this (stick into a form and get action?)
-  const listId = event.target.id.split("-")[1];
+  let listId;
+  if (event) listId = event.target.id.split("-")[1];
+  else listId = "all";
   console.log(listId);
   const res = await fetch('/lists' + "/" + listId);
 
@@ -27,7 +29,7 @@ const renderList = async (event) => {
 
   // bleh -- I don't have the list name from the back end
   // just fetch it from the link inner text
-  const listTitle = event.target.innerText.split(" (")[0];
+  const listTitle = event ? event.target.innerText.split(" (")[0] : "All";
   // set H2 to title of list
   const listTitleElement = document.getElementById("list_title_text");
   listTitleElement.innerText = "Browsing List: " + listTitle;
@@ -148,9 +150,12 @@ const deleteList = async (event) => {
   // if success, remove corresponding list div from DOM
   if (isDeleted) {
     console.log("hello");
-    const listItem = document.getElementById("list-id-" + listId);
+    console.log(listId);
+    const listItem = document.getElementById("list-" + listId);
     console.log(listItem);
     listItem.remove();
+    // and then re-render the "all" lists
+    renderList(null);
   }
 
 };
