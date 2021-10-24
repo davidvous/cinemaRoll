@@ -76,9 +76,7 @@ router.get('/:listId', asyncHandler(async (req, res) => {
     movies.push(...list.Movies);
   }
 
-  if (!movies.length)
-    res.json({"message": "List doesn't have any movies in it."});
-
+  //if (!movies.length) res.json({"message": "List doesn't have any movies in it."});
   res.json(movies);
 }));
 

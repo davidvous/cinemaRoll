@@ -17,12 +17,11 @@ const renderList = async (event) => {
   const res = await fetch('/lists' + "/" + listId);
 
   const movies = await res.json();
-  if (movies.message) {
-    //listDisplay.innerText = content.message;
-    console.log("hello");
-  } else {
-    console.log(movies);
+  if (movies.length) {
     renderPosters(movies);
+  } else {
+    const movieContainer = document.getElementById("top_movies_grid-4");
+    movieContainer.innerText = "No movies in the list"
   }
 };
 

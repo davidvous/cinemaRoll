@@ -29,3 +29,16 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+.movie_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px blue solid;
+}
+
+input.util_btn {
+  min-height: 30px;
+  border-radius: 5px;
+}
