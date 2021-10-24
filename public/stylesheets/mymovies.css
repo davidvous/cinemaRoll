@@ -42,3 +42,11 @@ input.util_btn {
   min-height: 30px;
   border-radius: 5px;
 }
+
+/* not selecting -- abandon for time
+#sidebar input.listName {
+  min-height: 100px;
+  border-radius: 5px;
+  border: 1px red solid;
+}
+*/

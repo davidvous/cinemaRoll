@@ -18,7 +18,7 @@ block content
           div(class="listItem" id="list-"+list.id) #{list.name} (#{list.Movies.length})
       form
         input(type="text", name="listName" id="listName" placeholder="new list name")
-        input(id="addListButton" type="button" value="Add List")
+        input(id="addListButton" class="util_btn" type="button" value="Add List")
 
     div#movie_container
       //include includes/list-routes-test.pug
