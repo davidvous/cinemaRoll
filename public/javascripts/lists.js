@@ -24,6 +24,13 @@ const renderList = async (event) => {
     const movieContainer = document.getElementById("top_movies_grid-4");
     movieContainer.innerText = "No movies in the list"
   }
+
+  // bleh -- I don't have the list name from the back end
+  // just fetch it from the link inner text
+  const listTitle = event.target.innerText.split(" (")[0];
+  // set H2 to title of list
+  const listTitleElement = document.getElementById("list_title_text");
+  listTitleElement.innerText = "Browsing List: " + listTitle;
 };
 
 
@@ -37,12 +44,24 @@ const renderPosters = (movies) => {
     const wrapper    = document.createElement("div");
     const navigation = document.createElement("a");
     const image      = document.createElement("img");
+    const delForm    = document.createElement("form");
+    const delButton  = document.createElement("input");
     // populate components with attributes
+    delButton.id    = "deleteMovieFromListButton-" + id;
+    delButton.value = "Remove";
+    delButton.type  = "button";
+    delButton.className = "util_btn";
     image.src = posterPath;
     navigation.href = "/movies/" + id
+
+
     // assemble components together
     navigation.appendChild(image);
-    wrapper.append(navigation);
+    wrapper.appendChild(navigation);
+
+    delForm.appendChild(delButton);
+    wrapper.appendChild(delForm);
+
     wrapper.className = "movie_wrapper"
     movieCards.push(wrapper);
   });
