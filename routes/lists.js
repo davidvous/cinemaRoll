@@ -3,7 +3,7 @@ const { check, validationResult } = require('express-validator');
 
 const db = require('../db/models');
 const { loginUser, logoutUser } = require('../auth');
-const {csurfProtection, asyncHandler} = require('./utils')
+const { csurfProtection, asyncHandler } = require('./utils')
 
 
 const router = express.Router();
@@ -24,9 +24,9 @@ router.get('/', asyncHandler(async (req, res) => {
     include: [{ model: db.Movie }]
   })
   const movies = []
-  lists.forEach(list => movies.push(...list.Movies) );
+  lists.forEach(list => movies.push(...list.Movies));
   const message = movies.length ? "" : "No movies & no lists"
-  res.render('mymovies', { movies, lists, message});
+  res.render('mymovies', { movies, lists, message });
 }));
 
 
@@ -42,7 +42,7 @@ router.post('/', asyncHandler(async (req, res) => {
     createdAt: new Date(),
     updatedAt: new Date()
   });
-  res.json({list})
+  res.json({ list })
 }));
 
 
@@ -69,7 +69,7 @@ router.delete('/', asyncHandler(async (req, res) => {
   });
   console.log("i got here.");
   console.log(isDeleted);
-  res.json({isDeleted})
+  res.json({ isDeleted })
 }));
 
 
