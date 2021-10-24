@@ -64,7 +64,7 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
   });
   hasCurrentReview = hasCurrentReview[0] // Will evaluate to the users review if it exists. Else its a falsy value
   if (hasCurrentReview) {
-    console.log(hasCurrentReview)
+
     hasCurrentReviewId = hasCurrentReview.Reviews[0].id
   }
   }
@@ -84,8 +84,6 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     limit: 9,
     include: { model: db.Genre, where: { id: genreId.genreId } },
   });
-
-  console.log(hasCurrentReview, "LOKKKKKKKKKKKKKKKKKKKKK")
 
   res.render("movies", {
     movieObj: movie,
@@ -194,7 +192,7 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
       //const review = await db.Review.create({title, reviewText, movieId, userId, userRating})
 
     try {
-      console.log("YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+
       const newMovieId = parseInt(req.params.id, 10)
       const newUserRating = parseInt(userRating, 10)
       const newUserId = parseInt(userId, 10)
@@ -205,9 +203,9 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
 } catch (err) {
   // print the error details
 
-    console.log('**********************')
-    console.log(err)
-    console.log('**********************')
+    // console.log('**********************')
+    // console.log(err)
+    // console.log('**********************')
       res.redirect(`/movies/${movieId}/` );
 
     } 
@@ -402,8 +400,8 @@ router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/', csurfProtection, movieValidat
       userRating
     };
       await specificReview.update(review);
-      console.log("LINEEEEEEEEEEEEEE 379");
-      console.log(review)
+      // console.log("LINEEEEEEEEEEEEEE 379");
+      // console.log(review)
 
 
       res.redirect(`/movies/${movieId}/`);
@@ -423,7 +421,7 @@ router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/', csurfProtection, movieValidat
 //DONE: ROUTE DELETES REVIEW
 router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/delete',  asyncHandler(async (req, res, next) => {
     const movieId = req.params.id
-    console.log("req.params.userId", req.params.userId)
+    // console.log("req.params.userId", req.params.userId)
     const review = await db.Review.findByPk(req.params.reviewId)
     if (!review) {
     next(createError(404))
