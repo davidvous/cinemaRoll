@@ -35,6 +35,7 @@ router.post('/', asyncHandler(async (req, res) => {
   const { authenticated, user } = res.locals;
   // need user auth check
   const { listName } = req.body
+  console.log("creating list", listName);
   const list = await db.MovieList.create({
     name: listName,
     userId: 1,
@@ -46,12 +47,28 @@ router.post('/', asyncHandler(async (req, res) => {
 
 
 router.delete('/', asyncHandler(async (req, res) => {
+  console.log("hey");
   const { authenticated, user } = res.locals;
   // need user auth check
   const { listId } = req.body
+  console.log("backend", listId);
+  // deleting db.MovieList directly is giving me FK errors
+  // I can figure out why later
+  // for now, just pop the records off the join table,
+  // then off the main table
+  //
+  //
+  // Reminder: I think that's the issue they talked about
+  // if you reseed without dropping first, there is some internal sequelize
+  // metadata related to id tracking that doesn't get deleted.
+  await db.ListToMoviesJoinTable.destroy({
+    where: { movieListId: listId }
+  });
   const isDeleted = await db.MovieList.destroy({
     where: { id: listId }
   });
+  console.log("i got here.");
+  console.log(isDeleted);
   res.json({isDeleted})
 }));
 

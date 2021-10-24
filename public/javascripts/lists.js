@@ -50,10 +50,14 @@ const addDeleteButtonToListRender = (listId) => {
   delButton.type  = "button";
   delButton.className = "util_btn";
   delForm.appendChild(delButton);
+  // add a listener
+  delForm.addEventListener("click", deleteList);
+
   // add button next to the list title
   const buttonContainer = document.getElementById("delete_list_button_container");
   buttonContainer.innerHTML = '';
   buttonContainer.appendChild(delForm);
+
 }
 
 
@@ -130,16 +134,17 @@ const addList = async (event) => {
 //deleteListButton.addEventListener("click",
 
 const deleteList = async (event) => {
-  const listId = document.getElementById("listId-delete").value;
+  const listId = document.querySelector("#delete_list_button_container input").id.split("-")[1];
+  console.log("list del", listId);
   let res = await fetch('/lists', {
     method: "DELETE",
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ listId})
+    body: JSON.stringify({ listId })
   });
   let content = await res.json();
 
   const { isDeleted } = content;
-
+  console.log("is deleted", isDeleted);
   // if success, remove corresponding list div from DOM
   if (isDeleted) {
     console.log("hello");
