@@ -72,7 +72,7 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
 
 
 
-  
+
 
   /// Pulling "similar movies"
   const genreMovies = await db.Movie.findAll({
@@ -81,13 +81,36 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     include: { model: db.Genre, where: { id: genreId.genreId } },
   });
 
+
+  // ilya-start
+  // get user's existing lists
+  let movieLists = null;
+  let inListIndex = 0;
+  if (true) {
+    movieLists = await db.MovieList.findAll({
+      where: { userId: 1 },
+      include: [{ model: db.Movie }]
+    }) //req.session.auth.userId });
+    // check if movie id appears in any of the lists
+    movieLists.forEach((list, index) => {
+      if (list.Movies.length) {
+        list.Movies.forEach(movie => {
+          if (movie.id == movieId) inListIndex = index + 1; // +1 is to account for --none--
+        })
+      }
+    })
+  }
+  userStatus = 1;
+  // ilya-end
   res.render("movies", {
     movieObj: movie,
     ratingDecimal,
     reviews,
     userStatus,
     genreMovies,
-    hasCurrentReview
+    hasCurrentReview,
+    movieLists,
+    inListIndex
   });
 }));
 
@@ -107,7 +130,7 @@ router.get('/:id(\\d+)/reviews/', asyncHandler( async (req, res, next) => {
 //   where:{
 //     "userId" : usersId
 //   }
-  
+
 // }).then(res => {
 //     return res.map(row => {
 //       return row.dataValues
@@ -120,7 +143,7 @@ router.get('/:id(\\d+)/reviews/', asyncHandler( async (req, res, next) => {
 //   //   "movieId" : movieId,
 //   //   "userId" : {[Op.not]: req.params.userId}
 //   // }
-  
+
 // }).then(res => {
 //     return res.map(row => {
 //       return row.dataValues
@@ -136,7 +159,7 @@ router.get('/:id(\\d+)/reviews/', asyncHandler( async (req, res, next) => {
   where:{
     "id" : req.params.id
   }
-  
+
 }).then(res => {
     return res.map(row => {
       return row.dataValues
@@ -151,20 +174,20 @@ const {popularity, dateReleased, title, summary, poster_path, Reviews} = allRevi
 
 
 res.render("reviewsForMovieWithId", {popularity, dateReleased, title, summary, poster_path, Reviews} )
-  
+
 
 
 }));
 
 
-//THE POST ROUTE ISNT WORKING? I GET A VALIDATION ERROR. I'M NOT SURE WHY 
+//THE POST ROUTE ISNT WORKING? I GET A VALIDATION ERROR. I'M NOT SURE WHY
 router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandler( async (req, res) => {
- 
+
   //Add a new review for a given movie
   if (!req.session.auth) {
     //req.session.redirectTo =
     res.redirect("/users/login/");
-    
+
   }
   const movieId = Number(req.params.id)
 
@@ -176,13 +199,13 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
     title,
     reviewText,
     userRating
-  } = req.body 
+  } = req.body
 
   const validatorErrors = validationResult(req);
 
     if (validatorErrors.isEmpty()) {
       //await db.Review.create({title, reviewText, movieId, userId, userRating})
-      
+
       //const review = await db.Review.create({title, reviewText, movieId, userId, userRating})
 
     try {
@@ -202,7 +225,7 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
     console.log('**********************')
       res.redirect(`/movies/${movieId}/` );
 
-    } 
+    }
       const errors = validatorErrors.array().map((error) => error.msg);
       console.error(errors)
       res.render('addMovieReview', {
@@ -235,7 +258,7 @@ router.get('/:id(\\d+)/reviews/new/', csurfProtection, asyncHandler( async (req,
   if (!req.session.auth) {
 
     res.redirect(`/users/login/`)
-    
+
   }
   const movie = await db.Movie.findByPk(movieId);
   const ratingDecimal = (movie.popularity / 1000).toFixed(2);
@@ -269,7 +292,7 @@ router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandl
     if (!review) {
     next(createError(404))
   }
-  
+
     const userIdOfMovieReviewer = review.userId
     //http://localhost:8080/movies/3/reviews/2/edit
     //userIdOfMovieReviewer
@@ -278,15 +301,15 @@ router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandl
 
     if (req.session.auth && userIdOfMovieReviewer == req.session.auth.userId) {
       let reviewToEdit = await db.Review.findByPk(req.params.reviewId);
-    
+
       reviewToEdit=reviewToEdit.dataValues
-      
+
       res.render("reviewEditForm", {csrfToken: req.csrfToken(), reviewToEdit, movieId, reviewId});
-      
-      
+
+
     }else{
-      res.redirect("/users/login")       
-    
+      res.redirect("/users/login")
+
     }
 
 
@@ -306,15 +329,15 @@ router.put('/:id(\\d+)/reviews/:reviewId(\\d+)/edit', csurfProtection, movieVali
 
 
       res.redirect(`/movies/${movieId}/reviews/`);
-      
+
     }else{
        res.redirect('/users/login');
 
     }
 
 
-  
-  
+
+
 
 }));
 
@@ -333,14 +356,14 @@ router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/delete',  asyncHandler(async (re
       // await deletedReview.destroy();
       await review.destroy();
       res.redirect(`/movies/${movieId}/reviews/`);
-      
+
     }else{
        res.redirect('/users/login');
 
     }
 
 
-    
+
   }));
 
 

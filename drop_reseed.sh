@@ -1,4 +1,4 @@
-#may have to log off psql first
+# ! have to log off psql first
 npx dotenv sequelize-cli db:drop
 npx dotenv sequelize-cli db:create
 #npx dotenv sequelize-cli db:seed:undo:all

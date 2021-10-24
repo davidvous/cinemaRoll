@@ -136,4 +136,47 @@ router.delete('/movie', asyncHandler(async (req, res) => {
 }));
 
 
+router.post('/movie/add', asyncHandler(async (req, res) => {
+  const userId = 1
+  console.log("1234");
+  const { movieListId, movieId } = req.body;
+  console.log("backend, movie id------", movieId);
+  console.log("backend, movie list id-", movieListId);
+
+  // we need to ensure the user can't add the movie to more than one list at a time
+  // this is not the intended functionality, just a fix for now,
+  // for the front-end that doesn't support multipule lists
+
+  // find all of user's movie lists (if we set up associations, we could do it via sequelize)
+  // and purge the movie from all of them
+  // this will ensure that the user can only add the movie to one list at a time
+  // this is a backwards way of ensuring a use can only add a movie to one list at a time
+  const lists = await db.MovieList.findAll({
+    where: { userId },
+    include: [{ model: db.Movie }]
+  })
+  lists.forEach(list => {
+    list.Movies.forEach(async movie => {
+      if (movie.id == movieId) {
+        // how do i do this in bulk?
+        await db.ListToMoviesJoinTable.destroy({
+          where: {movieListId: list.id, movieId: movie.id}
+        });
+      };
+    });
+  });
+
+  // now push the movie into the list, if the movie list id was provided
+  // it won't be provided if "---none---" was selected in dropdown
+  if (movieListId) {
+    const newRecord = await db.ListToMoviesJoinTable.create({
+      movieListId,
+      movieId,
+    });
+  }
+  console.log("now, here");
+
+  return res.json({ isSuccess: true });
+}));
+
 module.exports = router;

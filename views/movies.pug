@@ -2,6 +2,7 @@ extends layout
 include utils.pug
 append head
     link(rel="stylesheet" href="/stylesheets/reviews.css")
+    script(src='/javascripts/movies.js')
 
 block content
     .mainContentContainer 
@@ -11,7 +12,17 @@ block content
                     #topcolumn(class="col")
                         #imagecolumn(class="col") 
                             img(src=`${movieObj.posterPath}`)
-                            p Movie Lists (add or remove)
+                            if userStatus
+                              p Create a new list on the My Movies page
+                              if movieLists
+                                div On Watch List:
+                                // don't add any more classes to line below, or it will break event listener
+                                select(name="movieLists", id="movieListsSelect", class="movieId-"+movieObj.id)
+                                  option(value="" selected = inListIndex == 0 ? true : false) ---none---
+                                  each list, index in movieLists
+                                    option(value=list.id selected = inListIndex - 1 == index ? true : false)= list.name
+                            else
+                              p Log In to bookmark movies
                             .smallHeadingcontainer 
                             h2.smallHeading Popularity 
                             span= `${ratingDecimal} out of 10`
