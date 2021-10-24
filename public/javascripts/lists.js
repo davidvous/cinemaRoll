@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async event => {
 const renderList = async (event) => {
   // there is gotta be a better way to do this (stick into a form and get action?)
   const listId = event.target.id.split("-")[1];
+  console.log(listId);
   const res = await fetch('/lists' + "/" + listId);
 
   const movies = await res.json();
@@ -72,7 +73,7 @@ const addList = async (event) => {
 
   // create new list item with the list name and id
   const listItem = document.createElement("div");
-  listItem.id = "list-id-" + list.id;
+  listItem.id = "list-" + list.id;
   listItem.className = "listItem";
   listItem.innerText = list.name + " (0)";
   // add event listener to the newly created list item
