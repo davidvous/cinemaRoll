@@ -86,9 +86,9 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
   // get user's existing lists
   let movieLists = null;
   let inListIndex = 0;
-  if (true) {
+  if (userStatus) {
     movieLists = await db.MovieList.findAll({
-      where: { userId: 1 },
+      where: { userId: res.locals.user.id },
       include: [{ model: db.Movie }]
     }) //req.session.auth.userId });
     // check if movie id appears in any of the lists
@@ -100,7 +100,6 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
       }
     })
   }
-  userStatus = 1;
   // ilya-end
   res.render("movies", {
     movieObj: movie,

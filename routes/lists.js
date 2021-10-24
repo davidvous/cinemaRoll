@@ -12,15 +12,24 @@ const router = express.Router();
 //TODO: middleware to redirect users who are not logged in
 
 
+// hide router from un-auth'ed users
+const redirect = (req, res, next) => {
+  if (!res.locals.authenticated) {
+    return res.redirect('/users/login');
+  } else {
+    next()
+    return
+  }
+}
+router.use(redirect);
+
+
+// render user's list page on initial load
 router.get('/', asyncHandler(async (req, res) => {
 
   const { authenticated, user } = res.locals;
-  if (!authenticated || !user) {
-    //return res.redirect('/users/login');
-  }
-
   const lists = await db.MovieList.findAll({
-    where: { userId: 1 },
+    where: { userId: user.id },
     include: [{ model: db.Movie }]
   })
   const movies = []
@@ -30,15 +39,14 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 
-// creates list of movies for user
+// create new list for user
 router.post('/', asyncHandler(async (req, res) => {
   const { authenticated, user } = res.locals;
-  // need user auth check
   const { listName } = req.body
   console.log("creating list", listName);
   const list = await db.MovieList.create({
     name: listName,
-    userId: 1,
+    userId: user.id,
     createdAt: new Date(),
     updatedAt: new Date()
   });
@@ -46,42 +54,37 @@ router.post('/', asyncHandler(async (req, res) => {
 }));
 
 
+// delete watch list by watch list id
+//
+// deleting db.MovieList directly is giving me FK errors
+// I can figure out why later
+// for now, just pop the records off the join table,
+// then off the main table
+//
+//
+// Reminder: I think that's the issue they talked about
+// if you reseed without dropping first, there is some internal sequelize
+// metadata related to id tracking that doesn't get deleted.
 router.delete('/', asyncHandler(async (req, res) => {
-  console.log("hey");
-  const { authenticated, user } = res.locals;
-  // need user auth check
   const { listId } = req.body
-  console.log("backend", listId);
-  // deleting db.MovieList directly is giving me FK errors
-  // I can figure out why later
-  // for now, just pop the records off the join table,
-  // then off the main table
-  //
-  //
-  // Reminder: I think that's the issue they talked about
-  // if you reseed without dropping first, there is some internal sequelize
-  // metadata related to id tracking that doesn't get deleted.
   await db.ListToMoviesJoinTable.destroy({
     where: { movieListId: listId }
   });
   const isDeleted = await db.MovieList.destroy({
     where: { id: listId }
   });
-  console.log("i got here.");
-  console.log(isDeleted);
   res.json({ isDeleted })
 }));
 
 
+// get watch list by id
 router.get('/:listId', asyncHandler(async (req, res) => {
-
+  const { authenticated, user } = res.locals;
   const movies = [];
-  // this is BAD!! pressed for time rn, sorry future me
-  // this should go into GET lists/ with application-type/json if-else check
-  // and then the front end "#list-all" will need its listeners / id adjusted
+  // this id = "all" thing is bad TODO
   if (req.params.listId === "all") {
     lists = await db.MovieList.findAll({
-      where: { userId: 1 },
+      where: { userId: user.id },
       include: [{ model: db.Movie }]
     });
     lists.forEach(list => movies.push(...list.Movies));
@@ -96,52 +99,22 @@ router.get('/:listId', asyncHandler(async (req, res) => {
 }));
 
 
+// delete movie from list
 router.delete('/movie', asyncHandler(async (req, res) => {
-  // if list id is string "all", will delete from all lists
-  // this is not intended functionality.... will redo later
-  const userId = 1;
+  const { authenticated, user } = res.locals;
   const { movieId, listId } = req.body;
   let isDeleted = false;
-  if (listId === "all") {
-    // Going to table this for now, finish other stuff first
-    //
-    // This block was supposed to enable deleting from the "All page"
-    // I can already delete from the list-specific page, so I think I am ok
-    // I can just disable the delete buttons or something on the main page.
-    //
-    // FML -- the join table needs to be configures for associations
-    // before I can do this in a single call
-    // for now, a hack:
-    //const lists = await db.MovieList.findAll({
-    //  where: { userId },
-    //  include: [{ model: db.Movie }]
-    //});
-    //console.log(lists);
-    //firstList = lists.find(L => L.Movies.find(m => m.id === movieId));
-    //console.log("sup", firstList.id);
-    //console.log("---------------");
-    //isDeleted = await db.ListToMoviesJoinTable.destroy({
-    //  where: { movieId },
-    //  include: {
-    //    model: db.User,
-    //    where: { id: 1 }
-    //  }
-    //});
-  } else {
-    isDeleted = await db.ListToMoviesJoinTable.destroy({
-      where: { movieListId: listId , movieId}
-    });
-  }
+  isDeleted = await db.ListToMoviesJoinTable.destroy({
+    where: { movieListId: listId , movieId}
+  });
   return res.json({ isDeleted });
 }));
 
 
+// add movie to list
 router.post('/movie/add', asyncHandler(async (req, res) => {
-  const userId = 1
-  console.log("1234");
+  const { authenticated, user } = res.locals;
   const { movieListId, movieId } = req.body;
-  console.log("backend, movie id------", movieId);
-  console.log("backend, movie list id-", movieListId);
 
   // we need to ensure the user can't add the movie to more than one list at a time
   // this is not the intended functionality, just a fix for now,
@@ -152,7 +125,7 @@ router.post('/movie/add', asyncHandler(async (req, res) => {
   // this will ensure that the user can only add the movie to one list at a time
   // this is a backwards way of ensuring a use can only add a movie to one list at a time
   const lists = await db.MovieList.findAll({
-    where: { userId },
+    where: { userId: user.id },
     include: [{ model: db.Movie }]
   })
   lists.forEach(list => {
@@ -174,7 +147,6 @@ router.post('/movie/add', asyncHandler(async (req, res) => {
       movieId,
     });
   }
-  console.log("now, here");
 
   return res.json({ isSuccess: true });
 }));
