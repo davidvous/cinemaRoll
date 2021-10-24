@@ -1,7 +1,9 @@
 include utils.pug
 
+h2(class="search-header" id="search-header") Search and browse movies
 div(id="genre-container")
-  h2(class="search-header" id="search-header") Search and browse movies
-  input(id="search" class="search-bar" placeholder="Search for a movie.")
+  form(class="search" action="/search" method="post")
+          input(type="text" name="search" class="inputfield" placeholder="Search movies" size="50")
+          button(type="submit" class="bottomSearchBtn") Search
   each genreArray, index in genres
     +blockList(genreArray, index+1)
