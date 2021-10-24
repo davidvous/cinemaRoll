@@ -79,8 +79,9 @@
 }
 
 .search {
-  display: grid;
+  display: inline-grid;
   grid-template-columns: repeat(2, auto);
+  width: 500px;
 }
 
 .search .util_btn {
