@@ -159,3 +159,8 @@ const deleteList = async (event) => {
   }
 
 };
+
+
+const removeMovie = async (event) => {
+  if (event) movieId = event.target.id.split("-")[1];
+}

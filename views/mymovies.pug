@@ -12,7 +12,8 @@ block content
     div#sidebar
       h1#sidebar_label Watch Lists
       div#sidebar_lists
-        div(class="listItem" id="list-all") All (#{lists.map(L => L.Movies.length).reduce((p, c) => p + c)})
+        div(class="listItem" id="list-all") All
+        //(#{lists.map(L => L.Movies.length).reduce((p, c) => p + c)})
         each list in lists
           div(class="listItem" id="list-"+list.id) #{list.name} (#{list.Movies.length})
       form
@@ -24,7 +25,7 @@ block content
       div#list_title
         H1#list_title_text Browsing List: All
         div#delete_list_button_container
-      div#top_movies_grid-4
+      div#top_movies_grid-4 #{message}
         each movie in movies
           div.movie_wrapper
             a(href= "/movies/"+movie.id)

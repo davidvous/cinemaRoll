@@ -25,8 +25,8 @@ router.get('/', asyncHandler(async (req, res) => {
   })
   const movies = []
   lists.forEach(list => movies.push(...list.Movies) );
-
-  res.render('mymovies', { movies, lists});
+  const message = movies.length ? "" : "No movies & no lists"
+  res.render('mymovies', { movies, lists, message});
 }));
 
 
