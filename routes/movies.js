@@ -353,7 +353,7 @@ router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandl
 //NEED TO DETERMINE CAUSE OF SEQUELIZE VALIDATION ERROR
 router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/', csurfProtection, movieValidators, asyncHandler( async (req, res) => {
   //Edit a specific movie review
-  console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+ 
 
   const specificReview = await db.Review.findByPk(req.params.reviewId)
     if (!specificReview) {
@@ -408,7 +408,7 @@ router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/delete',  asyncHandler(async (re
       //const deletedReview = await db.Review.findByPk(req.params.);
       // await deletedReview.destroy();
       await review.destroy();
-      res.redirect(`/movies/${movieId}/reviews/`);
+      res.redirect(`/movies/${movieId}/`);
       
     }else{
        res.redirect('/users/login');
