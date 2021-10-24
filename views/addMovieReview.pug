@@ -36,46 +36,57 @@ block content
                 .smallHeadingContainerReview 
                     h2.smallHeading Leave Your Review!
                 .reviewContainer
-                    form(type="submit" method="post" action=`/movies/${movieId}/reviews`)
-                        .form_wrap
-                            .field_group
-                            input(type='hidden' name='_csrf' value=csrfToken)
-                            div(class="form-field field_wrap")
-                                label(for="email") Review title:
-                            .field_group 
-                            div(class="form-field field_wrap")
-                                input(type="text", name="title" placeholder="Enter the title of your review.") 
-                            .field_group
-                            div(class="form-field field_wrap")
-                                label(for="email") What did you think of this movie?
-                            div(class="form-field field_wrap")
+                if errors
+                    ul 
+                        each error in errors
+                            li=`${error}`  
+
+                form(type="submit" method="post" action=`/movies/${movieId}/reviews`)
+                    .form_wrap
+                        .field_group
+                        input(type='hidden' name='_csrf' value=csrfToken)
+                        div(class="form-field field_wrap")
+                            label(for="email") Review title:
+                        .field_group 
+                        div(class="form-field field_wrap")
+                            if title
+                                input(type="text", name="title" value=`${title}`)
+                            else 
+                                input(type="text", name="title" placeholder="Enter the title of your review." )
+                        .field_group
+                        div(class="form-field field_wrap")
+                            label(for="email") What did you think of this movie?
+                        div(class="form-field field_wrap")
+                            if reviewText
+                                textarea(name="reviewText", cols="30", rows="10")=`${reviewText}`
+                            else 
                                 textarea(name="reviewText", cols="30", rows="10", placeholder='Write your review here')
-                            .field_group
-                            div(class="form-field field_wrap") 
-                                span Rate the movie from 1 - 5 (Worst to Best)
-                            .field_group
-                            div(class="form-field field_wrap")
-                                ul  
-                                    li 
-                                        label(for="rating-1")
-                                        input(type="radio" id="rating-1" name="userRating" value="1")
-                                        i(class="fas fa-star") 1
-                                    li
-                                        label(for="rating-2")
-                                        input(type="radio" id="rating-2" name="userRating" value="2")
-                                        i(class="fas fa-star") 2
-                                    li
-                                        label(for="rating-3")
-                                        input(type="radio" id="rating-3" name="userRating" value="3")
-                                        i(class="fas fa-star") 3
-                                    li
-                                        label(for="rating-4")
-                                        input(type="radio" id="rating-4" name="userRating" value="4")
-                                        i(class="fas fa-star") 4
-                                    li
-                                        label(for="rating-5")
-                                        input(type="radio" id="rating-5" name="userRating" value="5")
-                                        i(class="fas fa-star") 5
-                            .field_group
-                            button(type='submit' id="reviewButton") Submit
+                        .field_group
+                        div(class="form-field field_wrap") 
+                            span Rate the movie from 1 - 5 (Worst to Best)
+                        .field_group
+                        div(class="form-field field_wrap")
+                            ul  
+                                li 
+                                    label(for="rating-1")
+                                    input(type="radio" id="rating-1" name="userRating" value="1")
+                                    i(class="fas fa-star") 1
+                                li
+                                    label(for="rating-2")
+                                    input(type="radio" id="rating-2" name="userRating" value="2")
+                                    i(class="fas fa-star") 2
+                                li
+                                    label(for="rating-3")
+                                    input(type="radio" id="rating-3" name="userRating" value="3")
+                                    i(class="fas fa-star") 3
+                                li
+                                    label(for="rating-4")
+                                    input(type="radio" id="rating-4" name="userRating" value="4")
+                                    i(class="fas fa-star") 4
+                                li
+                                    label(for="rating-5")
+                                    input(type="radio" id="rating-5" name="userRating" value="5")
+                                    i(class="fas fa-star") 5
+                        .field_group
+                        button(type='submit' id="reviewButton") Submit
                 .reviewHeader

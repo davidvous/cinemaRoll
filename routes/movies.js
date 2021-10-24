@@ -221,6 +221,31 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
         userRating,
         csrfToken: req.csrfToken(),
       });
+    } else {
+      const errors = validatorErrors.array().map((error) => error.msg);
+      console.error(errors)
+
+      const movie = await db.Movie.findByPk(movieId)
+      const genreId = await db.genresToMovieJoinTable.findOne({
+    where: { movieId: movieId },
+  });
+      const genreMovies = await db.Movie.findAll({
+    order: [db.Sequelize.fn("RANDOM")],
+    limit: 9,
+    include: { model: db.Genre, where: { id: genreId.genreId } },
+  });
+      const ratingDecimal = (movie.popularity / 1000).toFixed(2);
+      res.render('addMovieReview', {
+        movieId,
+        title,
+        reviewText,
+        errors,
+        userRating,
+        movieObj:movie,
+        ratingDecimal,
+        genreMovies,
+        csrfToken: req.csrfToken(),
+      });
     }
 
 }));
