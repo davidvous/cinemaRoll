@@ -44,11 +44,20 @@ block content
                                     .reviewDate= hasCurrentReview.createdAt
                                 .smallHeadingContainer
                                         span= hasCurrentReview.Reviews[0].reviewText
-                                a(href=`/movies/${movieObj.id}/reviews/${hasCurrentReviewId}/edit` id="reviewButton") Edit your review! 
+                                a(href=`/movies/${movieObj.id}/reviews/${hasCurrentReviewId}/edit` id="reviewButton") Edit your review
+                                br
+                                form(type="submit" method="post" action=`/movies/${movieObj.id}/reviews/${hasCurrentReviewId}/delete` id="formFordelete")
+                                    button(type="submit" id="deleteButton") Delete review
+                                
                         p
-                    else 
-                        a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review! 
-                        p
+                    else
+                        if !reviews.length
+                            span.reviewTitle There are currently no reviews
+                            p
+                            a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review!
+                        else 
+                            a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review!
+                        
                 if reviews.length
                     each singleReview in reviews
                         if singleReview.userId != userStatus
@@ -58,8 +67,3 @@ block content
                                         .reviewDate= singleReview.createdAt
                                     .smallHeadingContainer
                                             span= singleReview.reviewText
-                if !reviews.length && userStatus
-                    span.reviewTitle There are currently no reviews
-                    p
-                    a(href=`/movies/${movieObj.id}/reviews/new` id="reviewButton") Leave a review!
-                        
