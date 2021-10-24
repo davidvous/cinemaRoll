@@ -31,7 +31,30 @@ const renderList = async (event) => {
   // set H2 to title of list
   const listTitleElement = document.getElementById("list_title_text");
   listTitleElement.innerText = "Browsing List: " + listTitle;
+
+  // delete pre-existing "delete list" button, if the list being rendered is "all"
+  const buttonContainer = document.getElementById("delete_list_button_container");
+  buttonContainer.innerHTML = '';
+  // for normal lists, re-render Delete List button with the list id, next to the H1 element
+  if (listId !== "all") addDeleteButtonToListRender(listId);
+
 };
+
+
+const addDeleteButtonToListRender = (listId) => {
+  const delForm    = document.createElement("form");
+  const delButton  = document.createElement("input");
+  // populate components with attributes
+  delButton.id    = "deleteListButton-" + listId;
+  delButton.value = "Remove List";
+  delButton.type  = "button";
+  delButton.className = "util_btn";
+  delForm.appendChild(delButton);
+  // add button next to the list title
+  const buttonContainer = document.getElementById("delete_list_button_container");
+  buttonContainer.innerHTML = '';
+  buttonContainer.appendChild(delForm);
+}
 
 
 const renderPosters = (movies) => {
@@ -101,3 +124,28 @@ const addList = async (event) => {
   sideBarLists.appendChild(listItem);
 
 }
+
+
+//const deleteListButton = document.getElementById("deleteListButton");
+//deleteListButton.addEventListener("click",
+
+const deleteList = async (event) => {
+  const listId = document.getElementById("listId-delete").value;
+  let res = await fetch('/lists', {
+    method: "DELETE",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ listId})
+  });
+  let content = await res.json();
+
+  const { isDeleted } = content;
+
+  // if success, remove corresponding list div from DOM
+  if (isDeleted) {
+    console.log("hello");
+    const listItem = document.getElementById("list-id-" + listId);
+    console.log(listItem);
+    listItem.remove();
+  }
+
+};

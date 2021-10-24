@@ -7,7 +7,6 @@
   padding-top: 30px;
   display: flex;
   flex-direction: row;
-  border: 1px red solid;
 }
 
 #sidebar {
@@ -64,3 +63,11 @@ input.util_btn {
 #movie_container {
   /* min-width: 800px; */
 }
+
+#movie_container > #list_title {
+  border: 1px red solid;
+  display: flex;
+  justify-content: space-between;
+}
+
+
