@@ -34,7 +34,8 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
   const movie = await db.Movie.findByPk(movieId);
   const genreId = await db.genresToMovieJoinTable.findOne({ where: { movieId: movieId}});
   let userStatus = 0;
-  let hasCurrentReview = 1;
+  let hasCurrentReview ;
+  let hasCurrentReviewId ;
   // will rewrite this to actually check but hardcoding for now
 
   if (!movie) {
@@ -52,22 +53,25 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     });
   });
 
-  // let previouslyReviewedByLoggedInUser
    if (req.session.auth) {
 
     // this line sets userStatus either to 0 or their userId. Pug will interpret false or render accordingly
     userStatus = req.session.auth.userId;
-   }
+    // A USER IS LOGGED IN CHECK IF THEY HAVE A REVIEW
 
-  //   previouslyReviewedByLoggedInUser = await db.User.findAll({
-  //   include: { model: db.Review, where: { movieId: movieId, userId: userId } },
-  // });
-  // previouslyReviewedByLoggedInUser = previouslyReviewedByLoggedInUser[0]
-  // }else{
-  //   previouslyReviewedByLoggedInUser = false
+     hasCurrentReview = await db.User.findAll({
+    include: { model: db.Review, where: { movieId: movieId, userId: userStatus } },
+  });
+  hasCurrentReview = hasCurrentReview[0] // Will evaluate to the users review if it exists. Else its a falsy value
+  if (hasCurrentReview) {
+    console.log(hasCurrentReview)
+    hasCurrentReviewId = hasCurrentReview.Reviews[0].id
+  }
+  }
+   else{
+    hasCurrentReview = false
 
-  // }
-   console.log (reviews);
+  }
 
 
 
@@ -81,13 +85,17 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     include: { model: db.Genre, where: { id: genreId.genreId } },
   });
 
+  console.log(hasCurrentReview, "LOKKKKKKKKKKKKKKKKKKKKK")
+
   res.render("movies", {
     movieObj: movie,
     ratingDecimal,
     reviews,
     userStatus,
     genreMovies,
-    hasCurrentReview
+    hasCurrentReview,
+    hasCurrentReviewId 
+
   });
 }));
 
@@ -261,51 +269,119 @@ router.get('/:id(\\d+)/reviews/new/', csurfProtection, asyncHandler( async (req,
 
 //WORKS, BUT NOT DONE: RENDERS PAGE W/ BUTTON TO DELETE ROUTE. DELETE WORKS. NEED TO ADD EDIT FORM TO TEST PUT/PATCH OF REVIEWS
 router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandler( async (req, res, next) => {
-    const movieId = req.params.id;
-    const reviewId = req.params.reviewId
+  //   const movieId = req.params.id;
+  //   const reviewId = req.params.reviewId
 
 
-    const review = await db.Review.findByPk(reviewId)
-    if (!review) {
+  //   const review = await db.Review.findByPk(reviewId)
+  //   if (!review) {
+  //   next(createError(404))
+  // }
+
+  
+  //   const userIdOfMovieReviewer = review.userId
+  //   //http://localhost:8080/movies/3/reviews/2/edit
+  //   //userIdOfMovieReviewer
+  //   //ComeBack Add stuff to get users old review. Prepopulate fields
+
+  //   if (!req.session.auth) {
+  //      res.redirect('/users/login');
+  //   }
+
+
+  //   if (req.session.auth && userIdOfMovieReviewer == req.session.auth.userId) {
+  //     let reviewToEdit = await db.Review.findByPk(req.params.reviewId);
+    
+  //     reviewToEdit=reviewToEdit.dataValues
+  //     console.log("*************************")
+  //     console.log(reviewToEdit)
+  //     console.log("*************************")
+      
+  //     res.render("reviewEditForm", {csrfToken: req.csrfToken(), reviewToEdit, movieId, reviewId});
+      
+      
+  //   }else{
+  //     res.redirect(`/movies/${movieId}`)       
+    
+  //   }
+
+
+
+
+
+  //Get the form to add a review that will be associated w/ a movie
+  const movieId = req.params.id;
+  const genreId = await db.genresToMovieJoinTable.findOne({
+    where: { movieId: movieId },
+  });
+  const reviewId = req.params.reviewId
+
+  /// Pulling "similar movies"
+  const genreMovies = await db.Movie.findAll({
+    order: [db.Sequelize.fn("RANDOM")],
+    limit: 9,
+    include: { model: db.Genre, where: { id: genreId.genreId } },
+  });
+
+  
+
+  if (!req.session.auth) {
+
+    res.redirect(`/users/login/`)
+    
+  }
+  const movie = await db.Movie.findByPk(movieId);
+  const ratingDecimal = (movie.popularity / 1000).toFixed(2);
+  //added finding users associated with each review for "By Jim Regan"
+  const review = await db.Review.findByPk(reviewId)
+    
+  if (!review) {
     next(createError(404))
   }
-  
-    const userIdOfMovieReviewer = review.userId
-    //http://localhost:8080/movies/3/reviews/2/edit
-    //userIdOfMovieReviewer
-    //ComeBack Add stuff to get users old review. Prepopulate fields
 
-
-    if (req.session.auth && userIdOfMovieReviewer == req.session.auth.userId) {
-      let reviewToEdit = await db.Review.findByPk(req.params.reviewId);
-    
-      reviewToEdit=reviewToEdit.dataValues
-      
-      res.render("reviewEditForm", {csrfToken: req.csrfToken(), reviewToEdit, movieId, reviewId});
-      
-      
-    }else{
-      res.redirect("/users/login")       
-    
-    }
+  res.render("reviewEditForm", {
+    csrfToken: req.csrfToken(),
+    movieId,
+    movieObj: movie,
+    ratingDecimal, genreMovies,
+    review
+  });
 
 
 }));
 
 //NEED TO DETERMINE CAUSE OF SEQUELIZE VALIDATION ERROR
-router.put('/:id(\\d+)/reviews/:reviewId(\\d+)/edit', csurfProtection, movieValidators, asyncHandler( async (req, res) => {
+router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/', csurfProtection, movieValidators, asyncHandler( async (req, res) => {
   //Edit a specific movie review
+  console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
 
-  const review = await db.Review.findByPk(req.params.reviewId)
-    if (!review) {
+  const specificReview = await db.Review.findByPk(req.params.reviewId)
+    if (!specificReview) {
     next(createError(404))
   }
-    const userIdOfMovieReviewer = review.userId
-    if (userIdOfMovieReviewer == req.session.auth.userId) {
-      await review.update();
+    const userId = specificReview.userId
+    const movieId = req.params.id
+    if (userId == req.session.auth.userId) {
+      const {
+      userRating,
+      title,
+      reviewText,
+
+    } = req.body;
+
+    const review = {
+      title,
+      reviewText,
+      movieId,
+      userId,
+      userRating
+    };
+      await specificReview.update(review);
+      console.log("LINEEEEEEEEEEEEEE 379");
+      console.log(review)
 
 
-      res.redirect(`/movies/${movieId}/reviews/`);
+      res.redirect(`/movies/${movieId}/`);
       
     }else{
        res.redirect('/users/login');
