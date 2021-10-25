@@ -107,6 +107,19 @@
   color: #FFF;
 }
 
+.bottomSearchBtn {
+  text-decoration: none;
+  background-color: #F4F1EA;
+  color: #382110;
+  padding: 0px 16px;
+  font-size: 16px;
+  height: 100%;
+  border: 1px solid;
+  cursor: pointer;
+  align-items: center;
+  margin: 0 auto;
+}
+
 
 /* 000000000000000000 */
 #browse_genres_dropdown {
