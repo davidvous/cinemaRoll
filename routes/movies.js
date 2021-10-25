@@ -113,8 +113,8 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     genreMovies,
     hasCurrentReview,
     movieLists,
-    inListIndex
-    hasCurrentReviewId 
+    inListIndex,
+    hasCurrentReviewId
   });
 }));
 
@@ -324,7 +324,7 @@ router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandl
   //   next(createError(404))
   // }
 
-  
+
   //   const userIdOfMovieReviewer = review.userId
   //   //http://localhost:8080/movies/3/reviews/2/edit
   //   //userIdOfMovieReviewer
@@ -337,18 +337,18 @@ router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandl
 
   //   if (req.session.auth && userIdOfMovieReviewer == req.session.auth.userId) {
   //     let reviewToEdit = await db.Review.findByPk(req.params.reviewId);
-    
+
   //     reviewToEdit=reviewToEdit.dataValues
   //     console.log("*************************")
   //     console.log(reviewToEdit)
   //     console.log("*************************")
-      
+
   //     res.render("reviewEditForm", {csrfToken: req.csrfToken(), reviewToEdit, movieId, reviewId});
-      
-      
+
+
   //   }else{
-  //     res.redirect(`/movies/${movieId}`)       
-    
+  //     res.redirect(`/movies/${movieId}`)
+
   //   }
 
 
@@ -369,18 +369,18 @@ router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandl
     include: { model: db.Genre, where: { id: genreId.genreId } },
   });
 
-  
+
 
   if (!req.session.auth) {
 
     res.redirect(`/users/login/`)
-    
+
   }
   const movie = await db.Movie.findByPk(movieId);
   const ratingDecimal = (movie.popularity / 1000).toFixed(2);
   //added finding users associated with each review for "By Jim Regan"
   const review = await db.Review.findByPk(reviewId)
-    
+
   if (!review) {
     next(createError(404))
   }
@@ -399,7 +399,7 @@ router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandl
 //NEED TO DETERMINE CAUSE OF SEQUELIZE VALIDATION ERROR
 router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/', csurfProtection, movieValidators, asyncHandler( async (req, res) => {
   //Edit a specific movie review
- 
+
 
   const specificReview = await db.Review.findByPk(req.params.reviewId)
     if (!specificReview) {
@@ -429,7 +429,7 @@ router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/', csurfProtection, movieValidat
 
 
       res.redirect(`/movies/${movieId}/`);
-      
+
     }else{
        res.redirect('/users/login');
 
@@ -457,7 +457,7 @@ router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/delete',  asyncHandler(async (re
       await review.destroy();
 
       res.redirect(`/movies/${movieId}/`);
-      
+
     }else{
        res.redirect('/users/login');
 
