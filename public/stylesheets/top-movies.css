@@ -22,6 +22,13 @@
   grid-column-gap: 10px;
 }
 
+/* dry up later */
+#top_movies_grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+}
 
 #top_movies_wrapper > h2 {
   font-size: 25px;

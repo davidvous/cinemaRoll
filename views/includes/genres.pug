@@ -1,9 +1,17 @@
-include utils.pug
 
-h2(class="search-header" id="search-header") Search and browse movies
+//mixin blockList(arrayOfGenres, divId)
+//  div(id= divId)
+//    each genre in arrayOfGenres
+//      a(href= `/genres/`)=genre 
+//      br
+
 div(id="genre-container")
-  form(class="search" action="/search" method="post")
-          input(type="text" name="search" class="inputfield" placeholder="Search movies" size="50")
-          button(type="submit" class="bottomSearchBtn") Search
-  each genreArray, index in genres
-    +blockList(genreArray, index+1)
+  h2(class="search-header" id="search-header") Search and browse movies
+  input(id="search" class="search-bar" placeholder="Search for a movie.")
+  each genreArray, genreArrayIndex in genres
+    div(id="genres-" + (genreArrayIndex + 1))
+      each genre in genreArray
+        a(href= "/genres/" + genre.name.replace(" ", "%20"))= genre.name
+        br
+
+

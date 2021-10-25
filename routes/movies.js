@@ -76,7 +76,7 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
 
 
 
-  
+
 
   /// Pulling "similar movies"
   const genreMovies = await db.Movie.findAll({
@@ -85,6 +85,26 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     include: { model: db.Genre, where: { id: genreId.genreId } },
   });
 
+
+  // ilya-start
+  // get user's existing lists
+  let movieLists = null;
+  let inListIndex = 0;
+  if (userStatus) {
+    movieLists = await db.MovieList.findAll({
+      where: { userId: res.locals.user.id },
+      include: [{ model: db.Movie }]
+    }) //req.session.auth.userId });
+    // check if movie id appears in any of the lists
+    movieLists.forEach((list, index) => {
+      if (list.Movies.length) {
+        list.Movies.forEach(movie => {
+          if (movie.id == movieId) inListIndex = index + 1; // +1 is to account for --none--
+        })
+      }
+    })
+  }
+  // ilya-end
   res.render("movies", {
     movieObj: movie,
     ratingDecimal,
@@ -92,8 +112,9 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     userStatus,
     genreMovies,
     hasCurrentReview,
-    hasCurrentReviewId 
-
+    movieLists,
+    inListIndex,
+    hasCurrentReviewId
   });
 }));
 
@@ -113,7 +134,7 @@ router.get('/:id(\\d+)/reviews/', asyncHandler( async (req, res, next) => {
 //   where:{
 //     "userId" : usersId
 //   }
-  
+
 // }).then(res => {
 //     return res.map(row => {
 //       return row.dataValues
@@ -126,7 +147,7 @@ router.get('/:id(\\d+)/reviews/', asyncHandler( async (req, res, next) => {
 //   //   "movieId" : movieId,
 //   //   "userId" : {[Op.not]: req.params.userId}
 //   // }
-  
+
 // }).then(res => {
 //     return res.map(row => {
 //       return row.dataValues
@@ -142,7 +163,7 @@ router.get('/:id(\\d+)/reviews/', asyncHandler( async (req, res, next) => {
   where:{
     "id" : req.params.id
   }
-  
+
 }).then(res => {
     return res.map(row => {
       return row.dataValues
@@ -157,20 +178,20 @@ const {popularity, dateReleased, title, summary, poster_path, Reviews} = allRevi
 
 
 res.render("reviewsForMovieWithId", {popularity, dateReleased, title, summary, poster_path, Reviews} )
-  
+
 
 
 }));
 
 
-//THE POST ROUTE ISNT WORKING? I GET A VALIDATION ERROR. I'M NOT SURE WHY 
+//THE POST ROUTE ISNT WORKING? I GET A VALIDATION ERROR. I'M NOT SURE WHY
 router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandler( async (req, res) => {
- 
+
   //Add a new review for a given movie
   if (!req.session.auth) {
     //req.session.redirectTo =
     res.redirect("/users/login/");
-    
+
   }
   const movieId = Number(req.params.id)
 
@@ -182,13 +203,13 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
     title,
     reviewText,
     userRating
-  } = req.body 
+  } = req.body
 
   const validatorErrors = validationResult(req);
 
     if (validatorErrors.isEmpty()) {
       //await db.Review.create({title, reviewText, movieId, userId, userRating})
-      
+
       //const review = await db.Review.create({title, reviewText, movieId, userId, userRating})
 
     try {
@@ -208,7 +229,7 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
     // console.log('**********************')
       res.redirect(`/movies/${movieId}/` );
 
-    } 
+    }
       const errors = validatorErrors.array().map((error) => error.msg);
       console.error(errors)
       res.render('addMovieReview', {
@@ -266,7 +287,7 @@ router.get('/:id(\\d+)/reviews/new/', csurfProtection, asyncHandler( async (req,
   if (!req.session.auth) {
 
     res.redirect(`/users/login/`)
-    
+
   }
   const movie = await db.Movie.findByPk(movieId);
   const ratingDecimal = (movie.popularity / 1000).toFixed(2);
@@ -296,12 +317,14 @@ router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandl
   //   const reviewId = req.params.reviewId
 
 
+
+
   //   const review = await db.Review.findByPk(reviewId)
   //   if (!review) {
   //   next(createError(404))
   // }
 
-  
+
   //   const userIdOfMovieReviewer = review.userId
   //   //http://localhost:8080/movies/3/reviews/2/edit
   //   //userIdOfMovieReviewer
@@ -314,18 +337,18 @@ router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandl
 
   //   if (req.session.auth && userIdOfMovieReviewer == req.session.auth.userId) {
   //     let reviewToEdit = await db.Review.findByPk(req.params.reviewId);
-    
+
   //     reviewToEdit=reviewToEdit.dataValues
   //     console.log("*************************")
   //     console.log(reviewToEdit)
   //     console.log("*************************")
-      
+
   //     res.render("reviewEditForm", {csrfToken: req.csrfToken(), reviewToEdit, movieId, reviewId});
-      
-      
+
+
   //   }else{
-  //     res.redirect(`/movies/${movieId}`)       
-    
+  //     res.redirect(`/movies/${movieId}`)
+
   //   }
 
 
@@ -346,18 +369,18 @@ router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandl
     include: { model: db.Genre, where: { id: genreId.genreId } },
   });
 
-  
+
 
   if (!req.session.auth) {
 
     res.redirect(`/users/login/`)
-    
+
   }
   const movie = await db.Movie.findByPk(movieId);
   const ratingDecimal = (movie.popularity / 1000).toFixed(2);
   //added finding users associated with each review for "By Jim Regan"
   const review = await db.Review.findByPk(reviewId)
-    
+
   if (!review) {
     next(createError(404))
   }
@@ -376,12 +399,13 @@ router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandl
 //NEED TO DETERMINE CAUSE OF SEQUELIZE VALIDATION ERROR
 router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/', csurfProtection, movieValidators, asyncHandler( async (req, res) => {
   //Edit a specific movie review
- 
+
 
   const specificReview = await db.Review.findByPk(req.params.reviewId)
     if (!specificReview) {
     next(createError(404))
   }
+
     const userId = specificReview.userId
     const movieId = req.params.id
     if (userId == req.session.auth.userId) {
@@ -405,15 +429,15 @@ router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/', csurfProtection, movieValidat
 
 
       res.redirect(`/movies/${movieId}/`);
-      
+
     }else{
        res.redirect('/users/login');
 
     }
 
 
-  
-  
+
+
 
 }));
 
@@ -431,15 +455,16 @@ router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/delete',  asyncHandler(async (re
       //const deletedReview = await db.Review.findByPk(req.params.);
       // await deletedReview.destroy();
       await review.destroy();
+
       res.redirect(`/movies/${movieId}/`);
-      
+
     }else{
        res.redirect('/users/login');
 
     }
 
 
-    
+
   }));
 
 

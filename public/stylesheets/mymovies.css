@@ -1,0 +1,76 @@
+#list-test {
+ background: green;
+ min-height: 200px;
+}
+
+#mymovies_container {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+#sidebar {
+  border-radius: 10px;
+  min-width: 200px;
+  padding: 50px;
+  margin-right: 20px;
+  background-color: #F4F1EA;
+}
+
+#sidebar_label {
+  padding-bottom: 10px;
+}
+
+.listItem:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.movie_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+input.util_btn {
+  margin-top: 5px;
+  min-height: 30px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  max-width: 120px;
+}
+
+#sidebar form > #listName {
+  min-height: 30px;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+#sidebar form {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#list_title h1{
+  margin-bottom: 20px;
+}
+
+#movie_container {
+  /* min-width: 800px; */
+}
+
+#movie_container > #list_title {
+  display: flex;
+  justify-content: space-between;
+}
+
+#delete_list_button_container .util_btn {
+  color: red;
+  border: 1px red solid;
+}
+

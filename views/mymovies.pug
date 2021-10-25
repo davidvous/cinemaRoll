@@ -1,0 +1,38 @@
+extends layout
+
+append head
+  link(rel="stylesheet" href="/stylesheets/mymovies.css")
+  link(rel="stylesheet" href="/stylesheets/top-movies.css")
+  link(rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css")
+  script(src='/javascripts/lists.js')
+
+
+block content
+  div#mymovies_container
+    div#sidebar
+      h1#sidebar_label Watch Lists
+      div#sidebar_lists
+        div(class="listItem" id="list-all") All
+        //(#{lists.map(L => L.Movies.length).reduce((p, c) => p + c)})
+        each list in lists
+          div(class="listItem" id="list-"+list.id) #{list.name} (#{list.Movies.length})
+      form
+        input(type="text", name="listName" id="listName" placeholder="new list name")
+        input(id="addListButton" class="util_btn" type="button" value="Add List")
+
+    div#movie_container
+      //include includes/list-routes-test.pug
+      div#list_title
+        H1#list_title_text Browsing List: All
+        div#delete_list_button_container
+      div#top_movies_grid-4 #{message}
+        each movie in movies
+          div.movie_wrapper
+            a(href= "/movies/"+movie.id)
+              img(
+                src= movie.posterPath
+                alt= "movie poster for " + movie.title
+              )
+            form
+              - const id_ = "deleteMovieFromListButton-" + movie.ListToMoviesJoinTable.movieListId + "-" + movie.id
+              input(id=id_ class="util_btn delete_btn" type="button" value="Remove")

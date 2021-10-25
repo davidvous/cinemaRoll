@@ -6,8 +6,3 @@ mixin validationErrorSummary(errors)
         each error in errors                                                             
           li(style={color: 'red'})= error
 
-mixin blockList(arrayOfGenres, divId)
-    div(id= divId)
-        each genre in arrayOfGenres
-          a(href= `/genres/${genre}/`)=genre 
-          br

@@ -19,7 +19,7 @@ router.get('/', asyncHandler(async (req, res) => {
       limit: 15,
       order: [["popularity", "DESC"]]
   }).map(m => m.dataValues);
-
+  console.log(genres);
   res.render('index', { genres, topMovies });
 }));
 
