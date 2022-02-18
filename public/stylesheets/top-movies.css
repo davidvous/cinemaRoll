@@ -6,15 +6,44 @@
 .movie_wrapper {
   max-width: 200px;
 };
+.movie_wrapper:hover{
+  transform: scale(1.1); 
+  position: relative;
+  z-index: 5;
+  transition: 500ms;
+}
 
+.dupeListError{
+  text-transform: initial;
+  font-size: 16px;
+  color: red;
+  font-weight: bold;
+}
 .movie_wraper > a {
   width: 100%;
 }
 .movie_wrapper > a >  img {
   max-width: 100%;
   height: auto;
+  transform: scale(1.0);
+  transition: 500ms;
 }
-
+/* .movie_wrapper > a > img:hover{
+  transform: scale(1.1); 
+  position: relative;
+  z-index: 5;
+  transition: 500ms;
+} */
+.movie_wrapper:hover{
+  transform: scale(1.1);
+  position: relative;
+  z-index: 5;
+  transition: 500ms;
+}
+.movie_wrapper{
+  transform: scale(1.0);
+  transition: 500ms;
+}
 #top_movies_grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
