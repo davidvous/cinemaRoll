@@ -10,7 +10,6 @@
 
 document.addEventListener('DOMContentLoaded', async event => {
 
-  console.log("i am alive, what am i? ..");
   // get side bar
   const sideBar = document.getElementById("sidebar");
   const listDisplay = document.getElementById("list-test");
@@ -18,13 +17,9 @@ document.addEventListener('DOMContentLoaded', async event => {
 
   const addList = document.getElementById("addListButton");
   addList.addEventListener("click", async (event) => {
-    event.preventDefault() // <-- not sure if needed
+    event.preventDefault() 
 
-    // get content of the form
-    // need a breaker here to prevent empty form submission
     const listName  = document.getElementById("listName").value;
-    //const listName = form.value;
-    console.log("POST'ing new list to database");
     let res = await fetch('/lists', {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
@@ -32,10 +27,8 @@ document.addEventListener('DOMContentLoaded', async event => {
     });
 
     let content = await res.json();
-    console.log(content);
     const { list } = content;
 
-    console.log(list);
 
 
     // create new list item with the list name and id
@@ -46,7 +39,6 @@ document.addEventListener('DOMContentLoaded', async event => {
 
     sideBar.appendChild(listItem);
 
-    console.log(sideBar);
 
   });
 
@@ -66,9 +58,7 @@ document.addEventListener('DOMContentLoaded', async event => {
 
     // if success, remove corresponding list div from DOM
     if (isDeleted) {
-      console.log("hello");
       const listItem = document.getElementById("list-id-" + listId);
-      console.log(listItem);
       listItem.remove();
     }
 
@@ -84,11 +74,8 @@ document.addEventListener('DOMContentLoaded', async event => {
       listDisplay.innerText = content.message;
     } else {
       const titles = content.Movies.map(m => m.title).join("\n");
-      console.log(titles);
-      //console.log(listDisplay);
       listDisplay.innerText = titles;//JSON.stringify(titles);
     }
   });
 
-  console.log("you are an important JavaScript");
 });

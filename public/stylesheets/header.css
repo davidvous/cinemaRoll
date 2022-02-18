@@ -13,6 +13,15 @@
   display: flex;
   justify-content: center;
 }
+.welcomeContainer{
+  display: flex;
+  align-items: center;
+
+}
+.logoutForm{
+  margin-left: 13px;
+  height: 100%;
+}
 
 .header_nav {
   display: flex;
@@ -165,4 +174,3 @@
 a.dropdown_item:hover {
  text-decoration: underline;
 }
-

@@ -25,7 +25,8 @@ router.use(redirect);
 
 
 // render user's list page on initial load
-router.get('/', asyncHandler(async (req, res) => {
+router.get('/', csurfProtection, asyncHandler(async (req, res) => {
+  const csrfToken = req.csrfToken()
 
   const { authenticated, user } = res.locals;
   const lists = await db.MovieList.findAll({
@@ -35,7 +36,7 @@ router.get('/', asyncHandler(async (req, res) => {
   const movies = []
   lists.forEach(list => movies.push(...list.Movies));
   const message = movies.length ? "" : "No movies & no lists"
-  res.render('mymovies', { movies, lists, message });
+  res.render('mymovies', { movies, lists, message, csrfToken });
 }));
 
 
@@ -43,7 +44,6 @@ router.get('/', asyncHandler(async (req, res) => {
 router.post('/', asyncHandler(async (req, res) => {
   const { authenticated, user } = res.locals;
   const { listName } = req.body
-  console.log("creating list", listName);
   const list = await db.MovieList.create({
     name: listName,
     userId: user.id,

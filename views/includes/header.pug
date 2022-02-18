@@ -20,15 +20,21 @@ header(class="header")
       div
         form(class="search" action="/search" method="post")
           input(type="text" name="search" class="inputfield" placeholder="Search movies" size="50")
-          button(type="submit" class="util_btn") Search
+          //- button(type="submit" class="util_btn") Search
     .blank
     if locals.authenticated
-      span Welcome #{user.first_name} #{user.last_name}!
-      form(action ="/users/logout" method="POST")
-        button(type='submit') Logout
+      div.welcomeContainer
+        span Welcome #{user.firstName}!
+        form( class="logoutForm" action ="/users/logout" method="POST")
+          input(type="hidden", name="_csrf" value=csrfToken)
+          button(type='submit' class="util_btn") Logout
+        
     else
       form(action ="/users/login" method="GET")
         button(type='submit' class="util_btn") Login
       form(action ="/users/signup" method="GET")
         button(type='submit' class="util_btn") Signup
+      form(action="/users/demoLogin", method="POST")
+        input(type="hidden", name="_csrf" value=csrfToken)
+        button(type='submit' class="util_btn") Demo 
     .blank

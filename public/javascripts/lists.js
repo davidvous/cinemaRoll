@@ -12,6 +12,26 @@ document.addEventListener('DOMContentLoaded', async event => {
   const deleteMovieButtons = document.getElementsByClassName("delete_btn");
   Array.from(deleteMovieButtons).forEach(btn => btn.addEventListener("click", deleteMovie));
 });
+let regex = /\(.*\)/;
+const getNamesOfCurrentLists = () => {
+  const allListNames = []
+  const listsCollection = document.getElementsByClassName("listItem")
+  for (let index = 0; index < listsCollection.length; index++) {
+    const list = listsCollection[index];
+    const totalList = list.innerHTML
+    let listName
+    if(listName =="All"){
+      allListNames.push(listName)
+
+    }else{
+      listName = list.innerHTML.slice(0, totalList.length-4)
+      allListNames.push(listName)
+
+    }
+  }
+  
+  return allListNames
+}
 
 
 const renderList = async (event) => {
@@ -19,7 +39,6 @@ const renderList = async (event) => {
   let listId;
   if (event) listId = event.target.id.split("-")[1];
   else listId = "all";
-  console.log(listId);
   const res = await fetch('/lists' + "/" + listId);
 
   const movies = await res.json();
@@ -87,7 +106,6 @@ const renderPosters = (movies, listId) => {
     image.src = posterPath;
     navigation.href = "/movies/" + id
 
-    console.log(movie);
 
     // assemble components together
     navigation.appendChild(image);
@@ -109,10 +127,25 @@ const renderPosters = (movies, listId) => {
 const addList = async (event) => {
   event.preventDefault() // <-- not sure if needed
 
+  let prevError = document.getElementById('dupeListError')
+  if (prevError) {
+    prevError.remove()
+  }
+
   // get content of the form
   // need a breaker here to prevent empty form submission
+  const currentLists = getNamesOfCurrentLists()
   const listName  = document.getElementById("listName").value;
-  console.log("POST'ing new list to database");
+  if (currentLists.indexOf(listName)!=-1) {
+    const sidebarLists = document.getElementById("sidebar_lists")
+    
+    const errorMessage = document.createElement("h2")
+    errorMessage.className = "dupeListError"
+    errorMessage.setAttribute("id", "dupeListError")
+    errorMessage.innerHTML =`The list ${listName} already exists. Please choose a different list name.`;
+    document.getElementById("sidebar_lists").parentNode.insertBefore(errorMessage, document.getElementById("sidebar_lists"));
+    return
+  }
   let res = await fetch('/lists', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
@@ -121,7 +154,6 @@ const addList = async (event) => {
   let content = await res.json();
   const { list } = content;
 
-  console.log(list);
 
   // create new list item with the list name and id
   const listItem = document.createElement("div");
@@ -138,7 +170,6 @@ const addList = async (event) => {
 
 const deleteList = async (event) => {
   const listId = document.querySelector("#delete_list_button_container input").id.split("-")[1];
-  console.log("list del", listId);
   let res = await fetch('/lists', {
     method: "DELETE",
     headers: { 'Content-Type': 'application/json' },
@@ -147,13 +178,9 @@ const deleteList = async (event) => {
   let content = await res.json();
 
   const { isDeleted } = content;
-  console.log("is deleted", isDeleted);
   // if success, remove corresponding list div from DOM
   if (isDeleted) {
-    console.log("hello");
-    console.log(listId);
     const listItem = document.getElementById("list-" + listId);
-    console.log(listItem);
     listItem.remove();
     // and then re-render the "all" lists
     renderList(null);
@@ -164,28 +191,17 @@ const deleteList = async (event) => {
 
 const deleteMovie = async (event) => {
   const [listId, movieId] = event.target.id.split("-").slice(-2);
-  console.log(movieId);
-  console.log(listId);
+
   let res = await fetch('/lists/movie', {
     method: "delete",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ movieId, listId })
   });
   const { isDeleted } = await res.json();
-  console.log(isDeleted);
 
   if (isDeleted) {
     const movieCard = event.target.parentElement.parentElement; // Will break hard if HTML is changed
     movieCard.remove();
 
-    // also update the text in the side bar
-
-    // This is turning out too complicated, and I am strapped for time
-    // address this later. Let's table this for now.
-    //const listItem = document.getElementById("list-" + listId);
-    //const lastPart = listItem.innerText.split(" ").slice(-1)[0];
-    //const number   = lastPart.split("").slice(-1, 1);
-    //console.log(number);
   }
 };
-
