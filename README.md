@@ -1,6 +1,6 @@
 # CinemaRoll
 
-[Live website](https://cinemaroll.herokuapp.com/)
+[Live website](http://cinema-roll.herokuapp.com/)
 
 This website is a clone of [goodreads.com](goodreads.com), but for movies.
 
