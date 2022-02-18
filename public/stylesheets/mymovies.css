@@ -32,6 +32,14 @@
   justify-content: center;
   align-items: center;
   padding-bottom: 20px;
+  transform: scale(1.0);
+  transition: 500ms;
+}
+.movie_wrapper:hover{
+  transform: scale(1.1);
+  position: relative;
+  z-index: 5;
+  transition: 500ms;
 }
 
 input.util_btn {
@@ -73,4 +81,3 @@ input.util_btn {
   color: red;
   border: 1px red solid;
 }
-

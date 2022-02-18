@@ -11,6 +11,36 @@
     background: #FFF;
 }
 
+input#listName {
+    padding-left: 8px;
+}
+
+.reviewTitle:first-of-type{
+    margin-top: 5px;
+}
+.movie-item:hover, .similarMovies img:hover {
+  transform: scale(1.1); 
+  position: relative;
+  z-index: 12;
+  transition: 500ms;
+}
+.movie-item{
+  transform: scale(1.0); 
+  
+  transition: 500ms;
+}
+
+.revButtons{
+    display: flex;
+    margin-top: 25px;
+    gap: 25px;
+}
+.revButtons form{
+    width: auto;
+    margin: initial
+}
+
+
 .mainContentFloat {
     width: 960px;
     margin-top: 15px;
@@ -111,6 +141,8 @@ h1 {
 }
 
 .similarMovies img {
-    height: 120px;
+    /* height: 120px; */
+    transform: scale(1.0); 
+    transition: 500ms;
     width: 100px;
 }
