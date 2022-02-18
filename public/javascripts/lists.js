@@ -12,6 +12,26 @@ document.addEventListener('DOMContentLoaded', async event => {
   const deleteMovieButtons = document.getElementsByClassName("delete_btn");
   Array.from(deleteMovieButtons).forEach(btn => btn.addEventListener("click", deleteMovie));
 });
+let regex = /\(.*\)/;
+const getNamesOfCurrentLists = () => {
+  const allListNames = []
+  const listsCollection = document.getElementsByClassName("listItem")
+  for (let index = 0; index < listsCollection.length; index++) {
+    const list = listsCollection[index];
+    const totalList = list.innerHTML
+    let listName
+    if(listName =="All"){
+      allListNames.push(listName)
+
+    }else{
+      listName = list.innerHTML.slice(0, totalList.length-4)
+      allListNames.push(listName)
+
+    }
+  }
+  
+  return allListNames
+}
 
 
 const renderList = async (event) => {
@@ -109,10 +129,31 @@ const renderPosters = (movies, listId) => {
 const addList = async (event) => {
   event.preventDefault() // <-- not sure if needed
 
+  let prevError = document.getElementById('dupeListError')
+  if (prevError) {
+    prevError.remove()
+  }
+
   // get content of the form
   // need a breaker here to prevent empty form submission
+  const currentLists = getNamesOfCurrentLists()
   const listName  = document.getElementById("listName").value;
+  console.log(listName)
   console.log("POST'ing new list to database");
+  console.log(currentLists, "CURRENT LIST");
+  if (currentLists.indexOf(listName)!=-1) {
+    const sidebarLists = document.getElementById("sidebar_lists")
+    
+    console.log(document.getElementById("sidebar_lists"), "THIS")
+    //console.log(sideBarLists)
+    const errorMessage = document.createElement("h2")
+    errorMessage.className = "dupeListError"
+    errorMessage.setAttribute("id", "dupeListError")
+    errorMessage.innerHTML =`The list ${listName} already exists. Please choose a different list name.`;
+    document.getElementById("sidebar_lists").parentNode.insertBefore(errorMessage, document.getElementById("sidebar_lists"));
+    //document.insertBefore(errorMessage,sidebarLists)
+    return
+  }
   let res = await fetch('/lists', {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
@@ -188,4 +229,3 @@ const deleteMovie = async (event) => {
     //console.log(number);
   }
 };
-
