@@ -16,7 +16,7 @@ This website is a clone of [goodreads.com](goodreads.com), but for movies.
 
 # Design Docs & Database Schema
 
-Can be viewed in the [Project Wiki](https://github.com/davidvous/cinemaRoll/wiki).
+Can be viewed in the [Project Wiki](https://github.com/jas0123uah/cinemaRoll).
 
 # Deployment Instructions & Requirements
 
@@ -45,7 +45,7 @@ Pug templates are used on the frontend for rendering data.
  * ![HEROKU](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
 
 ### Backend Technologies
-* ![Express](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white)
+* ![Express](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 * ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
 * ![Postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
