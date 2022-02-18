@@ -150,7 +150,6 @@ router.post('/demoLogin', csurfProtection, loginValidation, asyncHandler (async 
   else {
 
     const user = await db.User.findOne({ where: { email: 'jim@jim.com' } });
-    console.log(user, "USERRRRR")
     if (user) {
       const isPasswords = await bcrypt.compare(
         'Password1!',
