@@ -1,9 +1,9 @@
 const express = require('express');
-const {asyncHandler} = require('./utils')
+const {asyncHandler, csurfProtection} = require('./utils')
 const db = require('../db/models');
 const router = express.Router();
-
-router.get('/', asyncHandler( async (req, res, next) => {
+router.get('/', csurfProtection, asyncHandler( async (req, res, next) => {
+  const csrfToken = req.csrfToken()
   const allMovies = await db.Movie.findAll({
     order: [db.Sequelize.fn("RANDOM")],
     limit: 5,
@@ -115,12 +115,14 @@ router.get('/', asyncHandler( async (req, res, next) => {
 
 // const romanceMovies = await db.Movie.findAll({ order: Sequelize.literal('rand()'), limit: 5,
 // where: { genreId: 14} })
-  res.render("listGenres", {movies: allMovies, genresList, actMovies, advMovies, aniMovies, comMovies, criMovies, docMovies, draMovies, famMovies, fanMovies, hisMovies, horMovies, musMovies, mysMovies, romMovies, sciMovies, tvMovies, thrMovies, warMovies, wesMovies});  
+  res.render("listGenres", {movies: allMovies, genresList, actMovies, advMovies, aniMovies, comMovies, criMovies, docMovies, draMovies, famMovies, fanMovies, hisMovies, horMovies, musMovies, mysMovies, romMovies, sciMovies, tvMovies, thrMovies, warMovies, wesMovies, csrfToken});  
 }));
 
 router.get(
   "/:genre([A-Za-z]+)|(Science\sFiction)",
-  asyncHandler(async (req, res) => {
+  csurfProtection, asyncHandler(async (req, res) => {
+
+    const csrfToken = req.csrfToken()
     
     const genresList = await db.Genre.findAll();
     let reqGenre;
@@ -165,6 +167,7 @@ router.get(
       genreTitle: req.params.genre,
       genresList,
       genreMovies,
+      csrfToken
     });
   })
 );
