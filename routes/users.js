@@ -9,6 +9,7 @@ const { loginUser, logoutUser } = require('../auth');
 
 
 const router = express.Router();
+router.use(csurfProtection)
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -137,7 +138,47 @@ router.post('/logout', asyncHandler(async (req, res, next) => {
   return res.redirect("/");
 }))
 
-router.get('/:userId(\\d+)/movielists/:movieListId(\\d+)', asyncHandler( async (req, res) => {
+
+
+router.post('/demoLogin', csurfProtection, loginValidation, asyncHandler (async (req, res, next) =>{
+
+  //const errors = validationResult(req).errors.map(e => e.msg);
+  errors=[]
+
+  if (errors.length > 0) {
+    return res.render('login', {errors, csrfToken: req.csrfToken()});}
+  else {
+
+    const user = await db.User.findOne({ where: { email: 'jim@jim.com' } });
+    if (user) {
+      const isPasswords = await bcrypt.compare(
+        'Password1!',
+        user.passwordHash.toString(),
+      );
+      if (isPasswords) {
+        loginUser(req, res, user);
+        return res.redirect("/");
+      }
+    }
+  }
+  errors.push("Email address or password incorrect.");
+  return res.render("login", { errors, csrfToken: req.csrfToken() });
+}))
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.get('/:userId(\\d+)/movielists/:movieListId(\\d+)', csurfProtection, asyncHandler( async (req, res) => {
+  const csrfToken = req.csrfToken()
   const movieList = await db.Mo.findByPk(req.params.movieListId);
     if (!movieList) {
     next(createError(404))
@@ -148,7 +189,7 @@ router.get('/:userId(\\d+)/movielists/:movieListId(\\d+)', asyncHandler( async (
       // await deletedReview.destroy();
   
 
-      res.render(`getMovieList`, movieList);
+      res.render(`getMovieList`, movieList, csrfToken);
       
     }else{
        res.redirect('http://localhost:8080/users/login');

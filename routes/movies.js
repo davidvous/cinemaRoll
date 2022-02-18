@@ -1,11 +1,11 @@
 const express = require("express");
-const { asyncHandler, csurfProtection } = require("./utils");
+const { asyncHandler, csurfProtection, removeTimeFromDates, removeTimeFromLoggedInUserReview } = require("./utils");
 const { check, validationResult } = require('express-validator');
 const db = require("../db/models");
 const router = express.Router();
 const createError = require('http-errors')
 const Op = require('sequelize')
-
+router.use(csurfProtection)
 const movieValidators = [
   check('title')
     .exists({ checkFalsy: true })
@@ -44,7 +44,7 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
   const ratingDecimal = (movie.popularity / 1000).toFixed(2);
 
   // Added finding users associated with each review for "By Jim Regan"
-  const reviews = await db.Review.findAll({
+  let reviews = await db.Review.findAll({
     where: { movieId: movieId },
     include: { model: db.User },
   }).then((res) => {
@@ -52,6 +52,7 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
       return row.dataValues;
     });
   });
+  reviews = removeTimeFromDates(reviews)
 
    if (req.session.auth) {
 
@@ -104,7 +105,13 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
       }
     })
   }
-  // ilya-end
+  const csrfToken = req.csrfToken()
+  if (hasCurrentReview.Reviews){
+    hasCurrentReview.Reviews[0].dataValues.createdAt = removeTimeFromLoggedInUserReview(hasCurrentReview.Reviews[0].dataValues.createdAt)
+  }
+
+
+
   res.render("movies", {
     movieObj: movie,
     ratingDecimal,
@@ -114,8 +121,8 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
     hasCurrentReview,
     movieLists,
     inListIndex,
-    hasCurrentReviewId
-  });
+    hasCurrentReviewId,
+  csrfToken});
 }));
 
 
@@ -123,42 +130,7 @@ router.get("/:id(\\d+)", asyncHandler(async (req, res, next) => {
 router.get('/:id(\\d+)/reviews/', asyncHandler( async (req, res, next) => {
   //Get all reviews associated w/ a movie
   const movieId = req.params.id
-//   if (req.session.auth){
-//     const usersId = req.session.auth.userId
-//     console.log("HIIII")
 
-//     console.log(usersId)
-//     console.log("******************")
-
-//   let reviewsFromUser = await db.Review.findAll({
-//   where:{
-//     "userId" : usersId
-//   }
-
-// }).then(res => {
-//     return res.map(row => {
-//       return row.dataValues
-//     })
-//   })
-// console.log(reviewsFromUser)
-// //reviewFromUser= reviewFromUser[0]
-// const allOtherReviews = await db.Review.findAll({
-//   // where:{
-//   //   "movieId" : movieId,
-//   //   "userId" : {[Op.not]: req.params.userId}
-//   // }
-
-// }).then(res => {
-//     return res.map(row => {
-//       return row.dataValues
-//     })
-//   })
-
-
-//   console.log(reviewFromUser, "<----- Review from user")
-//   console.log(allOtherReviews, "************ALL OTHER REVIEWS******")
-
-// }
   let allReviewsForMovie = await db.Movie.findAll({include: ['Reviews'],
   where:{
     "id" : req.params.id
@@ -176,8 +148,8 @@ if (!allReviewsForMovie) {
 
 const {popularity, dateReleased, title, summary, poster_path, Reviews} = allReviewsForMovie[0]
 
-
-res.render("reviewsForMovieWithId", {popularity, dateReleased, title, summary, poster_path, Reviews} )
+const csrfToken = req.csrfToken()
+res.render("reviewsForMovieWithId", {popularity, dateReleased, title, summary, poster_path, Reviews, csrfToken} )
 
 
 
@@ -208,9 +180,6 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
   const validatorErrors = validationResult(req);
 
     if (validatorErrors.isEmpty()) {
-      //await db.Review.create({title, reviewText, movieId, userId, userRating})
-
-      //const review = await db.Review.create({title, reviewText, movieId, userId, userRating})
 
     try {
 
@@ -220,13 +189,7 @@ router.post('/:id(\\d+)/reviews/', csurfProtection, movieValidators, asyncHandle
       await db.Review.create({title, reviewText, movieId:newMovieId, userId:newUserId, userRating: newUserRating})
        res.redirect(`/movies/${movieId}`);
       // you can now access the newly created user
-      //console.log('success', review.toJSON());
 } catch (err) {
-  // print the error details
-
-    // console.log('**********************')
-    // console.log(err)
-    // console.log('**********************')
       res.redirect(`/movies/${movieId}/` );
 
     }
@@ -291,7 +254,6 @@ router.get('/:id(\\d+)/reviews/new/', csurfProtection, asyncHandler( async (req,
   }
   const movie = await db.Movie.findByPk(movieId);
   const ratingDecimal = (movie.popularity / 1000).toFixed(2);
-  //added finding users associated with each review for "By Jim Regan"
   const reviews = await db.Review.findAll({
     where: { movieId: movieId },
     include: { model: db.User },
@@ -313,47 +275,6 @@ router.get('/:id(\\d+)/reviews/new/', csurfProtection, asyncHandler( async (req,
 
 //WORKS, BUT NOT DONE: RENDERS PAGE W/ BUTTON TO DELETE ROUTE. DELETE WORKS. NEED TO ADD EDIT FORM TO TEST PUT/PATCH OF REVIEWS
 router.get('/:id(\\d+)/reviews/:reviewId(\\d+)/edit',csurfProtection, asyncHandler( async (req, res, next) => {
-  //   const movieId = req.params.id;
-  //   const reviewId = req.params.reviewId
-
-
-
-
-  //   const review = await db.Review.findByPk(reviewId)
-  //   if (!review) {
-  //   next(createError(404))
-  // }
-
-
-  //   const userIdOfMovieReviewer = review.userId
-  //   //http://localhost:8080/movies/3/reviews/2/edit
-  //   //userIdOfMovieReviewer
-  //   //ComeBack Add stuff to get users old review. Prepopulate fields
-
-  //   if (!req.session.auth) {
-  //      res.redirect('/users/login');
-  //   }
-
-
-  //   if (req.session.auth && userIdOfMovieReviewer == req.session.auth.userId) {
-  //     let reviewToEdit = await db.Review.findByPk(req.params.reviewId);
-
-  //     reviewToEdit=reviewToEdit.dataValues
-  //     console.log("*************************")
-  //     console.log(reviewToEdit)
-  //     console.log("*************************")
-
-  //     res.render("reviewEditForm", {csrfToken: req.csrfToken(), reviewToEdit, movieId, reviewId});
-
-
-  //   }else{
-  //     res.redirect(`/movies/${movieId}`)
-
-  //   }
-
-
-
-
 
   //Get the form to add a review that will be associated w/ a movie
   const movieId = req.params.id;
@@ -424,8 +345,6 @@ router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/', csurfProtection, movieValidat
       userRating
     };
       await specificReview.update(review);
-      // console.log("LINEEEEEEEEEEEEEE 379");
-      // console.log(review)
 
 
       res.redirect(`/movies/${movieId}/`);
@@ -445,15 +364,12 @@ router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/', csurfProtection, movieValidat
 //DONE: ROUTE DELETES REVIEW
 router.post('/:id(\\d+)/reviews/:reviewId(\\d+)/delete',  asyncHandler(async (req, res, next) => {
     const movieId = req.params.id
-    // console.log("req.params.userId", req.params.userId)
     const review = await db.Review.findByPk(req.params.reviewId)
     if (!review) {
     next(createError(404))
   }
     const userIdOfMovieReviewer = review.userId
     if (userIdOfMovieReviewer == req.session.auth.userId) {
-      //const deletedReview = await db.Review.findByPk(req.params.);
-      // await deletedReview.destroy();
       await review.destroy();
 
       res.redirect(`/movies/${movieId}/`);

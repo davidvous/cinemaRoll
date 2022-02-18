@@ -2,14 +2,15 @@ const express = require('express');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const db = require("../db/models");
-const { asyncHandler } = require("./utils");
+const { asyncHandler, csurfProtection } = require("./utils");
 
 const router = express.Router();
 
 
 /* GET home page. */
-router.get('/', asyncHandler(async (req, res) => {
+router.get('/', csurfProtection, asyncHandler(async (req, res) => {
   // the template expects genres in sub-arrays of size 5
+  const csrfToken = req.csrfToken()
   const genres_ = await db.Genre.findAll().map(g => g.dataValues);
   const genres = [];
   while (genres_.length) genres.push(genres_.splice(0, 5));
@@ -19,8 +20,7 @@ router.get('/', asyncHandler(async (req, res) => {
       limit: 15,
       order: [["popularity", "DESC"]]
   }).map(m => m.dataValues);
-  console.log(genres);
-  res.render('index', { genres, topMovies });
+  res.render('index', { genres, topMovies, csrfToken });
 }));
 
 router.post('/search', asyncHandler(async (req, res) => {
