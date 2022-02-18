@@ -30,10 +30,25 @@ Can be viewed in the [Project Wiki](https://github.com/davidvous/cinemaRoll/wiki
 	```
 - Make sure to create & populate the `.env` file following the example given in `.env.example`. 
 
-# Tech Uses
+## Technologies Used
+Cinemaroll features an Express backend that uses the ORM Sequelize. The database is made with PostgreSQL. 
 
-- Express backend with Pug templates
-- Vanilla JS / CSS on the frontend
+Pug templates are used on the frontend for rendering data.
+
+
+### Frontend Technologies
+ * ![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+ * ![Pug](https://img.shields.io/badge/Pug-E3C29B?style=for-the-badge&logo=pug&logoColor=black)
+ * ![HTML](https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white)
+ * ![CSS](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)
+ * ![NODE JS](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+ * ![HEROKU](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
+
+### Backend Technologies
+* ![Express](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white)
+* ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
+* ![Postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+
 
 # Code Snippets
 
