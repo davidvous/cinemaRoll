@@ -43,22 +43,24 @@ block content
                             a(href=`/movies/${oneGenreMovie.id}`)
                                 img(src=`${oneGenreMovie.posterPath}`)  
             .reviewContent
-                .smallHeadingContainer 
-                    h2.smallHeading Reviews
+                 
+                h2.smallHeading Reviews
                 .reviewContainer
                 .reviewHeader
                 if userStatus 
                     if hasCurrentReview 
-                        span.reviewTitle= hasCurrentReview.Reviews[0].title
+                        div.reviewTitle= hasCurrentReview.Reviews[0].title
                                 .reviewMeta     
                                     .reviewAuthor= `By ${hasCurrentReview.firstName} ${hasCurrentReview.lastName}`
-                                    .reviewDate= hasCurrentReview.createdAt
+                                    .reviewDate= hasCurrentReview.Reviews[0].createdAt
                                 .smallHeadingContainer
                                         span= hasCurrentReview.Reviews[0].reviewText
-                                a(href=`/movies/${movieObj.id}/reviews/${hasCurrentReviewId}/edit` id="reviewButton") Edit your review
-                                br
-                                form(type="submit" method="post" action=`/movies/${movieObj.id}/reviews/${hasCurrentReviewId}/delete` id="formFordelete")
-                                    button(type="submit" id="deleteButton") Delete review
+                                div.revButtons
+                                    form(type="submit" method="get" action=`/movies/${movieObj.id}/reviews/${hasCurrentReviewId}/edit` id="formForedit")
+                                        button(class="util_btn" href=`/movies/${movieObj.id}/reviews/${hasCurrentReviewId}/edit`) Edit your review
+                                    
+                                    form(type="submit" method="post" action=`/movies/${movieObj.id}/reviews/${hasCurrentReviewId}/delete` id="formFordelete")
+                                        button(type="submit" id="deleteButton") Delete review
                                 
                         p
                     else
@@ -72,7 +74,7 @@ block content
                 if reviews.length
                     each singleReview in reviews
                         if singleReview.userId != userStatus
-                            span.reviewTitle= singleReview.title
+                            div.reviewTitle= singleReview.title
                                     .reviewMeta     
                                         .reviewAuthor= `By ${singleReview.User.firstName} ${singleReview.User.lastName}`
                                         .reviewDate= singleReview.createdAt
